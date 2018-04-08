@@ -1,0 +1,4 @@
+    curl,  E,                curl
+    htop,  K,   monitoring system
+   dunst,  G, Notification system
+ openssh,   ,       SSH tunneling
