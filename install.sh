@@ -1,6 +1,5 @@
 #!/bin/bash 
-pacman -Syu --noconfirm || (echo "Impossible to run the script. Please verify that: \n - You have Internet \n - You execute the script as root" && exit) 
-pacman -S --noconfirm --needed dialog
+pacman -S --noconfirm --needed dialog || (echo "Impossible to run the script. Please verify that: \n - You have Internet \n - You execute the script as root\n\n" && exit) 
 dialog --title "Welcome!" --msgbox "Welcome to Phantas0s installation script for Arch linux.\n" 10 60
 
 name=$(dialog --no-cancel --inputbox "First, please enter your username" 10 60 3>&1 1>&2 2>&3 3>&1)
@@ -25,15 +24,18 @@ options=(V "Vmware tools" off
          T "Recommended tools" on
          G "Git & git tools" on
          I "i3 Tile manager & Desktop" on
+         M "Tmux" on
          N "Neovim" on
          K "Keyring applications" on
          U "Urxvt unicode" on
          Z "Unix Z-Shell (ZSH)" on
          S "Search tool ripgrep" on
          C "Compton - manage transparency" on
-         B "Firefox & Chromium browsers" on
+         B "Browsers (firefox + chromium)" on
          R "Ranger terminal file manager" on
          P "Programming environment" on
+         X "KeepassX" on
+         Y "Mysql (mariadb) & mysql tools" on
 	 )
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
@@ -46,6 +48,9 @@ clear
 dialog --infobox "Refreshing Arch Keyring..." 4 40
 pacman --noconfirm -Sy archlinux-keyring >/dev/tty6
 
+dialog --infobox "Updating the system..." 4 40
+pacman -Syu --noconfirm 
+
 dialog --infobox "Getting program list..." 4 40
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/progs.csv > /tmp/progs.csv
 
@@ -57,6 +62,34 @@ installProgram() { ( (pacman --noconfirm --needed -S $1 &>/dev/tty6 && echo $1 i
 for x in $(cat /tmp/progs.csv | grep -G ",$let," | awk -F, {'print $1'})
 do
 	n=$((n+1))
-	dialog --title "Arch Linux Installation" --infobox "Downloading and installing program $n out of $count: $x...\n\nThe first programs will take more time due to dependencies. You can watch the output on tty6." 8 70
+    dialog --title "Arch Linux Installation" --infobox "Downloading and installing program $n out of $count: $x...\n\nThe first programs will take more time due to dependencies. You can watch the output on tty6 (ctrl + alt + F6)." 8 70
 	installProgram $x >/dev/tty6
 done
+
+# TODO add that only if docker is installed...
+dialog --infobox "Add user to docker group" 4 40
+newgrp docker
+gpasswd -a $name docker
+
+# TODO add that only if PHP is installed (?)
+wget https://getcomposer.org/composer.phar \
+    && mv composer.phar /usr/local/bin/composer \
+    && chmod 775 /usr/local/bin/composer
+
+dialog --infobox "Copy user permissions configuration (sudoers)" 4 40
+curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers_tmp > /etc/sudoers
+
+curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_user.sh > /tmp/install_user.sh;
+sudo -u $name bash /tmp/install_user.sh
+rm -f /tmp/install_user.sh
+
+dialog --infobox "Enabling Network Manager..." 4 40
+systemctl enable NetworkManager
+systemctl start NetworkManager
+
+dialog --infobox "Disable the famous BIP sound we all love" 10 50
+rmmod pcspkr
+echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
+
+dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\n\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment.\n\n-Phantas0s" 12 80
+clear
