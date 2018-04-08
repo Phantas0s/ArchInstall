@@ -17,7 +17,7 @@ aurcheck() {
     done
 }
 
-dialog --infobox "Installing \"packer\", an AUR helper..." 10 60
+dialog --infobox "[$(whoami)] Installing \"packer\", an AUR helper..." 10 60
 aurcheck packer >/dev/null
 
 count=$(cat /tmp/aur_queue | wc -l)
@@ -26,11 +26,11 @@ n=0
 for prog in $(cat /tmp/aur_queue)
 do
 	n=$((n+1))
-	dialog --infobox "Downloading and installing program $n out of $count: $prog..." 10 60
+	dialog --infobox "[$(whoami)] Downloading and installing program $n out of $count: $prog..." 10 60
 	aurcheck $prog >/dev/null
 done
 
-dialog --infobox "Downloading and installing dotfiles..." 10 60
+dialog --infobox "[$(whoami)] Downloading and installing dotfiles..." 10 60
 git clone https://github.com/Phantas0s/.dotfiles.git >/dev/null \
     && rsync -va .dotfiles/ /home/$(whoami) >/dev/null \
     && rm -rf .dotfiles >/dev/null \
@@ -39,13 +39,13 @@ git clone https://github.com/Phantas0s/.dotfiles.git >/dev/null \
 
 source /home/$(whoami)/.dotfiles/env
 
-dialog --infobox "Install tmux plugins manager" 10 60
+dialog --infobox "[$(whoami)] Install tmux plugins manager" 10 60
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-dialog --infobox "Install Godoctor for neovim (go refactoring plugin)" 10 60
+dialog --infobox "[$(whoami)] Install Godoctor for neovim (go refactoring plugin)" 10 60
 git clone https://github.com/godoctor/godoctor.vim ~/nvim/godoctor.vim
 
-dialog --infobox "Install guru for go" 10 60
+dialog --infobox "[$(whoami)] Install guru for go" 10 60
 go get golang.org/x/tools/cmd/guru
 go build golang.org/x/tools/cmd/guru
 mv guru $(go env GOROOT)/bin
