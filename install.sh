@@ -53,6 +53,10 @@ pacman -Syu --noconfirm
 
 dialog --infobox "Getting program list..." 4 40
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/progs.csv > /tmp/progs.csv
+if [ -f /tmp/aur_queue ]; 
+    then
+        rm /tmp/aur_queue
+    fi
 
 rm /tmp/aur_queue &>/dev/tty6
 count=$(cat /tmp/progs.csv | grep -G ",$let," | wc -l)
@@ -67,11 +71,12 @@ do
 done
 
 # TODO add that only if docker is installed...
-dialog --infobox "Add user to docker group" 4 40
+dialog --infobox "Add user to docker group..." 4 40
 newgrp docker
 gpasswd -a $name docker
 
 # TODO add that only if PHP is installed (?)
+dialog --infobox "Install composer..." 4 40
 wget https://getcomposer.org/composer.phar \
     && mv composer.phar /usr/local/bin/composer \
     && chmod 775 /usr/local/bin/composer
