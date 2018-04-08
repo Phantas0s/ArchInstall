@@ -20,9 +20,20 @@ echo "$name:$pass1" | chpasswd >/dev/tty6
 
 cmd=(dialog --separate-output --nocancel  --buildlist "Press <SPACE> to select the packages you want to install. This script will install all the packages you put in the right column.
 Use \"^\" and \"\$\" to move to the left and right columns respectively. Press <ENTER> when done." 22 76 16)
-options=(E "Essentials" on
-         K "Keyboard config" on
-         G "Ranger" on
+options=(V "Vmware tools" off
+         E "Essentials" on
+         T "Recommended tools" on
+         G "Git & git tools" on
+         I "i3 Tile manager & Desktop" on
+         N "Neovim" on
+         K "Keyring applications" on
+         U "Urxvt unicode" on
+         Z "Unix Z-Shell (ZSH)" on
+         S "Search tool ripgrep" on
+         C "Compton - manage transparency" on
+         B "Firefox & Chromium browsers" on
+         R "Ranger terminal file manager" on
+         P "Programming environment" on
 	 )
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
