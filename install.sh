@@ -49,7 +49,7 @@ dialog --infobox "Refreshing Arch Keyring..." 4 40
 pacman --noconfirm -Sy archlinux-keyring >/dev/tty6
 
 dialog --infobox "Updating the system..." 4 40
-pacman -Syu --noconfirm
+pacman -Syu --noconfirm >/dev/tty6
 
 dialog --infobox "Getting program list..." 4 40
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/progs.csv > /tmp/progs.csv
@@ -69,12 +69,13 @@ do
 	n=$((n+1))
     dialog --title "Arch Linux Installation" --infobox "Downloading and installing program $n out of $count: $x...\n\n. You can watch the output on tty6 (ctrl + alt + F6)." 8 70
 	installProgram $x >/dev/tty6
-        if [[ $x = "docker" ]];
-            then
-            dialog --infobox "Add user $name to docker group..." 4 40
-            newgrp docker >/dev/tty6
-            gpasswd -a $name docker >/dev/tty6
-        fi
+
+    if [[ $x = "docker" ]];
+    then
+        dialog --infobox "Add user $name to docker group..." 4 40
+        newgrp docker
+        gpasswd -a $name docker
+    fi
 done
 
 dialog --infobox "Install composer..." 4 40
@@ -82,8 +83,8 @@ wget https://getcomposer.org/composer.phar \
     && mv composer.phar /usr/local/bin/composer \
     && chmod 775 /usr/local/bin/composer
 
-dialog --infobox "Copy user permissions configuration (sudoers)" 4 40
-curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers_tmp > /etc/sudoers
+dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
+curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers > /etc/sudoers
 
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_user.sh > /tmp/install_user.sh;
 sudo -u $name bash /tmp/install_user.sh
