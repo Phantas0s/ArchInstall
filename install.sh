@@ -73,7 +73,7 @@ do
     if [[ $x = "docker" ]];
     then
         dialog --infobox "Add user $name to docker group..." 4 40
-        newgrp docker
+        groupadd docker
         gpasswd -a $name docker
     fi
 done
