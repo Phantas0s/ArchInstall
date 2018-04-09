@@ -8,9 +8,9 @@ pass2=$(dialog --no-cancel --passwordbox "Enter your password again. To be sure.
 
 while [ $pass1 != $pass2 ]
 do
-	pass1=$(dialog --no-cancel --passwordbox "Passwords do not match.\n\nEnter password again." 10 60 3>&1 1>&2 2>&3 3>&1)
-	pass2=$(dialog --no-cancel --passwordbox "Retype password." 10 60 3>&1 1>&2 2>&3 3>&1)
-	unset pass2
+    pass1=$(dialog --no-cancel --passwordbox "Passwords do not match.\n\nEnter password again." 10 60 3>&1 1>&2 2>&3 3>&1)
+    pass2=$(dialog --no-cancel --passwordbox "Retype password." 10 60 3>&1 1>&2 2>&3 3>&1)
+    unset pass2
 done
 
 dialog --infobox "Adding user \"$name\"..." 4 50
@@ -35,8 +35,10 @@ options=(V "Vmware tools" off
          R "Ranger terminal file manager" on
          P "Programming environment" on
          X "KeepassX" on
+         L "Nextcloud" on
+         J "Jrnl" on
          Y "Mysql (mariadb) & mysql tools" on
-	 )
+     )
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
 let="\(\|[a-z]\|$(echo $choices | sed -e "s/ /\\\|/g")\)"
@@ -66,7 +68,7 @@ installProgram() { ( (pacman --noconfirm --needed -S $1 &>/dev/tty6 && echo $1 i
 
 for x in $(cat /tmp/progs.csv | grep -G ",$let," | awk -F, {'print $1'})
 do
-	n=$((n+1))
+    n=$((n+1))
     dialog --title "Arch Linux Installation" --infobox "Downloading and installing program $n out of $count: $x...\n\n. You can watch the output on tty6 (ctrl + alt + F6)." 8 70
 	installProgram $x >/dev/tty6
 
