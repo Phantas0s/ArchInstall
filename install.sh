@@ -59,7 +59,6 @@ curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/progs.csv > 
 if [ -f /tmp/aur_queue ];
     then
         rm /tmp/aur_queue &>/dev/tty6
-
 fi
 
 count=$(cat /tmp/progs.csv | grep -G ",$let," | wc -l)

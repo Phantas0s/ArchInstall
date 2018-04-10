@@ -42,11 +42,3 @@ dialog --infobox "[$(whoami)] Create base folders" 10 60
 mkdir /home/$(whoami)/Document/ >/dev/null
 mkdir /home/$(whoami)/Download/ >/dev/null
 mkdir /home/$(whoami)/Workspace/ >/dev/null
-
-dialog --infobox "[$(whoami)] Install Godoctor for neovim (go refactoring plugin)" 10 60
-git clone https://github.com/godoctor/godoctor.vim ~/nvim/godoctor.vim
-
-dialog --infobox "[$(whoami)] Install guru for go" 10 60
-go get golang.org/x/tools/cmd/guru
-go build golang.org/x/tools/cmd/guru
-mv guru $(go env GOROOT)/bin
