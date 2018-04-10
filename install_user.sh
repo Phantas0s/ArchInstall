@@ -32,7 +32,7 @@ done
 
 dialog --infobox "[$(whoami)] Downloading and installing dotfiles..." 10 60
 git clone https://github.com/Phantas0s/.dotfiles.git /home/$(whoami)/.dotfiles >/dev/null \
-    && source /home/$(whoami)/.dotfiles/env >/dev/null
+    && source /home/$(whoami)/.dotfiles/env >/dev/null \
     && cp /home/$(whoami)/.dotfiles/install_config.diff /home/$(whoami)/.dotfiles/install_config >/dev/null \
     && sh /home/$(whoami)/.dotfiles/install.sh
 
