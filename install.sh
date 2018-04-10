@@ -1,5 +1,7 @@
 #!/bin/bash 
-pacman -S --noconfirm --needed dialog || (echo "Impossible to run the script. Please verify that: \n - You have Internet \n - You execute the script as root\n\n" && exit) 
+pacman -S --noconfirm --needed dialog \
+|| (echo "Impossible to run the script. Please verify that: \n - You have Internet \n - You execute the script as root\n\n" && exit) 
+
 dialog --title "Welcome!" --msgbox "Welcome to Phantas0s installation script for Arch linux.\n" 10 60
 
 name=$(dialog --no-cancel --inputbox "First, please enter your username" 10 60 3>&1 1>&2 2>&3 3>&1)
@@ -33,7 +35,7 @@ options=(V "Vmware tools" off
          C "Compton - manage transparency" on
          B "Browsers (firefox + chromium)" on
          R "Ranger terminal file manager" on
-         P "Programming environment" on
+         P "Programming environment (PHP, Ruby, Go)" on
          X "KeepassX" on
          L "Nextcloud" on
          J "Jrnl" on
@@ -43,7 +45,11 @@ choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
 let="\(\|[a-z]\|$(echo $choices | sed -e "s/ /\\\|/g")\)"
 
-dialog --title "Let's get this party started!" --msgbox "The rest of the installation will now be totally automated, so you can sit back and relax.\n\nIt will take some time, but when done, you can relax even more with your complete system.\n\nNow just press <OK> and the system will begin installation!" 13 60 || (clear && exit)
+dialog --title "Let's get this party started!" --msgbox \
+"The rest of the installation will now be totally automated, so you can sit back and relax.\n\n
+It will take some time, but when done, you can relax even more with your complete system.\n\n
+Now just press <OK> and the system will begin installation!" 13 60 \
+|| (clear && exit)
 
 clear
 
@@ -63,12 +69,19 @@ fi
 
 count=$(cat /tmp/progs.csv | grep -G ",$let," | wc -l)
 n=0
-installProgram() { ( (pacman --noconfirm --needed -S $1 &>/dev/tty6 && echo $1 installed.) || echo $1 >> /tmp/aur_queue) || echo $1 >> /tmp/arch_install_failed ;}
+installProgram() { 
+    ( (pacman --noconfirm --needed -S $1 &>/dev/tty6 && echo $1 installed.) \
+    || echo $1 >> /tmp/aur_queue) \
+    || echo $1 >> /tmp/arch_install_failed ;
+}
 
 for x in $(cat /tmp/progs.csv | grep -G ",$let," | awk -F, {'print $1'})
 do
     n=$((n+1))
-    dialog --title "Arch Linux Installation" --infobox "Downloading and installing program $n out of $count: $x...\n\n. You can watch the output on tty6 (ctrl + alt + F6)." 8 70
+    dialog --title "Arch Linux Installation" --infobox \
+    "Downloading and installing program $n out of $count: $x...\n\n.
+    You can watch the output on tty6 (ctrl + alt + F6)." 8 70
+
 	installProgram $x >/dev/tty6
 
     if [[ $x = "docker" ]];
