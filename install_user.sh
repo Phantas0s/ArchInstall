@@ -37,6 +37,10 @@ git clone https://github.com/Phantas0s/.dotfiles.git /home/$(whoami)/.dotfiles >
     && sh /home/$(whoami)/.dotfiles/install.sh
 
 
+dialog --infobox "[$(whoami)] Install composer global tools" 10 60
+
+composer global update
+
 dialog --infobox "[$(whoami)] Create base folders" 10 60
 
 mkdir /home/$(whoami)/Document/ >/dev/null

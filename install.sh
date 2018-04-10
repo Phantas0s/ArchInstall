@@ -82,7 +82,7 @@ do
     "Downloading and installing program $n out of $count: $x...\n\n.
     You can watch the output on tty6 (ctrl + alt + F6)." 8 70
 
-	installProgram $x >/dev/tty6
+    installProgram $x >/dev/tty6
 
     if [[ $x = "docker" ]];
     then
@@ -91,11 +91,6 @@ do
         gpasswd -a $name docker
     fi
 done
-
-dialog --infobox "Install composer..." 4 40
-wget https://getcomposer.org/composer.phar \
-    && mv composer.phar /usr/local/bin/composer \
-    && chmod 775 /usr/local/bin/composer
 
 dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers > /etc/sudoers
@@ -108,9 +103,11 @@ dialog --infobox "Enabling Network Manager..." 4 40
 systemctl enable NetworkManager
 systemctl start NetworkManager
 
-dialog --infobox "Disable the famous BIP sound we all love" 10 50
+dialog --infobox "Disable the famous and loud BIIIIIP sound we all love" 10 50
 rmmod pcspkr
 echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
 
-dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\n\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment.\n\n-Phantas0s" 12 80
+dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\n\n
+To run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment.\n\n
+-Phantas0s" 12 80
 clear
