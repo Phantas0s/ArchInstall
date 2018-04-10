@@ -31,11 +31,11 @@ do
 done
 
 dialog --infobox "[$(whoami)] Downloading and installing dotfiles..." 10 60
-git clone https://github.com/Phantas0s/.dotfiles.git >/dev/null \
+git clone https://github.com/Phantas0s/.dotfiles.git /home/$(whoami)/.dotfiles >/dev/null \
     && rsync -va .dotfiles/ /home/$(whoami) >/dev/null \
     && rm -rf .dotfiles >/dev/null \
-    && cp /home/$(whoami)/install_config.diff /home/$(whoami)/install_config \
-    && sh /home/$(whoami)/install.sh
+    && cp /home/$(whoami)/.dotfiles/install_config.diff /home/$(whoami)/.dotfiles/install_config \
+    && sh /home/$(whoami)/.dotfiles/install.sh
 
 source /home/$(whoami)/.dotfiles/env
 
