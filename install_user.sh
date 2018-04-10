@@ -26,21 +26,22 @@ n=0
 for prog in $(cat /tmp/aur_queue)
 do
 	n=$((n+1))
-	dialog --infobox "[$(whoami)] Downloading and installing program $n out of $count: $prog..." 10 60
+	dialog --infobox "[AUR] AUR install - Downloading and installing program $n out of $count: $prog..." 10 60
 	aurcheck $prog >/dev/null
 done
 
 dialog --infobox "[$(whoami)] Downloading and installing dotfiles..." 10 60
 git clone https://github.com/Phantas0s/.dotfiles.git /home/$(whoami)/.dotfiles >/dev/null \
-    && rsync -va .dotfiles/ /home/$(whoami) >/dev/null \
-    && rm -rf .dotfiles >/dev/null \
-    && cp /home/$(whoami)/.dotfiles/install_config.diff /home/$(whoami)/.dotfiles/install_config \
+    && source /home/$(whoami)/.dotfiles/env >/dev/null
+    && cp /home/$(whoami)/.dotfiles/install_config.diff /home/$(whoami)/.dotfiles/install_config >/dev/null \
     && sh /home/$(whoami)/.dotfiles/install.sh
 
-source /home/$(whoami)/.dotfiles/env
 
-dialog --infobox "[$(whoami)] Install tmux plugins manager" 10 60
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+dialog --infobox "[$(whoami)] Create base folders" 10 60
+
+mkdir /home/$(whoami)/Document/ >/dev/null
+mkdir /home/$(whoami)/Download/ >/dev/null
+mkdir /home/$(whoami)/Workspace/ >/dev/null
 
 dialog --infobox "[$(whoami)] Install Godoctor for neovim (go refactoring plugin)" 10 60
 git clone https://github.com/godoctor/godoctor.vim ~/nvim/godoctor.vim
