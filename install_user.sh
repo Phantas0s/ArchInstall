@@ -35,9 +35,9 @@ if [ ! -d /home/$(whoami)/.dotfiles ];
         dialog --infobox "[$(whoami)] Downloading and installing dotfiles..." 10 60
         git clone https://github.com/Phantas0s/.dotfiles.git /home/$(whoami)/.dotfiles >/dev/null \
             && source /home/$(whoami)/.dotfiles/env >/dev/null \
-            && cp /home/$(whoami)/.dotfiles/install_config.diff /home/$(whoami)/.dotfiles/install_config >/dev/null \
-            && cd /home/$(whomai)/.dotfiles \
+            && cp /home/$(whoami)/.dotfiles/install_config.diff /home/$(whoami)/.dotfiles/install_config >/dev/null
 
+        cd /home/$(whoami)/.dotfiles
         bash install.sh
         cd -
 fi
@@ -48,6 +48,7 @@ composer global update
 
 dialog --infobox "[$(whoami)] Create base folders" 10 60
 
-mkdir /home/$(whoami)/Document/ >/dev/null
-mkdir /home/$(whoami)/Download/ >/dev/null
-mkdir /home/$(whoami)/Workspace/ >/dev/null
+mkdir -p /home/$(whoami)/Documents/ >/dev/null
+mkdir -p /home/$(whoami)/Downloads/ >/dev/null
+mkdir -p /home/$(whoami)/Workspace/ >/dev/null
+mkdir -p /home/$(whoami)/Softwares/ >/dev/null
