@@ -36,11 +36,11 @@ if [ ! -d /home/$(whoami)/.dotfiles ];
         git clone https://github.com/Phantas0s/.dotfiles.git /home/$(whoami)/.dotfiles >/dev/null \
             && source /home/$(whoami)/.dotfiles/env >/dev/null \
             && cp /home/$(whoami)/.dotfiles/install_config.diff /home/$(whoami)/.dotfiles/install_config >/dev/null
-
-        cd /home/$(whoami)/.dotfiles
-        bash install.sh
-        cd -
 fi
+
+cd /home/$(whoami)/.dotfiles
+bash install.sh
+cd -
 
 dialog --infobox "[$(whoami)] Install composer global tools" 10 60
 
