@@ -35,7 +35,7 @@ git clone https://github.com/Phantas0s/.dotfiles.git /home/$(whoami)/.dotfiles >
     && source /home/$(whoami)/.dotfiles/env >/dev/null \
     && cp /home/$(whoami)/.dotfiles/install_config.diff /home/$(whoami)/.dotfiles/install_config >/dev/null \
     && cd /home/$(whomai)/.dotfiles \
-    && sh install.sh \
+    && bash install.sh \
     && cd -
 
 dialog --infobox "[$(whoami)] Install composer global tools" 10 60
