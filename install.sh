@@ -19,11 +19,6 @@ dialog --infobox "Adding user \"$name\"..." 4 50
 useradd -m -g wheel -s /bin/bash $name >/dev/tty6
 echo "$name:$pass1" | chpasswd >/dev/tty6
 
-# This is to move to the general install of arch (will do that soon :D)
-export LC_ALL=C.UTF-8
-export LANG=C.UTF-8
-localectl set-locale LANG=en_US.UTF-8
-
 cmd=(dialog --separate-output --nocancel  --buildlist "Press <SPACE> to select the packages you want to install. This script will install all the packages you put in the right column.
 Use \"^\" and \"\$\" to move to the left and right columns respectively. Press <ENTER> when done." 22 76 16)
 options=(V "Vmware tools" off
