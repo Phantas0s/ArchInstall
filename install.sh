@@ -104,8 +104,8 @@ curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_user
 sudo -u $name bash /tmp/install_user.sh
 rm -f /tmp/install_user.sh
 
-dialog --infobox "[$(whoami)] Installing .dotfiles..." 10 60
-cd /home/$name/.dotfiles
+dialog --infobox "[$name] Installing .dotfiles..." 10 60
+sudo -u $name cd /home/$name/.dotfiles
 sudo -u $name source env >/dev/null
 sudo -u $name bash install.sh -y
 cd -
