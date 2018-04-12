@@ -40,7 +40,7 @@ fi
 dialog --infobox "[$(whoami)] Installing .dotfiles..." 10 60
 cd /home/$(whoami)/.dotfiles
 source env >/dev/null
-bash install.sh
+bash install.sh -y
 cd -
 
 command -v "zsh" >/dev/null && chsh -s $(which zsh)
