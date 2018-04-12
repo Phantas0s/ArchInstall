@@ -105,7 +105,7 @@ sudo -u $name bash /tmp/install_user.sh
 rm -f /tmp/install_user.sh
 
 dialog --infobox "[$(whoami)] Installing .dotfiles..." 10 60
-cd /home/$(whoami)/.dotfiles
+cd /home/$name/.dotfiles
 sudo -u $name source env >/dev/null
 sudo -u $name bash install.sh -y
 cd -
