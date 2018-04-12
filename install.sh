@@ -1,6 +1,6 @@
-#!/bin/bash 
+#!/bin/bash
 pacman -S --noconfirm --needed dialog \
-|| (echo "Impossible to run the script. Please verify that: \n - You have Internet \n - You execute the script as root\n\n" && exit) 
+|| (echo "Impossible to run the script. Please verify that: \n - You have Internet \n - You execute the script as root\n\n" && exit)
 
 dialog --title "Welcome!" --msgbox "Welcome to Phantas0s installation script for Arch linux.\n" 10 60
 
@@ -69,7 +69,7 @@ fi
 
 count=$(cat /tmp/progs.csv | grep -G ",$let," | wc -l)
 n=0
-installProgram() { 
+installProgram() {
     ( (pacman --noconfirm --needed -S $1 &>/dev/tty6 && echo $1 installed.) \
     || echo $1 >> /tmp/aur_queue) \
     || echo $1 >> /tmp/arch_install_failed ;
@@ -91,6 +91,11 @@ do
         gpasswd -a $name docker
     fi
 done
+
+dialog --infobox "Install composer..." 4 40
+wget https://getcomposer.org/composer.phar \
+    && mv composer.phar /usr/local/bin/composer \
+    && chmod 775 /usr/local/bin/composer
 
 dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers > /etc/sudoers
