@@ -123,6 +123,7 @@ dialog --title "All done!" \
 dialog --title "Reboot time" \
 --yesno "It is adviced to restart your computer. Do you want to restart now?" 7 60
 
+response=$?
 case $response in
    0) reboot;;
    1) clear;;
