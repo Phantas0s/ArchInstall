@@ -19,6 +19,10 @@ dialog --infobox "Adding user \"$name\"..." 4 50
 useradd -m -g wheel -s /bin/bash $name >/dev/tty6
 echo "$name:$pass1" | chpasswd >/dev/tty6
 
+# This is to move to the general install of arch (will do that soon :D)
+export LC_ALL=C.UTF-8
+export LANG=C.UTF-8
+
 cmd=(dialog --separate-output --nocancel  --buildlist "Press <SPACE> to select the packages you want to install. This script will install all the packages you put in the right column.
 Use \"^\" and \"\$\" to move to the left and right columns respectively. Press <ENTER> when done." 22 76 16)
 options=(V "Vmware tools" off
@@ -35,7 +39,7 @@ options=(V "Vmware tools" off
          C "Compton - manage transparency" on
          B "Browsers (firefox + chromium)" on
          R "Ranger terminal file manager" on
-         P "Programming environment (PHP, Ruby, Go)" on
+         P "Programming environment (PHP, Ruby, Go, Docker)" on
          X "KeepassX" on
          L "Nextcloud" on
          J "Jrnl" on
@@ -82,7 +86,7 @@ do
     "Downloading and installing program $n out of $count: $x...\n\n.
     You can watch the output on tty6 (ctrl + alt + F6)." 8 70
 
-    installProgram $x >/dev/tty6
+	installProgram $x >/dev/tty6
 
     if [[ $x = "docker" ]];
     then
@@ -108,11 +112,17 @@ dialog --infobox "Enabling Network Manager..." 4 40
 systemctl enable NetworkManager
 systemctl start NetworkManager
 
-dialog --infobox "Disable the famous and loud BIIIIIP sound we all love" 10 50
+dialog --infobox "Disable the famous BIP sound we all love" 10 50
 rmmod pcspkr
 echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
 
-dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\n\n
-To run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment.\n\n
--Phantas0s" 12 80
-clear
+dialog --title "All done!" \
+--msgbox "Congrats! The install is done! \n\nTo run the new graphical environment, you need to restart your computer, log in and type \"startx\"" 12 80
+
+dialog --title "Reboot time" \
+--yesno "It is adviced to restart your computer. Do you want to restart now?" 7 60
+
+case $response in
+   0) reboot;;
+   1) clear;;
+esac

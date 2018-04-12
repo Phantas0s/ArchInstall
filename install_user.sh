@@ -26,7 +26,7 @@ n=0
 for prog in $(cat /tmp/aur_queue)
 do
 	n=$((n+1))
-	dialog --infobox "[AUR] AUR install - Downloading and installing program $n out of $count: $prog..." 10 60
+    dialog --infobox "[$(whoami)] AUR install - Downloading and installing program $n out of $count: $prog..." 10 60
 	aurcheck $prog >/dev/null
 done
 
@@ -42,6 +42,8 @@ cd /home/$(whoami)/.dotfiles
 source env >/dev/null
 bash install.sh
 cd -
+
+command -v "zsh" >/dev/null && chsh -s $(which zsh)
 
 dialog --infobox "[$(whoami)] Install composer global tools" 10 60
 
