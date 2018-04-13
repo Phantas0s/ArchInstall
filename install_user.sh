@@ -1,7 +1,13 @@
 #!/bin/bash
 
 #Install an AUR package manually.
-aurinstall() { curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz && tar -xvf $1.tar.gz && cd $1 && makepkg --noconfirm -si && cd .. && rm -rf $1 $1.tar.gz ; }
+aurinstall() { curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz \
+    && tar -xvf $1.tar.gz \
+    && cd $1 \
+    && makepkg --noconfirm -si \
+    && cd .. \
+    && rm -rf $1 $1.tar.gz ;
+    }
 
 #aurcheck runs on each of its arguments, if the argument is not already installed, it either uses packer to install it, or installs it manually.
 aurcheck() {
@@ -43,7 +49,7 @@ command -v "zsh" >/dev/null && chsh -s $(which zsh)
 dialog --infobox "[$(whoami)] Installing .dotfiles..." 10 60
 cd /home/$(whoami)/.dotfiles
 source env >/dev/null
-bash install.sh -y
+sh install.sh -y
 cd -
 
 dialog --infobox "[$(whoami)] Install composer global tools" 10 60

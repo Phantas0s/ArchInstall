@@ -101,7 +101,7 @@ dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers > /etc/sudoers
 
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_user.sh > /tmp/install_user.sh;
-sudo -u $name bash /tmp/install_user.sh
+sudo -u $name sh /tmp/install_user.sh
 rm -f /tmp/install_user.sh
 
 dialog --infobox "Enabling Network Manager..." 4 40
