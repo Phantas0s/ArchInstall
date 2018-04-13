@@ -37,7 +37,14 @@ if [ ! -d /home/$(whoami)/.dotfiles ];
         # && cp /home/$(whoami)/.dotfiles/install_config.diff /home/$(whoami)/.dotfiles/install_config >/dev/null
 fi
 
+dialog --infobox "[$(whoami)] Setting zsh has default terminal. \n Please enter your password" 10 60
 command -v "zsh" >/dev/null && chsh -s $(which zsh)
+
+dialog --infobox "[$(whoami)] Installing .dotfiles..." 10 60
+cd /home/$(whoami)/.dotfiles
+source env >/dev/null
+bash install.sh -y
+cd -
 
 dialog --infobox "[$(whoami)] Install composer global tools" 10 60
 
