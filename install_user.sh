@@ -47,7 +47,7 @@ dialog --infobox "[$(whoami)] Setting zsh has default terminal. \n Please enter 
 command -v "zsh" >/dev/null && chsh -s $(which zsh)
 
 dialog --infobox "[$(whoami)] Installing .dotfiles..." 10 60
-cd /home/$(whoami)/.dotfiles
+cd /home/$(whoami)/.dotfiles/
 (command -v "zsh" >/dev/null && zsh install.sh -y) || sh install.sh -y
 cd -
 
