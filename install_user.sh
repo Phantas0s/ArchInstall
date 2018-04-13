@@ -1,13 +1,14 @@
 #!/bin/bash
 
 #Install an AUR package manually.
-aurinstall() { curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz \
+aurinstall() {
+    curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz \
     && tar -xvf $1.tar.gz \
     && cd $1 \
     && makepkg --noconfirm -si \
     && cd .. \
     && rm -rf $1 $1.tar.gz ;
-    }
+}
 
 #aurcheck runs on each of its arguments, if the argument is not already installed, it either uses packer to install it, or installs it manually.
 aurcheck() {
@@ -40,7 +41,6 @@ if [ ! -d /home/$(whoami)/.dotfiles ];
     then
         dialog --infobox "[$(whoami)] Downloading .dotfiles..." 10 60
         git clone https://github.com/Phantas0s/.dotfiles.git /home/$(whoami)/.dotfiles >/dev/null
-        # && cp /home/$(whoami)/.dotfiles/install_config.diff /home/$(whoami)/.dotfiles/install_config >/dev/null
 fi
 
 dialog --infobox "[$(whoami)] Setting zsh has default terminal. \n Please enter your password" 10 60
@@ -48,8 +48,7 @@ command -v "zsh" >/dev/null && chsh -s $(which zsh)
 
 dialog --infobox "[$(whoami)] Installing .dotfiles..." 10 60
 cd /home/$(whoami)/.dotfiles
-source env >/dev/null
-sh install.sh -y
+(command -v "zsh" >/dev/null && zsh install.sh -y) || sh install.sh -y
 cd -
 
 dialog --infobox "[$(whoami)] Install composer global tools" 10 60
