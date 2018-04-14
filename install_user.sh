@@ -25,14 +25,14 @@ aurcheck() {
             echo $arg is already installed.
         else
             echo $arg not installed.
-            aurman --noconfirm -S $arg || aurinstall $arg
+            bauerbill --noconfirm -S $arg || aurinstall $arg
         fi
     done
 }
 
 cd /home/$(whoami)/
 dialog --infobox "[$(whoami)] Installing \"aurman\", an AUR helper..." 10 60
-aurcheck aurman >/dev/null
+aurcheck bauerbill >/dev/null
 
 count=$(cat /tmp/aur_queue | wc -l)
 n=0
