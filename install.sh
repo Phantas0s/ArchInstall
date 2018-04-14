@@ -84,11 +84,16 @@ do
 
 	installProgram $x >/dev/tty6
 
-    if [[ $x = "docker" ]];
+    if [ $x = "docker" ];
     then
-        dialog --infobox "Add user $name to docker group..." 4 40
         groupadd docker
         gpasswd -a $name docker
+    fi
+
+    if [ $x = "open-vm-tools" ];
+    then
+        systemctl enable vmtoolsd.service
+        systemctl enable vmware-vmblock-fuse.service
     fi
 done
 
