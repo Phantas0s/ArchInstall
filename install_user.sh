@@ -12,7 +12,7 @@ aurinstall() {
     && tar -xvf $1.tar.gz \
     && cd $1 \
     && makepkg --noconfirm -si \
-    && cd .. \
+    && cd - \
     && rm -rf $1 $1.tar.gz ;
 }
 
@@ -25,7 +25,7 @@ aurcheck() {
             echo $arg is already installed.
         else
             echo $arg not installed.
-            bauerbill --noconfirm -S $arg || aurinstall $arg
+            aurman --noconfirm -S $arg || aurinstall $arg
         fi
     done
 }
