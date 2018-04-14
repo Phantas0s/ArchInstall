@@ -53,7 +53,11 @@ cd -
 
 dialog --infobox "[$(whoami)] Install composer global tools" 10 60
 
-mkdir /home/$(whoami)/composer
+if [ ! -d /home/$(whoami)/composer ];
+then
+    mkdir /home/$(whoami)/composer
+fi
+
 COMPOSER_HOME=/home/$(whoami)/composer
 composer global update
 
