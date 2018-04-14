@@ -32,7 +32,7 @@ aurcheck() {
 
 cd /home/$(whoami)/
 dialog --infobox "[$(whoami)] Installing \"aurman\", an AUR helper..." 10 60
-aurcheck bauerbill >/dev/null
+aurcheck aurman >/dev/null
 
 count=$(cat /tmp/aur_queue | wc -l)
 n=0
