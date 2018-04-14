@@ -25,7 +25,7 @@ aurcheck() {
             echo $arg is already installed.
         else
             echo $arg not installed.
-            aurman --noconfirm -S $arg >/dev/null || aurinstall $arg
+            aurman --noconfirm -S $arg || aurinstall $arg
         fi
     done
 }
