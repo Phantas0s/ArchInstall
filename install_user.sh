@@ -53,6 +53,10 @@ cd -
 
 dialog --infobox "[$(whoami)] Install composer global tools" 10 60
 
+mkdir /home/$(whoami)/composer
+COMPOSER_HOME=/home/$(whoami)/composer
+composer global update
+
 dialog --infobox "[$(whoami)] Create base folders" 10 60
 
 mkdir -p /home/$(whoami)/Documents/ >/dev/null
