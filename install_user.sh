@@ -30,7 +30,7 @@ aurcheck() {
     done
 }
 
-cd /home/$(whoami)/
+cd /tmp/
 dialog --infobox "[$(whoami)] Installing \"aurman\", an AUR helper..." 10 60
 aurcheck aurman >/dev/null
 
