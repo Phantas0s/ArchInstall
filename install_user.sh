@@ -1,5 +1,11 @@
 #!/bin/bash
 
+dialog --infobox "[$(whoami)] Create base folders" 10 60
+mkdir -p /home/$(whoami)/documents/ >/dev/null
+mkdir -p /home/$(whoami)/downloads/ >/dev/null
+mkdir -p /home/$(whoami)/workspace/ >/dev/null
+mkdir -p /home/$(whoami)/softwares/ >/dev/null
+
 #Install an AUR package manually.
 aurinstall() {
     curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz \
@@ -19,13 +25,14 @@ aurcheck() {
             echo $arg is already installed.
         else
             echo $arg not installed.
-            packer --noconfirm -S $arg >/dev/null || aurinstall $arg
+            aurman --noconfirm -S $arg >/dev/null || aurinstall $arg
         fi
     done
 }
 
-dialog --infobox "[$(whoami)] Installing \"packer\", an AUR helper..." 10 60
-aurcheck packer >/dev/null
+cd /home/$(whoami)/
+dialog --infobox "[$(whoami)] Installing \"aurman\", an AUR helper..." 10 60
+aurcheck aurman >/dev/null
 
 count=$(cat /tmp/aur_queue | wc -l)
 n=0
@@ -47,13 +54,18 @@ dialog --infobox "[$(whoami)] Setting zsh has default terminal. \n Please enter 
 command -v "zsh" >/dev/null && chsh -s $(which zsh)
 
 dialog --infobox "[$(whoami)] Installing .dotfiles..." 10 60
-cd /home/$(whoami)/.dotfiles && source ./env
+cd /home/$(whoami)/.dotfiles \
+&& source ./env
+
 (command -v "zsh" >/dev/null && zsh ./install.sh -y) || sh ./install.sh -y
 cd -
 
-dialog --infobox "[$(whoami)] Create base folders" 10 60
+dialog --infobox "[$(whoami)] Install composer global tools" 10 60
 
-mkdir -p /home/$(whoami)/Documents/ >/dev/null
-mkdir -p /home/$(whoami)/Downloads/ >/dev/null
-mkdir -p /home/$(whoami)/Workspace/ >/dev/null
-mkdir -p /home/$(whoami)/Softwares/ >/dev/null
+if [ ! -d /home/$(whoami)/composer ];
+then
+    mkdir /home/$(whoami)/composer
+fi
+
+composer global update
+
