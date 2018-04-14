@@ -51,16 +51,6 @@ cd /home/$(whoami)/.dotfiles && source ./env
 (command -v "zsh" >/dev/null && zsh ./install.sh -y) || sh ./install.sh -y
 cd -
 
-dialog --infobox "[$(whoami)] Install composer global tools" 10 60
-
-if [ ! -d /home/$(whoami)/composer ];
-then
-    mkdir /home/$(whoami)/composer
-fi
-
-COMPOSER_HOME=/home/$(whoami)/composer
-composer global update
-
 dialog --infobox "[$(whoami)] Create base folders" 10 60
 
 mkdir -p /home/$(whoami)/Documents/ >/dev/null
