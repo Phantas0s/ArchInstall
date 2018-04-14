@@ -47,13 +47,11 @@ dialog --infobox "[$(whoami)] Setting zsh has default terminal. \n Please enter 
 command -v "zsh" >/dev/null && chsh -s $(which zsh)
 
 dialog --infobox "[$(whoami)] Installing .dotfiles..." 10 60
-cd /home/$(whoami)/.dotfiles/ && source env
+cd /home/$(whoami)/.dotfiles && source ./env
 (command -v "zsh" >/dev/null && zsh ./install.sh -y) || sh ./install.sh -y
 cd -
 
 dialog --infobox "[$(whoami)] Install composer global tools" 10 60
-
-COMPOSER_HOME=/home/$(whoami)/composer composer global update
 
 dialog --infobox "[$(whoami)] Create base folders" 10 60
 
