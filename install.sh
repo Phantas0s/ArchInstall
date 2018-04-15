@@ -19,8 +19,8 @@ dialog --infobox "Adding user \"$name\"..." 4 50
 useradd -m -g wheel -s /bin/bash $name >/dev/tty6
 echo "$name:$pass1" | chpasswd >/dev/tty6
 
-cmd=(dialog --separate-output --nocancel  --buildlist "Press <SPACE> to select the packages you want to install. This script will install all the packages you put in the right column.
-Use \"^\" and \"\$\" to move to the left and right columns respectively. Press <ENTER> when done." 22 76 16)
+cmd=(dialog --separate-output --nocancel  --buildlist "Press <SPACE> to select the packages you want to install. This script will install all the packages you put in the right column.\n
+Use \"^\" and \"\$\" to move to the left and right columns respectively. Press <ENTER> when done.\n\n You can see the description of each packages in the file progs.csv" 22 76 16)
 options=(V "Vmware tools" off
          E "Essentials" on
          T "Recommended tools" on
@@ -82,7 +82,7 @@ do
     "Downloading and installing program $n out of $count: $x...\n\n.
     You can watch the output on tty6 (ctrl + alt + F6)." 8 70
 
-	installProgram $x >/dev/tty6
+    installProgram $x >/dev/tty6
 
     if [ $x = "docker" ];
     then
@@ -90,6 +90,7 @@ do
         gpasswd -a $name docker
     fi
 
+    # Needed if system installed in VMWare
     if [ $x = "open-vm-tools" ];
     then
         systemctl enable vmtoolsd.service
@@ -117,7 +118,7 @@ dialog --title "All done!" \
 --msgbox "Congrats! The install is done! \n\nTo run the new graphical environment, you need to restart your computer, log in and type \"startx\"" 12 80
 
 dialog --title "Reboot time" \
---yesno "It is adviced to restart your computer. Do you want to restart now?" 7 60
+--yesno "You should restart your computer before trying your new shiny system. Do you want to restart now?" 7 60
 
 response=$?
 case $response in

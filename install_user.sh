@@ -5,6 +5,7 @@ mkdir -p /home/$(whoami)/documents/ >/dev/null
 mkdir -p /home/$(whoami)/downloads/ >/dev/null
 mkdir -p /home/$(whoami)/workspace/ >/dev/null
 mkdir -p /home/$(whoami)/softwares/ >/dev/null
+mkdir -p /home/$(whoami)/composer/ >/dev/null
 
 #Install an AUR package manually.
 aurinstall() {
@@ -60,10 +61,4 @@ cd /home/$(whoami)/.dotfiles \
 cd -
 
 dialog --infobox "[$(whoami)] Install composer global tools" 10 60
-
-if [ ! -d /home/$(whoami)/composer ];
-then
-    mkdir /home/$(whoami)/composer
-fi
-
 composer global update
