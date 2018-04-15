@@ -56,7 +56,6 @@ command -v "zsh" >/dev/null && chsh -s $(which zsh)
 dialog --infobox "[$(whoami)] Installing .dotfiles..." 10 60
 cd /home/$(whoami)/.dotfiles \
 && source ./env
-
 (command -v "zsh" >/dev/null && zsh ./install.sh -y) || sh ./install.sh -y
 cd -
 
@@ -68,4 +67,3 @@ then
 fi
 
 composer global update
-

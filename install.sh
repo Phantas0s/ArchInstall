@@ -109,10 +109,6 @@ curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_user
 sudo -u $name sh /tmp/install_user.sh
 rm -f /tmp/install_user.sh
 
-dialog --infobox "Enabling Network Manager..." 4 40
-systemctl enable NetworkManager
-systemctl start NetworkManager
-
 dialog --infobox "Disable the famous BIP sound we all love" 10 50
 rmmod pcspkr
 echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
