@@ -91,6 +91,12 @@ do
         systemctl enable vmware-vmblock-fuse.service
     fi
 
+    if [ $x = "zsh" ];
+    then
+        dialog --infobox "[$(whoami)] Setting zsh has default terminal." 10 60
+        chsh -s $(which zsh) $name
+    fi
+
     if [ $x = "docker" ];
     then
         groupadd docker
