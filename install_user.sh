@@ -17,7 +17,7 @@ aurinstall() {
     && rm -rf $1 $1.tar.gz ;
 }
 
-#aurcheck runs on each of its arguments, if the argument is not already installed, it either uses packer to install it, or installs it manually.
+#aurcheck runs on each of its arguments, if the argument is not already installed, it either uses aurman to install it, or installs it manually.
 aurcheck() {
     qm=$(pacman -Qm | awk '{print $1}')
     for arg in "$@"
@@ -51,12 +51,8 @@ if [ ! -d /home/$(whoami)/.dotfiles ];
         git clone https://github.com/Phantas0s/.dotfiles.git /home/$(whoami)/.dotfiles >/dev/null
 fi
 
-dialog --infobox "[$(whoami)] Setting zsh has default terminal. \n Please enter your password" 10 60
-command -v "zsh" >/dev/null && chsh -s $(which zsh)
-
 dialog --infobox "[$(whoami)] Installing .dotfiles..." 10 60
-cd /home/$(whoami)/.dotfiles \
-&& source ./env
+cd /home/$(whoami)/.dotfiles
 (command -v "zsh" >/dev/null && zsh ./install.sh -y) || sh ./install.sh -y
 cd -
 
