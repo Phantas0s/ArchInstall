@@ -103,12 +103,14 @@ wget https://getcomposer.org/composer.phar \
     && mv composer.phar /usr/local/bin/composer \
     && chmod 775 /usr/local/bin/composer
 
-dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
-curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers > /etc/sudoers
 
+curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers_tmp > /etc/sudoers
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_user.sh > /tmp/install_user.sh;
 sudo -u $name sh /tmp/install_user.sh
 rm -f /tmp/install_user.sh
+
+dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
+curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers > /etc/sudoers
 
 dialog --infobox "Disable the famous BIP sound we all love" 10 50
 rmmod pcspkr
