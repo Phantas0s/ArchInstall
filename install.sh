@@ -84,17 +84,17 @@ do
 
     installProgram $x >/dev/tty6
 
-    if [ $x = "docker" ];
-    then
-        groupadd docker
-        gpasswd -a $name docker
-    fi
-
     # Needed if system installed in VMWare
     if [ $x = "open-vm-tools" ];
     then
         systemctl enable vmtoolsd.service
         systemctl enable vmware-vmblock-fuse.service
+    fi
+
+    if [ $x = "docker" ];
+    then
+        groupadd docker
+        gpasswd -a $name docker
     fi
 done
 
