@@ -6,11 +6,11 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-dialog --defaultno --title "Are you sure?" --yesno "This is my personnal arch linux install. It will just destroy everything on your hard disk. Don't run that if you are not sure! Are you sure?"  15 60 || exit
+dialog --defaultno --title "Are you sure?" --yesno "This is my personnal arch linux install. \n\nIt will just destroy everything on your hard disk. \n\nDon't say YES if you are not sure about what your are doing! \n\nAre you sure?"  15 60 || exit
 
-dialog --no-cancel --inputbox "Enter a name for your computer." 10 80 2> comp
+dialog --no-cancel --inputbox "Enter a name for your computer." 15 60 2> comp
 
-dialog --no-cancel --inputbox "You need four partitions: Boot, Swat, Root and Home. \n\n Boot will be 200M.\n\n Enter partitionsize in gb, separated by space for swap & root. \n\n Home will take the rest" 10 60 2>psize
+dialog --no-cancel --inputbox "You need four partitions: Boot, Swat, Root and Home. \n\n Boot will be 200M.\n\n Enter partitionsize in gb, separated by space for swap & root. \n\n Home will take the rest" 15 60 2>psize
 
 IFS=' ' read -ra SIZE <<< $(cat psize)
 
