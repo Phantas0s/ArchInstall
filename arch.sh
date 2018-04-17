@@ -49,6 +49,8 @@ p
 +${SIZE[1]}G
 n
 p
+
+
 w
 EOF
 partprobe
