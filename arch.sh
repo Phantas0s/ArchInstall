@@ -1,10 +1,5 @@
 #!/bin/bash
 
-#This is a lazy script I have for auto-installing Arch.
-#It's not officially part of LARBS, but I use it for testing.
-#DO NOT RUN THIS YOURSELF because Step 1 is it reformatting /dev/sda WITHOUT confirmation,
-#which means RIP in peace qq your data unless you've already backed up all of your drive.
-
 pacman -S --noconfirm dialog
 
 RED='\033[0;31m'
@@ -21,7 +16,8 @@ IFS=' ' read -ra SIZE <<< $(cat psize)
 
 re='^[0-9]+$'
 if ! [ ${#SIZE[@]} -eq 2 ] || ! [[ ${SIZE[0]} =~ $re ]] || ! [[ ${SIZE[1]} =~ $re ]] ; then
-    SIZE=(12 25);
+    # SIZE=(12 25);
+    SIZE=(2 4);
 fi
 
 timedatectl set-ntp true
@@ -38,12 +34,18 @@ cat <<EOF | fdisk /dev/sda
 o
 n
 p
+
+
 +200M
 n
 p
+
+
 +${SIZE[0]}G
 n
 p
+
+
 +${SIZE[1]}G
 n
 p
