@@ -8,7 +8,7 @@ NC='\033[0m'
 
 dialog --defaultno --title "Are you sure?" --yesno "This is my personnal arch linux install. It will just destroy everything on your hard disk. Don't run that if you are not sure! Are you sure?"  15 60 || exit
 
-dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
+dialog --no-cancel --inputbox "Enter a name for your computer." 10 80 2> comp
 
 dialog --no-cancel --inputbox "You need four partitions: Boot, Swat, Root and Home. \n\n Boot will be 200M.\n\n Enter partitionsize in gb, separated by space for swap & root. \n\n Home will take the rest" 10 60 2>psize
 
