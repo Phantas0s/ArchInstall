@@ -13,6 +13,10 @@ locale-gen
 # Install netctl (from arch iso base) ?
 # TODO take care of the network management
 
-pacman --noconfirm --needed -S grub && grub-install /dev/sda && grub-mkconfig -o /boot/grub/grub.cfg
+pacman --noconfirm --needed -S networkmanager
+systemctl enable NetworkManager
+systemctl start NetworkManager
 
 pacman --noconfirm --needed -S dialog
+
+dialog --title "Install dotfiles" --yesno "Do you want to install the dotfiles?" 15 60 && curl -LO https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install.sh && install.sh
