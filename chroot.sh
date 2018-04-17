@@ -19,4 +19,4 @@ systemctl start NetworkManager
 
 pacman --noconfirm --needed -S dialog
 
-dialog --title "Install dotfiles" --yesno "Do you want to install the dotfiles?" 15 60 && curl -LO https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install.sh && sh install.sh
+dialog --title "Install dotfiles" --yesno "Do you want to install the dotfiles?" 15 60 && curl -LO https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install.sh && sh ./install.sh
