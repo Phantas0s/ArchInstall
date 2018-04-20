@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# inspired by aui
+# to install: wget ow.ly/wnFgh -O aui.zip && mkdir aui && bsdtar -x -f aui.zip -C aui
+
 pacman -S --noconfirm dialog
 
 RED='\033[0;31m'
