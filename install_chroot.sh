@@ -25,6 +25,7 @@ echo "127.0.1.1    tartarus.localdomain    tartarus" >> /etc/hosts
 
 # Install boot
 pacman --noconfirm --needed -S grub && grub-install /dev/sda && grub-mkconfig -o /boot/grub/grub.cfg
+ sed -i -e 's/GRUB_CMDLINE_LINUX="\(.\+\)"/GRUB_CMDLINE_LINUX="\1 cryptdevice=\/dev\/sda4:crypt"/g' -e 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cryptdevice=\/dev\/sda4:crypt"/g' /etc/default/grub
 
 # Install network manager
 pacman --noconfirm --needed -S networkmanager
