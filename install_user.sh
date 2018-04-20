@@ -40,9 +40,9 @@ n=0
 
 for prog in $(cat /tmp/aur_queue)
 do
-	n=$((n+1))
+    n=$((n+1))
     dialog --infobox "[$(whoami)] AUR install - Downloading and installing program $n out of $count: $prog..." 10 60
-	aurcheck $prog >/dev/null
+    aurcheck $prog >/dev/null
 done
 
 if [ ! -d /home/$(whoami)/.dotfiles ];

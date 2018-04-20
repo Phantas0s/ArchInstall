@@ -34,8 +34,6 @@ timedatectl set-ntp true
 #e - extended partition
 #w - write the table to disk and exit
 
-dialog --title "Partition" --msgbox "Creation of the partition table on the disk." 10 60
-
 cat <<EOF | fdisk /dev/sda
 o
 n
@@ -61,9 +59,7 @@ w
 EOF
 partprobe
 
-dialog --title "Partition" --msgbox "Formatting partition..." 10 60
-
-mkfs.ext4 /dev/sda4
+# mkfs.ext4 /dev/sda4
 mkfs.ext4 /dev/sda3
 mkfs.ext4 /dev/sda1
 mkswap /dev/sda2
@@ -71,16 +67,30 @@ swapon /dev/sda2
 mount /dev/sda3 /mnt
 mkdir /mnt/boot
 mount /dev/sda1 /mnt/boot
-mkdir /mnt/home
-mount /dev/sda4 /mnt/home
+#mkdir /mnt/home
+# Encrypt home
+cryptsetup --cipher aes-xts-plain64\
+    --key-size 512\
+    --hash sha512\
+    --iter-time 5000\
+    --use-random\
+    --verify-passphrase\
+    luksFormat\
+    --type luks2\
+    /dev/sda4
 
-dialog --title "Install" --msgbox "Installation of the system..." 10 60
+cryptsetup open /dev/sda4 crypt
+
+mkfs.ext4 /dev/mapper/crypt
+mkdir /mnt/home
+mount /dev/mapper/crypt /mnt/home
+
+
 pacstrap /mnt base base-devel
 
-dialog --title "Install" --msgbox "Fstab generation..." 10 60
 genfstab -U /mnt >> /mnt/etc/fstab
 
-curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/chroot.sh > /mnt/chroot.sh && arch-chroot /mnt bash chroot.sh && rm /mnt/chroot.sh
+curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh && arch-chroot /mnt bash install_chroot.sh && rm /mnt/install_chroot.sh
 
 cat comp > /mnt/etc/hostname && rm comp
 
