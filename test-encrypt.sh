@@ -86,7 +86,7 @@ cryptsetup --cipher aes-xts-plain64\
     /dev/sda4 \
     /mnt/etc/luks-keys/home
 
-cryptsetup -d /etc/luks-keys/home open /dev/sda4 home
+cryptsetup -d /mnt/etc/luks-keys/home open /dev/sda4 home
 
 mkfs.ext4 /dev/mapper/home
 mkdir /mnt/home
