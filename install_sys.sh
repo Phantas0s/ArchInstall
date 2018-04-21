@@ -77,7 +77,7 @@ mount /dev/sda1 /mnt/boot
 mkdir /mnt/etc/
 mkdir -m 700 /mnt/etc/luks-keys
 dd if=/dev/random of=/mnt/etc/luks-keys/home bs=1 count=256
-cryptsetup --cipher aes-xts-plain64\
+cat << EOF | cryptsetup --cipher aes-xts-plain64\
     --key-size 512\
     --hash sha512\
     --iter-time 5000\
@@ -85,6 +85,8 @@ cryptsetup --cipher aes-xts-plain64\
     luksFormat\
     /dev/sda4 \
     /mnt/etc/luks-keys/home
+YES
+EOF
 
 cryptsetup -d /mnt/etc/luks-keys/home open /dev/sda4 home
 
@@ -95,11 +97,14 @@ mount /dev/mapper/home /mnt/home
 pacstrap /mnt base base-devel
 
 genfstab -U /mnt >> /mnt/etc/fstab
-curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh && arch-chroot /mnt bash install_chroot.sh && rm /mnt/install_chroot.sh
+curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh && arch-chroot /mnt bash install_chroot.sh \
+    && rm /mnt/install_chroot.sh
 
-cat comp > /mnt/etc/hostname && rm comp
+cat comp > /mnt/etc/hostname \
+    && rm comp
 
 dialog --defaultno --title "Final Qs" --yesno "Eject CD/ROM (if any)?"  5 30 && eject
 dialog --defaultno --title "Final Qs" --yesno "Reboot computer?"  5 30 && reboot
 dialog --defaultno --title "Final Qs" --yesno "Return to chroot environment?"  6 30 && arch-chroot /mnt
+
 clear
