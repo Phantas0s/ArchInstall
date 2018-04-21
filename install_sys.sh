@@ -95,10 +95,6 @@ mount /dev/mapper/home /mnt/home
 pacstrap /mnt base base-devel
 
 genfstab -U /mnt >> /mnt/etc/fstab
-
-echo "home /dev/sda4 /etc/luks-keys/home" >> /etc/crypttab
-echo "/dev/mapper/home      /home               ext4    defaults,errors=remount-ro  0  2" >> /etc/fstab
-
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh && arch-chroot /mnt bash install_chroot.sh && rm /mnt/install_chroot.sh
 
 cat comp > /mnt/etc/hostname && rm comp
