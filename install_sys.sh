@@ -73,6 +73,9 @@ mount /dev/sda1 /mnt/boot
 #mkfs.ext4 /dev/sda4
 #mkdir /mnt/home
 # Encrypt home
+mkdir -m 700 /mnt/etc/luks-keys
+dd if=/dev/random of=/mnt/etc/luks-keys/home bs=1 count=256
+
 cryptsetup --cipher aes-xts-plain64\
     --key-size 512\
     --hash sha512\
@@ -81,21 +84,18 @@ cryptsetup --cipher aes-xts-plain64\
     luksFormat\
     --type luks2\
     /dev/sda4
-    /etc/luks-keys/home
+    /mnt/etc/luks-keys/home
 
-cryptsetup -d /etc/luks-keys/home open /dev/sda4 home
+cryptsetup -d /mnt/etc/luks-keys/home open /dev/sda4 home
 
 mkfs.ext4 /dev/mapper/home
 mkdir /mnt/home
 mount /dev/mapper/home /mnt/home
 
-mkdir -m 700 /etc/luks-keys
-dd if=/dev/random of=/etc/luks-keys/home bs=1 count=256
-
 echo "home /dev/sda4 /etc/luks-keys/home" >> /etc/crypttab
 
 genfstab -U /mnt >> /mnt/etc/fstab
-echo "/dev/mapper/home      /mnt/home               ext4    defaults,errors=remount-ro  0  2" >> /etc/fstab
+echo "/dev/mapper/home      /mnt/home               ext4    defaults,errors=remount-ro  0  2" >> /mnt/etc/fstab
 
 pacstrap /mnt base base-devel
 
