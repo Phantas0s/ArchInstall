@@ -83,7 +83,7 @@ cryptsetup --cipher aes-xts-plain64\
     --iter-time 5000\
     --use-random\
     luksFormat\
-    /dev/sda4
+    /dev/sda4 \
     /mnt/etc/luks-keys/home
 
 cryptsetup -d /etc/luks-keys/home open /dev/sda4 home
