@@ -7,6 +7,10 @@ mkdir -p /home/$(whoami)/workspace/ >/dev/null
 mkdir -p /home/$(whoami)/softwares/ >/dev/null
 mkdir -p /home/$(whoami)/composer/ >/dev/null
 
+command -v "go" >/dev/null && mkdir -p /home/$(whoami)/workspace/go/bin >/dev/null
+command -v "go" >/dev/null && mkdir -p /home/$(whoami)/workspace/go/pkg >/dev/null
+command -v "go" >/dev/null &&  mkdir -p /home/$(whoami)/workspace/go/src >/dev/null
+
 #Install an AUR package manually.
 aurinstall() {
     curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz \
@@ -26,7 +30,7 @@ aurcheck() {
             echo $arg is already installed.
         else
             echo $arg not installed.
-            aurman --noconfirm -S $arg || aurinstall $arg
+            aurman --noconfirm --noedit -S $arg || aurinstall $arg
         fi
     done
 }
