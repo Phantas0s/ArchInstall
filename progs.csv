@@ -1,7 +1,6 @@
 open-vm-tools,V,vmware tools,
 xf86-video-vmware,V,vmware video,
 xf86-input-vmmouse,V,vmware mouse,
-xf86-video-vmware,V,vmware tools,
 mesa-libgl,E,opengl,
 xorg-server,E,Display server,
 xorg-xinit,E,Display server boot,
