@@ -11,6 +11,10 @@ command -v "go" >/dev/null && mkdir -p /home/$(whoami)/workspace/go/bin >/dev/nu
 command -v "go" >/dev/null && mkdir -p /home/$(whoami)/workspace/go/pkg >/dev/null
 command -v "go" >/dev/null &&  mkdir -p /home/$(whoami)/workspace/go/src >/dev/null
 
+# Activate netctl
+sudo systemctl enable netctl > /dev/null
+sudo systemctl start netctl > /dev/null
+
 #Install an AUR package manually.
 aurinstall() {
     curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz \
