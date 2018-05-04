@@ -30,6 +30,6 @@ systemctl start NetworkManager
 # Install dialog for chroot
 pacman --noconfirm --needed -S dialog
 
-dialog --title "Install dotfiles" --yesno "Do you want to install the dotfiles?" 15 60 \
+dialog --title "Software install" --yesno "Do you want to install the softwares automatically?" 15 60 \
     && curl -LO https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_root.sh \
     && sh ./install_root.sh

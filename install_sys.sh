@@ -16,7 +16,7 @@ dialog --defaultno --title "Are you sure?" --yesno "This is my personnal arch li
 
 dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 
-dialog --no-cancel --inputbox "You need four partitions: Boot, Swat, Root and Home. \n\n\
+dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Home. \n\n\
     Boot will be 200M.\n\n\
     Enter partitionsize in gb, separated by space for root & swap.\n\n\
     Home will take the rest of space available" 15 60 2>psize
@@ -25,8 +25,7 @@ IFS=' ' read -ra SIZE <<< $(cat psize)
 
 re='^[0-9]+$'
 if ! [ ${#SIZE[@]} -eq 2 ] || ! [[ ${SIZE[0]} =~ $re ]] || ! [[ ${SIZE[1]} =~ $re ]] ; then
-    # SIZE=(12 25);
-    SIZE=(2 4);
+    SIZE=(40 16);
 fi
 
 timedatectl set-ntp true
