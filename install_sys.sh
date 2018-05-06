@@ -30,12 +30,14 @@ fi
 
 timedatectl set-ntp true
 
-#o - create a new MBR partition table / clear all partition data!
+# CLEAR THE WHOLE HARD DISK!!!
+dd if=/dev/zero of=/dev/sda bs=512  count=1
+
+#o - create a new MBR partition table
 #n - create new partition
 #p - primary partition
 #e - extended partition
 #w - write the table to disk and exit
-
 cat <<EOF | fdisk /dev/sda
 o
 n

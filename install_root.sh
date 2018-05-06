@@ -31,14 +31,13 @@ options=(V "Vmware tools" off
          N "Neovim" on
          K "Keyring applications" on
          U "Urxvt unicode" on
-         Z "Unix Z-Shell (ZSH)" on
-         S "Search tool ripgrep" on
-         C "Compton - manage transparency" on
+         Z "Unix Z-Shell (zsh)" on
+         S "Ripgrep" on
+         C "Compton" on
          B "Browsers (firefox + chromium)" on
          R "Ranger terminal file manager" on
          P "Programming environment (PHP, Ruby, Go, Docker)" on
          X "KeepassX" on
-         L "Nextcloud" on
          J "Jrnl" on
          Y "Mysql (mariadb) & mysql tools" on
      )
