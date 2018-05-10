@@ -7,9 +7,11 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 dialog --defaultno --title "Are you sure?" --yesno "This is my personnal arch linux install. \n\n\
-    It will just destroy everything on your hard disk (/dev/sda). \n\n\
+    It will just DESTROY EVERYTHING on your hard disk (/dev/sda). \n\n\
     Don't say YES if you are not sure about what your are doing! \n\n\
     Are you sure?"  15 60 || exit
+
+dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 
 menuitem=$(dialog --clear  --help-button \
 --title "!!! DELETE EVERYTHING !!!" \
@@ -23,8 +25,6 @@ case $menuitem in
 	2) shred -v /dev/sda;;
     3) ;;
 esac
-
-dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 
 dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Home. \n\n\
     Boot will be 200M.\n\n\
