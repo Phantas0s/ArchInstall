@@ -22,11 +22,6 @@ pacman --noconfirm --needed -S grub && grub-install /dev/sda && grub-mkconfig -o
 echo "home /dev/sda4 /etc/luks-keys/home" >> /etc/crypttab
 echo "/dev/mapper/home      /home               ext4    defaults,errors=remount-ro  0  2" >> /etc/fstab
 
-# Install network manager
-pacman --noconfirm --needed -S networkmanager
-systemctl enable NetworkManager
-systemctl start NetworkManager
-
 # Install dialog for chroot
 pacman --noconfirm --needed -S dialog
 
