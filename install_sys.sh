@@ -98,6 +98,8 @@ mount /dev/mapper/home /mnt/home
 pacstrap /mnt base base-devel
 
 genfstab -U /mnt >> /mnt/etc/fstab
+
+### Continue installation
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh && arch-chroot /mnt bash install_chroot.sh \
     && rm /mnt/install_chroot.sh
 
