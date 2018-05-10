@@ -3,23 +3,33 @@
 # inspired by aui
 # to install: wget ow.ly/wnFgh -O aui.zip && mkdir aui && bsdtar -x -f aui.zip -C aui
 
-pacman -S --noconfirm dialog
-
 RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m'
-
 dialog --defaultno --title "Are you sure?" --yesno "This is my personnal arch linux install. \n\n\
     It will just destroy everything on your hard disk (/dev/sda). \n\n\
     Don't say YES if you are not sure about what your are doing! \n\n\
     Are you sure?"  15 60 || exit
+
+menuitem=$(dialog --clear  --help-button \
+--title "!!! DELETE EVERYTHING !!!" \
+--menu "Choose the way to destroy everything on your hard disk (/dev/sda)" 15 60 4 \
+1 "Use dd" \
+2 "Use schred" \
+3 "No need - my hard disk is empty" --output-fd 1)
+
+case $menuitem in
+	1) dd if=/dev/zero of=/dev/sda status=progress;;
+	2) shred -v /dev/sda;;
+    3) ;;
+esac
 
 dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 
 dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Home. \n\n\
     Boot will be 200M.\n\n\
     Enter partitionsize in gb, separated by space for root & swap.\n\n\
-    Home will take the rest of space available" 15 60 2>psize
+    Home will take the rest of the space available" 15 60 2>psize
 
 IFS=' ' read -ra SIZE <<< $(cat psize)
 
@@ -32,24 +42,6 @@ timedatectl set-ntp true
 
 # CLEAR THE WHOLE HARD DISK!!!
 dd if=/dev/zero of=/dev/sda bs=512  count=1
-
-menuitem=$(dialog --clear  --help-button \
---title "!!! DELETE EVERYTHING !!!" \
---menu "Choose the way to destroy everything on your hard disk (/dev/sda)" 15 60 4 \
-1 "Use dd" \
-2 "Use schred" \
-3 "No need - my hard disk is empty" --output-fd 1)
-
-# make decsion
-case $menuitem in
-	1) dd if=/dev/zero of=/dev/sda status=progress;;
-	2) shred -v /dev/sda;;
-    3) ;;
-esac
-
-# if temp files found, delete em
-[ -f $OUTPUT ] && rm $OUTPUT
-[ -f $INPUT ] && rm $INPUT
 
 
 #o - create a new MBR partition table
