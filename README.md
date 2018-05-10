@@ -4,8 +4,6 @@ This is my scripts to install easily Arch Linux.
 
 **WARNING**: This set of script should be used for inspiration, don't run them on your system.
 
-I basically adapted this set of script for my needs: [https://github.com/LukeSmithxyz/LARBS/tree/master/src](https://github.com/LukeSmithxyz/LARBS/tree/master/src)
-
 If you want to try to install everything (I would advise you to use a VM) you just have to `curl` the first script `install_sys.sh` and launch it. Follow the instructions.
 Don't expect a lot of choices though.
 
