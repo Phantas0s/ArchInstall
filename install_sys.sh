@@ -33,20 +33,18 @@ timedatectl set-ntp true
 # CLEAR THE WHOLE HARD DISK!!!
 dd if=/dev/zero of=/dev/sda bs=512  count=1
 
-dialog --clear  --help-button \
+menuitem=$(dialog --clear  --help-button \
 --title "!!! DELETE EVERYTHING !!!" \
---menu "Choose the way to destroy everything on your hard disk (/dev/sda)" 15 50 4 \
-dd "Use dd" \
-shread "Use schred" \
-de "No need - my hard disk is empty" \
-
-menuitem=$(<"${INPUT}")
+--menu "Choose the way to destroy everything on your hard disk (/dev/sda)" 15 60 4 \
+1 "Use dd" \
+2 "Use schred" \
+3 "No need - my hard disk is empty" --output-fd 1)
 
 # make decsion
 case $menuitem in
-	dd) dd if=/dev/zero of=/dev/sda status=progress;;
-	shred) shred -v /dev/sda;;
-    de) ;;
+	1) dd if=/dev/zero of=/dev/sda status=progress;;
+	2) shred -v /dev/sda;;
+    3) ;;
 esac
 
 # if temp files found, delete em
