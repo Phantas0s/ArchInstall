@@ -33,6 +33,27 @@ timedatectl set-ntp true
 # CLEAR THE WHOLE HARD DISK!!!
 dd if=/dev/zero of=/dev/sda bs=512  count=1
 
+dialog --clear  --help-button \
+--title "!!! DELETE EVERYTHING !!!" \
+--menu "Choose the way to destroy everything on your hard disk (/dev/sda)" 15 50 4 \
+dd "Use dd" \
+shread "Use schred" \
+de "No need - my hard disk is empty" \
+
+menuitem=$(<"${INPUT}")
+
+# make decsion
+case $menuitem in
+	dd) dd if=/dev/zero of=/dev/sda status=progress;;
+	shred) shred -v /dev/sda;;
+    de) ;;
+esac
+
+# if temp files found, delete em
+[ -f $OUTPUT ] && rm $OUTPUT
+[ -f $INPUT ] && rm $INPUT
+
+
 #o - create a new MBR partition table
 #n - create new partition
 #p - primary partition
