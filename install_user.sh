@@ -10,6 +10,7 @@ mkdir -p /home/$(whoami)/composer/ >/dev/null
 command -v "go" >/dev/null && mkdir -p /home/$(whoami)/workspace/go/bin >/dev/null
 command -v "go" >/dev/null && mkdir -p /home/$(whoami)/workspace/go/pkg >/dev/null
 command -v "go" >/dev/null &&  mkdir -p /home/$(whoami)/workspace/go/src >/dev/null
+command -v "owncloud" >/dev/null &&  mkdir -p /home/$(whoami)/nextcloud >/dev/null
 
 # Activate netctl
 sudo systemctl enable netctl > /dev/null
