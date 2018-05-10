@@ -20,12 +20,6 @@ menuitem=$(dialog --clear  --help-button \
 2 "Use schred" \
 3 "No need - my hard disk is empty" --output-fd 1)
 
-case $menuitem in
-	1) dd if=/dev/zero of=/dev/sda status=progress;;
-	2) shred -v /dev/sda;;
-    3) ;;
-esac
-
 dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Home. \n\n\
     Boot will be 200M.\n\n\
     Enter partitionsize in gb, separated by space for root & swap.\n\n\
@@ -38,11 +32,13 @@ if ! [ ${#SIZE[@]} -eq 2 ] || ! [[ ${SIZE[0]} =~ $re ]] || ! [[ ${SIZE[1]} =~ $r
     SIZE=(40 16);
 fi
 
+case $menuitem in
+	1) dd if=/dev/zero of=/dev/sda status=progress;;
+	2) shred -v /dev/sda;;
+    3) ;;
+esac
+
 timedatectl set-ntp true
-
-# CLEAR THE WHOLE HARD DISK!!!
-dd if=/dev/zero of=/dev/sda bs=512  count=1
-
 
 #o - create a new MBR partition table
 #n - create new partition
