@@ -20,6 +20,7 @@ hderaser=$(dialog --no-cancel \
 dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Home. \n\n\
     Boot will be 200M.\n\n\
     Enter partitionsize in gb, separated by space for root & swap.\n\n\
+    If you dont enter anything, root -> 40G and Swap -> 60G
     Home will take the rest of the space available" 15 60 2> psize
 
 IFS=' ' read -ra SIZE <<< $(cat psize)
@@ -110,8 +111,16 @@ curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chro
 cat comp > /mnt/etc/hostname \
     && rm comp
 
-dialog --defaultno --title "Final Qs" --yesno "Eject CD/ROM (if any)?"  5 30 && eject
-dialog --defaultno --title "Final Qs" --yesno "Reboot computer?"  5 30 && reboot
-dialog --defaultno --title "Final Qs" --yesno "Return to chroot environment?"  6 30 && arch-chroot /mnt
+dialog --title "All done!" \
+--msgbox "" 12 80
+
+dialog --title "Reboot time" \
+--yesno "Congrats! The install is done! \n\nTo run the new graphical environment, you need to restart your computer, log in and type \"startx\" \n\n You should restart your computer before trying your new shiny system. Do you want to restart now?" 20 90
+
+response=$?
+case $response in
+   0) reboot;;
+   1) clear;;
+esac
 
 clear

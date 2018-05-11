@@ -1,5 +1,7 @@
 # Phantas0s Arch Install
 
+![Phantas0s rice](screen.png "Phantas0s rice")
+
 This is my scripts to install easily Arch Linux.
 
 **WARNING**: This set of script should be used for inspiration, don't run them on your system.

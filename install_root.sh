@@ -46,9 +46,11 @@ choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 let="\(\|[a-z]\|$(echo $choices | sed -e "s/ /\\\|/g")\)"
 
 dialog --title "Let's get this party started!" --msgbox \
-"The rest of the installation will now be totally automated, so you can sit back and relax.\n\n
-It will take some time, but when done, you can relax even more with your complete system.\n\n
-Now just press <OK> and the system will begin installation!" 13 60 \
+"The rest of the installation will now be almost automated, so you can sit back and relax.\n\n
+Some questions will be asked while installing the dotfiles at the end of the installation.\n\n
+
+It will take some time, but when done your system will be fully functional.\n\n
+Now just press <OK> and the system will begin the installation!" 13 60 \
 || (clear && exit)
 
 clear
@@ -125,14 +127,3 @@ dialog --infobox "Disable the famous BIP sound we all love" 10 50
 rmmod pcspkr
 echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
 
-dialog --title "All done!" \
---msgbox "Congrats! The install is done! \n\nTo run the new graphical environment, you need to restart your computer, log in and type \"startx\"" 12 80
-
-dialog --title "Reboot time" \
---yesno "You should restart your computer before trying your new shiny system. Do you want to restart now?" 7 60
-
-response=$?
-case $response in
-   0) reboot;;
-   1) clear;;
-esac
