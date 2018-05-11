@@ -20,7 +20,6 @@ The first script `install_sys`.sh will:
 The second script `install_chroot` will:
 1. Set up locale / time
 2. Set up Grub for the boot
-3. Set up network manager
 
 The third script `install_root` will:
 1. Create a new user with password
@@ -29,7 +28,7 @@ The third script `install_root` will:
 
 The fourth script `install_user` will:
 1. Try to install every software not found by pacman with aurman (AUR repos)
-2. Install my dotfiles
+2. Install my [dotfiles](https://github.com/Phantas0s/.dotfiles)
 
 ## What software are installed?
 
