@@ -93,7 +93,7 @@ do
 
     if [ $x = "zsh" ];
     then
-        dialog --infobox "[$(whoami)] Setting zsh has default terminal." 10 60
+        # zsh as default terminal for user
         chsh -s $(which zsh) $name
     fi
 
@@ -101,6 +101,7 @@ do
     then
         groupadd docker
         gpasswd -a $name docker
+        systemctl enable docker.service
     fi
 done
 
@@ -109,7 +110,7 @@ wget https://getcomposer.org/composer.phar \
     && mv composer.phar /usr/local/bin/composer \
     && chmod 775 /usr/local/bin/composer
 
-# Install the mount for usbkeys
+# Create folder to mount usb keys
 mkdir -p /mnt/usbkey/ >/dev/null
 
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers_tmp > /etc/sudoers
