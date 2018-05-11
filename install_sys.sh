@@ -23,7 +23,7 @@ dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Ho
     If you dont enter anything: \n\
     root -> 40G \n\
     swap -> 16G \n\n\
-    Home will take the rest of the space available" 15 80 2> psize
+    Home will take the rest of the space available" 20 60 2> psize
 
 IFS=' ' read -ra SIZE <<< $(cat psize)
 
