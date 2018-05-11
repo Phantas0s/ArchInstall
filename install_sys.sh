@@ -113,11 +113,9 @@ curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chro
 cat comp > /mnt/etc/hostname \
     && rm comp
 
-dialog --title "All done!" \
---msgbox "" 12 80
 
 dialog --title "Reboot time" \
---yesno "Congrats! The install is done! \n\nTo run the new graphical environment, you need to restart your computer, log in and type \"startx\" \n\n You should restart your computer before trying your new shiny system. Do you want to restart now?" 20 90
+--yesno "Congrats! The install is done! \n\nTo run the new graphical environment, you need to restart your computer, log in and type \"startx\" \n\n You should restart your computer before trying your new shiny system. Do you want to restart now?" 20 60
 
 response=$?
 case $response in
