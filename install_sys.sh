@@ -20,8 +20,10 @@ hderaser=$(dialog --no-cancel \
 dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Home. \n\n\
     Boot will be 200M.\n\n\
     Enter partitionsize in gb, separated by space for root & swap.\n\n\
-    If you dont enter anything, root -> 40G and Swap -> 60G
-    Home will take the rest of the space available" 15 60 2> psize
+    If you dont enter anything: \n
+    root -> 40G \n
+    swap -> 16G \n\n
+    Home will take the rest of the space available" 15 80 2> psize
 
 IFS=' ' read -ra SIZE <<< $(cat psize)
 
