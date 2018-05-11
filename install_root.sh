@@ -40,6 +40,7 @@ options=(V "Vmware tools" off
          X "KeepassX" on
          J "Jrnl" on
          Y "Mysql (mariadb) & mysql tools" on
+         H "Hugo static site generator" off
      )
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
