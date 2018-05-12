@@ -41,6 +41,7 @@ options=(V "Vmware tools" off
          J "Jrnl" on
          Y "Mysql (mariadb) & mysql tools" on
          H "Hugo static site generator" off
+         F "Freemind - mind mapping software" off
      )
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
