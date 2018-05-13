@@ -1,8 +1,6 @@
 #!/bin/bash
-pacman -S --noconfirm --needed dialog \
-|| (echo "Impossible to run the script. Please verify that: \n - You have Internet \n - You execute the script as root\n\n" && exit)
 
-dialog --title "Welcome!" --msgbox "Welcome to Phantas0s installation script for Arch linux.\n" 10 60
+dialog --title "Welcome!" --msgbox "Welcome to Phantas0s dotfiles and software installation script for Arch linux.\n" 10 60
 
 name=$(dialog --no-cancel --inputbox "First, please enter your username" 10 60 3>&1 1>&2 2>&3 3>&1)
 pass1=$(dialog --no-cancel --passwordbox "Enter your password" 10 60 3>&1 1>&2 2>&3 3>&1)
