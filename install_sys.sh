@@ -32,11 +32,15 @@ if ! [ ${#SIZE[@]} -eq 2 ] || ! [[ ${SIZE[0]} =~ $re ]] || ! [[ ${SIZE[1]} =~ $r
     SIZE=(40 16);
 fi
 
+dialog --infobox "Formatting /dev/sda..." 4 40
+
 case $hderaser in
 	1) dd if=/dev/zero of=/dev/sda status=progress;;
 	2) shred -v /dev/sda;;
     3) ;;
 esac
+
+dialog --infobox "Creating partitions..." 4 40
 
 timedatectl set-ntp true
 
@@ -81,6 +85,8 @@ mount /dev/sda1 /mnt/boot
 # mkfs.ext4 /dev/sda4
 # mkdir /mnt/home
 # Encrypt home
+
+dialog --infobox "Encrypt /home partition..." 4 40
 
 mkdir /mnt/etc/
 mkdir -m 700 /mnt/etc/luks-keys
