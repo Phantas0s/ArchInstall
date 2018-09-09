@@ -26,7 +26,7 @@ aurinstall() {
     && rm -rf $1 $1.tar.gz ;
 }
 
-#aurcheck runs on each of its arguments, if the argument is not already installed, it either uses aurman to install it, or installs it manually.
+#aurcheck runs on each of its arguments, if the argument is not already installed, it either uses yay to install it, or installs it manually.
 aurcheck() {
     qm=$(pacman -Qm | awk '{print $1}')
     for arg in "$@"
@@ -35,14 +35,14 @@ aurcheck() {
             echo $arg is already installed.
         else
             echo $arg not installed.
-            aurman --noconfirm --noedit -S $arg || aurinstall $arg
+            yay --noconfirm -S $arg || aurinstall $arg
         fi
     done
 }
 
 cd /tmp/
-dialog --infobox "[$(whoami)] Installing \"aurman\", an AUR helper..." 10 60
-aurcheck aurman >/dev/null
+dialog --infobox "[$(whoami)] Installing \"yay\", an AUR helper..." 10 60
+aurcheck yay >/dev/null
 
 count=$(cat /tmp/aur_queue | wc -l)
 n=0
