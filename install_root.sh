@@ -108,6 +108,11 @@ do
         gpasswd -a $name docker
         systemctl enable docker.service
     fi
+
+    if [ $x = "at" ];
+    then
+        systemctl enable atd.service
+    fi
 done
 
 dialog --infobox "Install composer..." 4 40
