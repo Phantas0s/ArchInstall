@@ -113,6 +113,12 @@ do
     then
         systemctl enable atd.service
     fi
+
+    if [ $x = "mariadb" ];
+    then
+        mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+    fi
+
 done
 
 dialog --infobox "Install composer..." 4 40
