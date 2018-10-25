@@ -43,6 +43,7 @@ options=(V "Vmware tools" off
          D "Thunderbird" off
          A "Anki" off
          Q "Gcolor" off
+         L "TranslateShell" off
      )
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
