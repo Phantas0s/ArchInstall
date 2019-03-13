@@ -108,6 +108,11 @@ do
         groupadd docker
         gpasswd -a $name docker
         systemctl enable docker.service
+
+        # Put Docker files on home partition / not sure if it's a good idea...
+        # echo "{\n\
+        #     /home/$name/docker\n\
+        # }" > /etc/docker/daemon.json
     fi
 
     if [ $x = "at" ];

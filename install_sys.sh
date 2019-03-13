@@ -14,7 +14,7 @@ hderaser=$(dialog --no-cancel \
 --title "!!! DELETE EVERYTHING !!!" \
 --menu "Choose the way to destroy everything on your hard disk (/dev/sda)" 15 60 4 \
 1 "Use dd" \
-2 "Use schred" \
+2 "Use schred (slow)" \
 3 "No need - my hard disk is empty" --output-fd 1)
 
 dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Home. \n\n\
