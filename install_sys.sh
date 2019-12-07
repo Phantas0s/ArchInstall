@@ -13,7 +13,6 @@ dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 hderaser=$(dialog --no-cancel \
 --title "!!! DELETE EVERYTHING !!!" \
 --menu "Choose the way to destroy everything on your hard disk (/dev/sda)" 15 60 4 \
-0 "Use dd (remove only MBR)" \
 1 "Use dd (wipe all disk)" \
 2 "Use schred (slow & secure)" \
 3 "No need - my hard disk is empty" --output-fd 1)
@@ -36,7 +35,6 @@ fi
 dialog --infobox "Formatting /dev/sda..." 4 40
 
 case $hderaser in
-    0) dd if=/dev/zero of=/dev/sda bs=512 count=1 conv=notrunc status=progress;;
 	1) dd if=/dev/zero of=/dev/sda status=progress;;
 	2) shred -v /dev/sda;;
     3) ;;
