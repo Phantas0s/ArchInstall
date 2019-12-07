@@ -109,7 +109,7 @@ mount /dev/sda4 /mnt/home
 # mkdir /mnt/home
 # mount /dev/mapper/home /mnt/home
 
-pacstrap /mnt base base-devel
+pacstrap /mnt base base-devel linux linux-firmware
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
