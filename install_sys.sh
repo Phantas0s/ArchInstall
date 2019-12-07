@@ -117,17 +117,16 @@ genfstab -U /mnt >> /mnt/etc/fstab
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh && arch-chroot /mnt bash install_chroot.sh \
     && rm /mnt/install_chroot.sh
 
-cat comp > /mnt/etc/hostname \
-    && rm comp
+# cat comp > /mnt/etc/hostname \
+#     && rm comp
 
+# dialog --title "Reboot time" \
+# --yesno "Congrats! The install is done! \n\nTo run the new graphical environment, you need to restart your computer, log in and type \"startx\" \n\n You should restart your computer before trying your new shiny system. Do you want to restart now?" 20 60
 
-dialog --title "Reboot time" \
---yesno "Congrats! The install is done! \n\nTo run the new graphical environment, you need to restart your computer, log in and type \"startx\" \n\n You should restart your computer before trying your new shiny system. Do you want to restart now?" 20 60
+# response=$?
+# case $response in
+#    0) reboot;;
+#    1) clear;;
+# esac
 
-response=$?
-case $response in
-   0) reboot;;
-   1) clear;;
-esac
-
-clear
+# clear
