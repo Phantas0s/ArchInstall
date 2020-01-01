@@ -20,6 +20,7 @@ echo "$name:$pass1" | chpasswd >/dev/tty6
 cmd=(dialog --separate-output --nocancel  --buildlist "Press <SPACE> to select the packages you want to install. This script will install all the packages you put in the right column.\n
 Use \"^\" and \"\$\" to move to the left and right columns respectively. Press <ENTER> when done.\n\n You can see the description of each packages in the file progs.csv" 22 76 16)
 options=(V "Vmware tools" off
+         W "Multimedia" off
          O "Owncloud client" off
          E "Essentials" on
          T "Recommended tools" on
@@ -41,8 +42,7 @@ options=(V "Vmware tools" off
          H "Hugo static site generator" off
          F "Freemind - mind mapping software" off
          D "Thunderbird" off
-         A "Anki" off
-         Q "Gcolor" off
+         Q "Design" off
          L "TranslateShell" off
      )
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
