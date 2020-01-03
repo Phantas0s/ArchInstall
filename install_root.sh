@@ -32,10 +32,10 @@ options=(V "Vmware tools" off
          U "Urxvt unicode" on
          Z "Unix Z-Shell (zsh)" on
          S "Ripgrep" on
-         C "Compton" on
-         B "Browsers (firefox / min)" on
-         R "File Manager vifm" on
-         P "Programming (PHP / Ruby / Go / Docker / Clojure)" on
+         C "netctl + dhcpcd" off
+         B "Browsers (firefox + chromium)" off
+         R "Ranger terminal file manager" on
+         P "Programming environment (PHP, Ruby, Go, Docker)" on
          X "KeepassX" on
          J "Jrnl" on
          Y "Mysql (mariadb) & mysql tools" on
