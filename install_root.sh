@@ -36,7 +36,7 @@ options=(V "Vmware tools" off
          C "Network Configuration" off
          B "Browsers (firefox + chromium)" off
          R "Ranger terminal file manager" on
-         P "Programming environment (PHP, Ruby, Go, Docker)" on
+         P "Programming environment (PHP, Ruby, Go, Docker, Clojure)" on
          X "KeepassX" on
          J "Jrnl" on
          Y "Mysql (mariadb) & mysql tools" on
@@ -44,7 +44,7 @@ options=(V "Vmware tools" off
          F "Freemind - mind mapping software" off
          D "Thunderbird" off
          Q "Design" off
-         # L "TranslateShell" off // FREE
+         L "LibreOffice" off
      )
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
