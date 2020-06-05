@@ -133,9 +133,6 @@ wget https://getcomposer.org/composer.phar \
     && mv composer.phar /usr/local/bin/composer \
     && chmod 775 /usr/local/bin/composer
 
-# Create folder to mount usb keys
-mkdir -p /mnt/usbkey/ >/dev/null
-
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers_tmp > /etc/sudoers
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_user.sh > /tmp/install_user.sh;
 sudo -u $name sh /tmp/install_user.sh
