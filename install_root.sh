@@ -44,7 +44,7 @@ options=(V "Vmware tools" off
          F "Freemind - mind mapping software" off
          D "Thunderbird" off
          Q "Design" off
-         L "LibreOffice & Okular" off
+         L "Office tools (Libreoffice...)" off
      )
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
