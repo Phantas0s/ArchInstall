@@ -1,15 +1,28 @@
-# Set the root password
-pass1=$(dialog --no-cancel --passwordbox "Enter your root password" 10 60 3>&1 1>&2 2>&3 3>&1)
-pass2=$(dialog --no-cancel --passwordbox "Enter your root password again. To be sure..." 10 60 3>&1 1>&2 2>&3 3>&1)
-
-while [ $pass1 != $pass2 ]
-do
-    pass1=$(dialog --no-cancel --passwordbox "Passwords do not match.\n\nEnter root password again." 10 60 3>&1 1>&2 2>&3 3>&1)
-    pass2=$(dialog --no-cancel --passwordbox "Retype root password." 10 60 3>&1 1>&2 2>&3 3>&1)
-    unset pass2
-done
-cat <<EOF | passwd
-$pass1
-$pass2
-$pass2
-EOF
+dialog --separate-output --nocancel  --buildlist "Press <SPACE> to select the packages you want to install. This script will install all the packages you put in the right column.\n
+Use \"^\" and \"\$\" to move to the left and right columns respectively. Press <ENTER> when done.\n\n You can see the description of each packages in the file progs.csv" 22 76 16 \
+         V "Vmware tools" off \
+         A "Anki / TranslateShell" off \
+         W "Multimedia" off \
+         O "Owncloud client" off \
+         E "Essentials" on \
+         T "Recommended tools" on \
+         G "Git & git tools" on \
+         I "i3 Tile manager & Desktop" on \
+         M "Tmux" on \
+         N "Neovim" on \
+         K "Keyring applications" on \
+         U "Urxvt unicode" on \
+         Z "Unix Z-Shell (zsh)" on \
+         S "Ripgrep" on \
+         C "Network Configuration" off \
+         B "Browsers (firefox + chromium)" off \
+         R "Ranger terminal file manager" on \
+         P "Programming environments (PHP, Ruby, Go, Docker, Clojure)" on \
+         X "KeepassX" on \
+         J "Jrnl" on \
+         Y "Mysql (mariadb) & mysql tools" on \
+         H "Hugo static site generator" off \
+         F "Freemind - mind mapping software" off \
+         D "Thunderbird" off \
+         Q "Design" off \
+         L "Office tools (Libreoffice...)" off \

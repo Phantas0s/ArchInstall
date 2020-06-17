@@ -1,16 +1,16 @@
 #!/bin/bash
 
 dialog --infobox "[$(whoami)] Create base folders" 10 60
-mkdir -p /home/$(whoami)/documents/ >/dev/null
-mkdir -p /home/$(whoami)/downloads/ >/dev/null
+mkdir -p /home/$(whoami)/Documents/ >/dev/null
+mkdir -p /home/$(whoami)/Downloads/ >/dev/null
+
 mkdir -p /home/$(whoami)/workspace/ >/dev/null
-mkdir -p /home/$(whoami)/softwares/ >/dev/null
 mkdir -p /home/$(whoami)/composer/ >/dev/null
 
 command -v "go" >/dev/null && mkdir -p /home/$(whoami)/workspace/go/bin >/dev/null
 command -v "go" >/dev/null && mkdir -p /home/$(whoami)/workspace/go/pkg >/dev/null
 command -v "go" >/dev/null &&  mkdir -p /home/$(whoami)/workspace/go/src >/dev/null
-command -v "owncloud" >/dev/null &&  mkdir -p /home/$(whoami)/nextcloud >/dev/null
+command -v "nextcloud" >/dev/null &&  mkdir -p /home/$(whoami)/Nextcloud >/dev/null
 
 # Activate netctl
 sudo systemctl enable netctl > /dev/null
@@ -60,7 +60,7 @@ if [ ! -d /home/$(whoami)/.dotfiles ];
         git clone --recurse-submodules https://github.com/Phantas0s/.dotfiles.git /home/$(whoami)/.dotfiles >/dev/null
 fi
 
-dialog --infobox "[$(whoami)] Installing .dotfiles..." 10 60
+dialog --infobox "[$(whoami)] Installing dotfiles..." 10 60
 cd /home/$(whoami)/.dotfiles
 (command -v "zsh" >/dev/null && zsh ./install.sh -y) || sh ./install.sh -y
 command -v "nvim" >/dev/null && nvim --noplugin +PlugInstall +qa

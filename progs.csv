@@ -1,135 +1,134 @@
-open-vm-tools,V,vmware tools,
-xf86-video-vmware,V,vmware video,
-xf86-input-vmmouse,V,vmware mouse,
-mesa-libgl,E,opengl,
-xorg-server,E,Display server,
-xorg-xinit,E,Display server boot,
-xorg-apps,E,Display server utilities,
-iw,E,Utility for wireless devices,
-pulseaudio,E,Sound system,
-wpa_supplicant,E,Cross plateform supplicant for WIFI,
-compton,T,Compositor for X - manage transparency,
-openssh,T,Remote login tool for SSH protocol,
-htop,T,Interactive process viewer,
-qtkeychain,T,Qt API to store passwords,
-ncdu,T,Disk analyser,
-unzip,T,Compress / uncompress zip files,
-p7zip,T,Compress / uncompress 7z files,
-ntfs-3g,T,Allow mounting NTFS formatted devices,
-arandr,T,xrandr GUI,
-netcat,T,Read and write to network,
-nmap,T,Network mapper,
-boxes,T,Draw ASCII boxes in terminal - ESSENTIAL! (AUR),
-netctl,C,Network manager,
-dhcpcd,C,dhcp client,
-xsel,T,Manipulate the X selection,
-lxappearance,T,Theme switcher of LXDE,
-keepassx,T,Secure password management,
-man,T,Manual,
-polkit,T,Control system wide privilege,
-xcape,T,Configure modifier key,
-bc,T,Calculator,
-rsync,T,Tool for transferring and synchronizing files across computer systems,
-wget,T,Tool for retrieving files using HTTP HTTPS FTP and FTPS,
-httpie,T,a CLI cURL-like tool for humans,
-fzf,T,Command line fuzzy finder,
-siege,T,Http load testing and benchmarking utility,
-imagemagick,T,Convert edit or compose images,
-unclutter,T,Hide the mouse after short period of time,
-pv,T,Display progress bar through pipeline,
-the_silver_searcher,T,A fast code searching tool,
-bat,T,A cat clone with winds,
-ffmpeg,T,Complete solution to record stream audio / video,
-noto-fonts-cjk,T,Fonts for asian display,
-at,T,Take command input which is executed as a later time,
-whois,T,Display web domain information,
-refshift,T,Adjusts the temperature of you screen according to your surrounding,
-pavucontrol,T,Control panel for input hardware,
-alsa-utils,T,Utils to control sound card,
-time,T,Measure time takes a specific command,
-downgrader,T,Utility to downgrad Arch packages (AUR),
-net-tools,T,Include netstats and others,
-simple-mtpfs,T,Can mount MTP filesystems (thanks Android) (AUR),
-scrot,T,Screenshot software for i3lock,
-libnotify,T,Notifier,
-openvpn,T,VPN,
-xclip,T,CLI to Clipboard,
-redshift,T,Adjust color of screen,
-udiskie,T,Automount devices,
-gparted,T,Partitioning tool,
-gcolor2,Q,Simple color selector,
-pinta,Q,Easy to use image editor,
-libwebp,Q,Image converter from jpg to webp,
-drawio-desktop,Q,Desktop diagramming application (AUR),
-tmux,M,Terminal multiplexer,
-tmuxp,M,Configure tmux session + windows + panes via config files,
-git,G,Version control system,
-tig,G,Text mode interface for git,
-diff-so-fancy,G,Human readable git diff,
-i3-wm,I,i3 window tile manager,
-i3status,I,i3 status bar,
-i3lock,I,i3 lock monitor,
-dmenu,I,Dynamic menu for X,
-feh,I,X11 image viewer,
-xdg-utils,I,Allow application to interact with the desktop,
-arc-gtk-theme,I,Desktop themes,
-gtk-theme-arc-red,I,Desktop theme... but in red! (AUR),
-dunst,I,Notification system,
-php,P,PHP programming language,
-regexxer,P,Search/replace tool featuring Perl-style regular expressions,
-composer,P,Dependency management for PHP,
-ruby,P,Ruby programming language,
-go,P,Golang programming language,
-goreleaser,P,Release tool for Golang (AUR),
-go-tools,P,Tools for Goland,
-npm,P,Infamous javascript package manager,
-yarn,P,Wrapper for npm,
-docker,P,Build ship and run distributed applications,
-docker-compose,P,Configuration to run docker multi containers applications,
-ctags,P,Generates an index file of language objects found in source files,
-yamllint,P,Linter for yaml,
-vint,P,Linter for VimScript,
-rlwrap,P,Intercepting user input (used for Clojure cli),
-leiningen,P,REPL for Clojure,
-boot,P,REPL for Clojure / Clojurescript,
-phantomjs-bin,P,Headless browser,
-racket,P,Language Racket,
-mariadb,Y,Implementation of Mysql,
-mycli,Y,command line interface for MySQL (AUR),
-litecli,Y,command line interface for SQLite,
-neovim,N,Editor... and much more,
-python-neovim,N,Python for neovim,
-python2-neovim,N,Python2 for neovim,
-ruby-neovim,N,Ruby for neovim (AUR),
-markdown2ctags,N,Generates ctags-compatible output for the sections of a Markdown document(AUR),
-python-sqlparse,N,sqlparse is a non-validating SQL parser module for Python,
-clojure-lsp-bin,N,Clojure language client,
-clj-kondo-bin,N,Clojure static analysis,
-gnome-keyring,K,Gnome component to store passwords,
-libsecret,K,Library for application to use gnome keyring,
-seahorse,K,Gnome keyring GUI,
-firefox,B,Browser Firefox,
-min,B,Minimum browser,
-keepassx,X,Secure password management,
-rxvt-unicode,U,Terminal Urxvt,
-urxvt-tabbedex-mina86-git,U,Improved tab for Urxvt (AUR),
-urxvt-resize-font-git,U,Increase / decrease font size for Urxvt via keystrokes(AUR),
-zsh,Z,Unix shell (Z-Shell),
-ripgrep,S,Line oriented search tool (grep improved),
-vifm,R,File manager based on Vi,
-nextcloud-client,O,Client to nextcloud,
-hugo,H,Static site generator written in Go,
-freemind,F,Free mind mapping software in Java,
-jrnl,J,A simple plain text journal application,
-joplin,J,Note taking app open source (AUR),
-thunderbird,D,Thunderbird,
-anki,A,Powerful intelligent flash cards.,
-translate-shell,A,Command line translator,
-mpv,W,Free video player,
-nomacs,W,Image visualizeur,
-easytag,W,Tag Manager,
-mpd,W,Music Player Daemon,
-ncmpcpp,W,Client for mpd,
-libreoffice,L,Office suite,
-okular,L,PDF Reader,
-scribus,L,Document editing software,
+vmware,open-vm-tools,vmware tools
+vmware,xf86-video-vmware,vmware video
+vmware,xf86-input-vmmouse,vmware mouse
+essential,mesa-libgl,opengl
+essential,xorg-server,Display server
+essential,xorg-xinit,Display server boot
+essential,xorg-apps,Display server utilities
+essential,wpa_supplicant,Cross plateform supplicant for WIFI
+essential,man,Manual
+essential,man-pages,Manual pages
+essential,openssh,Remote login tool for SSH protocol
+zsh,zsh,Unix shell (Z-Shell)
+network,iw,Utility for wireless devices
+network,netctl,Network manager
+network,dhcpcd,dhcp client
+network,netcat,Read and write to network
+network,nmap,Network mapper
+network,wget,Tool for retrieving files using HTTP HTTPS FTP and FTPS
+network,net-tools,Include netstats and others
+network,openvpn,VPN
+compression,unzip,Compress / uncompress zip files
+compression,p7zip,Compress / uncompress 7z files
+audio,pulseaudio,Sound system
+audio,pavucontrol,Control panel for input hardware
+audio,alsa-utils,Utils to control sound card
+tools,rsync,Tool for transferring and synchronizing files across computer systems
+tools,ntfs-3g,Allow mounting NTFS formatted devices
+tools,compton,Compositor for X - manage transparency
+tools,htop,Interactive process viewer
+tools,qtkeychain,Qt API to store passwords
+tools,ncdu,Disk analyser
+tools,arandr,xrandr GUI
+tools,boxes,Draw ASCII boxes in terminal - ESSENTIAL! (AUR)
+tools,xsel,Manipulate the X selection
+tools,lxappearance,Theme switcher of LXDE
+tools,polkit,Control system wide privilege
+tools,xcape,Configure modifier key
+tools,bc,Calculator
+tools,httpie,a CLI cURL-like tool for humans
+tools,fzf,Command line fuzzy finder
+tools,siege,Http load testing and benchmarking utility
+tools,imagemagick,Convert edit or compose images
+tools,unclutter,Hide the mouse after short period of time
+tools,pv,Display progress bar through pipeline
+tools,the_silver_searcher,A fast code searching tool
+tools,bat,A cat clone with winds
+tools,noto-fonts-cjk,Fonts for asian display
+tools,at,Take command input which is executed as a later time
+tools,whois,Display web domain information
+tools,time,Measure time takes a specific command
+tools,downgrader,Utility to downgrad Arch packages (AUR)
+tools,simple-mtpfs,Can mount MTP filesystems (thanks Android) (AUR)
+tools,scrot,Screenshot software for i3lock
+tools,libnotify,Notifier
+tools,xclip,CLI to Clipboard
+tools,redshift,Adjust color of screen
+tools,udiskie,Automount devices
+tools,gparted,Partitioning tool
+graphism,gcolor2,Simple color selector
+graphism,pinta,Easy to use image editor
+graphism,libwebp,Image converter from jpg to webp
+graphism,drawio-desktop,Desktop diagramming application (AUR)
+tmux,tmux,Terminal multiplexer
+tmux,tmuxp,Configure tmux session + windows + panes via config files
+git,git,Version control system
+git,tig,Text mode interface for git
+git,diff-so-fancy,Human readable git diff
+i3,i3-wm,i3 window tile manager
+i3,i3status,i3 status bar
+i3,i3lock,i3 lock monitor
+i3,dmenu,Dynamic menu for X
+i3,feh,X11 image viewer
+i3,xdg-utils,Allow application to interact with the desktop
+i3,arc-gtk-theme,Desktop themes
+i3,gtk-theme-arc-red,Desktop theme... but in red! (AUR)
+i3,dunst,Notification system
+programming,php,PHP programming language
+programming,regexxer,Search/replace tool featuring Perl-style regular expressions
+programming,composer,Dependency management for PHP
+programming,ruby,Ruby programming language
+programming,go,Golang programming language
+programming,goreleaser,Release tool for Golang (AUR)
+programming,go-tools,Tools for Goland
+programming,npm,Infamous javascript package manager
+programming,yarn,Wrapper for npm
+programming,docker,Build ship and run distributed applications
+programming,docker-compose,Configuration to run docker multi containers applications
+programming,ctags,Generates an index file of language objects found in source files
+programming,yamllint,Linter for yaml
+programming,vint,Linter for VimScript
+programming,rlwrap,Intercepting user input (used for Clojure cli)
+programming,leiningen,REPL for Clojure
+programming,boot,REPL for Clojure / Clojurescript
+programming,phantomjs-bin,Headless browser
+programming,racket,Language Racket
+sql,mariadb,Implementation of Mysql
+sql,mycli,command line interface for MySQL (AUR)
+sql,litecli,command line interface for SQLite
+neovim,neovim,Editor... and much more
+neovim,python-neovim,Python for neovim
+neovim,python2-neovim,Python2 for neovim
+neovim,ruby-neovim,Ruby for neovim (AUR)
+neovim,markdown2ctags,Generates ctags-compatible output for the sections of a Markdown document(AUR)
+neovim,python-sqlparse,sqlparse is a non-validating SQL parser module for Python
+neovim,clojure-lsp-bin,Clojure language client
+neovim,clj-kondo-bin,Clojure static analysis
+keyring,gnome-keyring,Gnome component to store passwords
+keyring,libsecret,Library for application to use gnome keyring
+keyring,seahorse,Gnome keyring GUI
+urxvt,rxvt-unicode,Terminal Urxvt
+urxvt,urxvt-tabbedex-mina86-git,Improved tab for Urxvt (AUR)
+urxvt,urxvt-resize-font-git,Increase / decrease font size for Urxvt via keystrokes(AUR)
+ripgrep,ripgrep,Line oriented search tool (grep improved)
+vifm,vifm,File manager based on Vi
+nextcloud,nextcloud-client,Client to nextcloud
+hugo,hugo,Static site generator written in Go
+freemind,freemind,Free mind mapping software in Java
+notes,jrnl,A simple plain text journal application
+notes,joplin,Note taking app open source (AUR)
+language,anki,Powerful intelligent flash cards.
+language,translate-shell,Command line translator
+multimedia,mpv,Free video player
+multimedia,nomacs,Image visualizeur
+multimedia,easytag,Tag Manager
+multimedia,mpd,Music Player Daemon
+multimedia,ncmpcpp,Client for mpd
+multimedia,ffmpeg,Complete solution to record stream audio / video
+office,libreoffice,Office suite
+office,okular,PDF Reader
+office,scribus,Document editing software
+firefox,firefox,Browser Firefox
+min,min,Minimum browser
+keepass,keepassx,Secure password management
+thunderbird,thunderbird,Thunderbird
