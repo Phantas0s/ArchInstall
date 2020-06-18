@@ -5,7 +5,7 @@
 
 
 dialog --defaultno --title "Are you sure?" --yesno "This is my personnal arch linux install. \n\n\
-    It will just DESTROY EVERYTHING on your hard disk ($hd). \n\n\
+    It will just DESTROY EVERYTHING on the hard disk of your choice. \n\n\
     Don't say YES if you are not sure about what your are doing! \n\n\
     Are you sure?"  15 60 || exit
 
@@ -17,6 +17,8 @@ select_device() {
     hd=(dialog --title "Choose your hard drive" \
         --radiolist "Where do you want to install your new system?\n\nSelect with SPACE.\n\nWARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 ${devices_list[@]} --output-fd 1)
 }
+
+select_device
 
 hderaser=$(dialog --no-cancel \
     --title "!!! DELETE EVERYTHING !!!" \
