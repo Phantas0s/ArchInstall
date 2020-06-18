@@ -14,8 +14,8 @@ dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 hd=${hd:-/dev/sda}
 select_device() {
     devices_list=($(lsblk -d | awk '{print "/dev/" $1 " " $4 " off"}' | grep -E 'sd|hd|vd|nvme|mmcblk'))
-    hd=(dialog --title "Choose your hard drive" \
-        --radiolist "Where do you want to install your new system?\n\nSelect with SPACE.\n\nWARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 ${devices_list[@]} --output-fd 1)
+    hd=$(dialog --title "Choose your hard drive" \
+        --radiolist --stdout "Where do you want to install your new system?\n\nSelect with SPACE.\n\nWARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 ${devices_list[@]} --output-fd 1)
 }
 
 select_device
