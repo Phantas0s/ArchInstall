@@ -1,12 +1,17 @@
 # Phantas0s Arch Install
 
-![Phantas0s rice](screen.png "Phantas0s rice")
+![Phantas0s Arch Install](screen.png "Phantas0s Arch Install")
 
 This is my scripts to install easily Arch Linux.
 
 **WARNING**: This set of script should be used for inspiration, don't run them on your system.
 
-If you want to try to install everything (I would advise you to use a VM) you just have to `curl` the first script `install_sys.sh` and launch it. Follow the instructions.
+If you want to try to install everything (I would advise you to use a VM) you just have to `curl` the first script `install_sys.sh` and launch it:
+
+`curl -O https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_sys.sh && sh install_sys.sh`
+
+Follow the instructions.
+
 Don't expect a lot of choices though.
 
 ## What's in there? 
