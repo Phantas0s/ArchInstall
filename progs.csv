@@ -9,6 +9,7 @@ essential,wpa_supplicant,Cross plateform supplicant for WIFI
 essential,man,Manual
 essential,man-pages,Manual pages
 essential,openssh,Remote login tool for SSH protocol
+essential,openssh,Remote login tool for SSH protocol
 zsh,zsh,Unix shell (Z-Shell)
 network,iw,Utility for wireless devices
 network,netctl,Network manager

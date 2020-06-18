@@ -6,28 +6,44 @@ dialog --infobox "Disable the famous BIP sound we all love" 10 50
 rmmod pcspkr
 echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
 
+local output="/tmp/arch-install-logs"
+local progs_path="/tmp/progs.csv"
+local dry_run=true
+
 dialog --infobox "Get necessary files..." 4 40
-    curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/progs.csv > /tmp/progs.csv
+    curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/progs.csv > $progs_path
     curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_user.sh > /tmp/install_user.sh;
     curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers_tmp > /etc/sudoers
 
 function config_user() {
     dialog --title "Welcome!" --msgbox "Welcome to Phantas0s dotfiles and software installation script for Arch linux.\n" 10 60
 
-    name=$(dialog --no-cancel --inputbox "First, please enter your username" 10 60 3>&1 1>&2 2>&3 3>&1)
-    pass1=$(dialog --no-cancel --passwordbox "Enter your password" 10 60 3>&1 1>&2 2>&3 3>&1)
-    pass2=$(dialog --no-cancel --passwordbox "Enter your password again. To be sure..." 10 60 3>&1 1>&2 2>&3 3>&1)
+    name=$(dialog --no-cancel --inputbox "First, please enter your username" 10 60 --output-fd 1)
+    pass1=$(dialog --no-cancel --passwordbox "Enter your password" 10 60 --output-fd 1)
+    pass2=$(dialog --no-cancel --passwordbox "Enter your password again. To be sure..." 10 60 --output-fd 1)
 
     while [ $pass1 != $pass2 ]
     do
-        pass1=$(dialog --no-cancel --passwordbox "Passwords do not match.\n\nEnter password again." 10 60 3>&1 1>&2 2>&3 3>&1)
-        pass2=$(dialog --no-cancel --passwordbox "Retype password." 10 60 3>&1 1>&2 2>&3 3>&1)
+        pass1=$(dialog --no-cancel --passwordbox "Passwords do not match.\n\nEnter password again." 10 60 --output-fd 1)
+        pass2=$(dialog --no-cancel --passwordbox "Retype password." 10 60 --output-fd 1)
         unset pass2
     done
 
     dialog --infobox "Adding user $name..." 4 50
-    useradd -m -g wheel -s /bin/bash $name >/dev/tty6
-    echo "$name:$pass1" | chpasswd >/dev/tty6
+    if [ "$dry_run" != true ]; then
+        useradd -m -g wheel -s /bin/bash $name >> $output
+        echo "$name:$pass1" | chpasswd >> $output
+    fi
+}
+
+function pacman_install() {
+    ((pacman --noconfirm --needed -S $1 &> $output && echo $1 installed!) \
+    || echo $1 >> /tmp/aur_queue) \
+    || echo $1 >> /tmp/arch_install_failed ;
+}
+
+function fake_install() {
+    echo "$1 fakely installed!" >> $output
 }
 
 function install_progs() {
@@ -62,30 +78,34 @@ function install_progs() {
             freemind "Freemind - mind mapping software" off)
 
     dialog --title "Let's go!" --msgbox \
-    "The system will now install everything you need\n\n
-    It might take some time.\n\n " 13 60 \
+    "The system will now install everything you need.\n\n
+    It will take some time.\n\n " 13 60 \
     || (clear && exit)
 
     clear
 
-    dialog --infobox "Refreshing Arch Keyring..." 4 40
-    pacman --noconfirm -Sy archlinux-keyring >/dev/tty6
+    if [ "$dry_run" != true ]; then
+        dialog --infobox "Refreshing Arch Keyring..." 4 40
+        pacman --noconfirm -Sy archlinux-keyring >> $output
 
-    dialog --infobox "Updating the system..." 4 40
-    pacman -Syu --noconfirm >/dev/tty6
-
+        dialog --infobox "Updating the system..." 4 40
+        pacman -Syu --noconfirm >> $output
+    fi
 
     if [ -f /tmp/aur_queue ];
         then
-            rm /tmp/aur_queue &>/dev/tty6
+            rm /tmp/aur_queue >> $output 2>&1
     fi
 
     selection=$(echo $choices | sed -e "s/ /,|^/g")
-    lines=$(cat "/tmp/progs.csv" | grep -E "$selection")
+    lines=$(cat "$progs_path" | grep -E "$selection")
     count=$(echo $lines | wc -l)
     progs=$(echo $lines | awk -F, {'print $2'})
 
-    echo $progs
+    echo $selection >> $output
+    echo $lines >> $output
+    echo $count >> $output
+    echo $progs >> $output
 
     c=0
     echo $progs | while IFS= read -r line; do
@@ -95,49 +115,46 @@ function install_progs() {
         "Downloading and installing program $c out of $count: $line...\n\n.
         You can watch the output on tty6 (ctrl + alt + F6)." 8 70
 
-        ( (pacman --noconfirm --needed -S $line &>/dev/tty6 && echo $1 installed!) \
-        || echo $1 >> /tmp/aur_queue) \
-        || echo $1 >> /tmp/arch_install_failed ;
+        if [ "$dry_run" != true ]; then
+            pacman_install $line
 
-        # Needed if system installed in VMWare
-        if [ $x = "open-vm-tools" ]; then
-            systemctl enable vmtoolsd.service
-            systemctl enable vmware-vmblock-fuse.service
-        fi
+            # Needed if system installed in VMWare
+            if [ $line = "open-vm-tools" ]; then
+                systemctl enable vmtoolsd.service
+                systemctl enable vmware-vmblock-fuse.service
+            fi
 
-        if [ $x = "zsh" ]; then
-            # zsh as default terminal for user
-            chsh -s $(which zsh) $name
-        fi
+            if [ $line = "zsh" ]; then
+                # zsh as default terminal for user
+                chsh -s $(which zsh) $name
+            fi
 
-        if [ $x = "docker" ]; then
-            groupadd docker
-            gpasswd -a $name docker
-            systemctl enable docker.service
-        fi
+            if [ $line = "docker" ]; then
+                groupadd docker
+                gpasswd -a $name docker
+                systemctl enable docker.service
+            fi
 
-        if [ $x = "at" ]; then
-            systemctl enable atd.service
-        fi
+            if [ $line = "at" ]; then
+                systemctl enable atd.service
+            fi
 
-        if [ $x = "mariadb" ]; then
-            mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+            if [ $line = "mariadb" ]; then
+                mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+            fi
+        else
+            fake_install $line
         fi
     done
-
-    dialog --infobox "Install composer..." 4 40
-    wget https://getcomposer.org/composer.phar \
-        && mv composer.phar /usr/local/bin/composer \
-        && chmod 775 /usr/local/bin/composer
-
 }
 
 function install_user() {
     dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
-
     # Change user and begin the install use script
-    sudo -u $name sh /tmp/install_user.sh
-    rm -f /tmp/install_user.sh
+    if [ "$dry_run" != true ]; then
+        sudo -u $name sh /tmp/install_user.sh
+        rm -f /tmp/install_user.sh
+    fi
 }
 
 # Run!

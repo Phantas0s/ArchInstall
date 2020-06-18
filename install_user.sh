@@ -35,22 +35,21 @@ aurcheck() {
             echo $arg is already installed.
         else
             echo $arg not installed.
-            yay --noconfirm -S $arg || aurinstall $arg
+            yay --noconfirm -S $arg >/dev/null || aurinstall $arg
         fi
     done
 }
 
 cd /tmp/
 dialog --infobox "[$(whoami)] Installing \"yay\", an AUR helper..." 10 60
-aurcheck yay >/dev/null
+aurcheck yay
 
 count=$(cat /tmp/aur_queue | wc -l)
-n=0
-
+c=0
 for prog in $(cat /tmp/aur_queue)
 do
-    n=$((n+1))
-    dialog --infobox "[$(whoami)] AUR install - Downloading and installing program $n out of $count: $prog..." 10 60
+    c=$((n+1))
+    dialog --infobox "[$(whoami)] AUR install - Downloading and installing program $c out of $count: $prog..." 10 60
     aurcheck $prog >/dev/null
 done
 
