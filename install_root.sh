@@ -6,9 +6,19 @@ dialog --infobox "Disable the famous BIP sound we all love" 10 50
 rmmod pcspkr
 echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
 
+dry_run=${dry_run:-false}
+output=${/tmp/arch-install-logs}
+while getopts d:o: option
+do
+    case "${option}"
+        in
+        d) dry_run=${OPTARG};;
+        o) output=${OPTARG};;
+    esac
+done
+
 local output="/tmp/arch-install-logs"
 local progs_path="/tmp/progs.csv"
-local dry_run=true
 
 dialog --infobox "Get necessary files..." 4 40
     curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/progs.csv > $progs_path
