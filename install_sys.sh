@@ -43,7 +43,7 @@ if ! [ ${#SIZE[@]} -eq 2 ] || ! [[ ${SIZE[0]} =~ $re ]] || ! [[ ${SIZE[1]} =~ $r
 fi
 
 case $hderaser in
-    1) dialog  dd if=/dev/zero of=$hd status=progress | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
+    1) dd if=/dev/zero of=$hd status=progress | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
     2) shred -v $hd | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
     3) ;;
 esac
