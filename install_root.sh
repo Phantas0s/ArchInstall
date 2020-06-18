@@ -1,17 +1,18 @@
 #!/bin/bash
 
 dry_run=${dry_run:-false}
-output=${/tmp/arch-install-logs}
-while getopts d:o: option
+output=${output:-/tmp/arch-install-logs}
+progs_path=${progs_path:-/tmp/progs.csv}
+while getopts d:o:p: option
 do
     case "${option}"
         in
         d) dry_run=${OPTARG};;
         o) output=${OPTARG};;
+        p) progs_path=${OPTARG};;
     esac
 done
 
-local output="/tmp/arch-install-logs"
 local progs_path="/tmp/progs.csv"
 
 dialog --infobox "Get necessary files..." 4 40
@@ -101,18 +102,19 @@ function install_progs() {
             rm /tmp/aur_queue >> $output 2>&1
     fi
 
-    selection=$(echo $choices | sed -e "s/ /,|^/g")
+    selection="^$(echo $choices | sed -e 's/ /,|^/g'),"
     lines=$(cat "$progs_path" | grep -E "$selection")
-    count=$(echo $lines | wc -l)
-    progs=$(echo $lines | awk -F, {'print $2'})
+    count=$(echo "$lines" | wc -l)
+    progs=$(echo "$lines" | awk -F, {'print $2'})
 
-    echo $selection >> $output
-    echo $lines >> $output
-    echo $count >> $output
-    echo $progs >> $output
+    if [ "$dry_run" == true ]; then
+        echo "$selection" >> $output
+        echo "$lines" >> $output
+        echo "$count" >> $output
+    fi
 
     c=0
-    echo $progs | while IFS= read -r line; do
+    echo "$progs" | while IFS= read -r line; do
         c=$(( $c + 1 ))
 
         dialog --title "Arch Linux Installation" --infobox \
