@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Path to your CSV where every possible programs are listed
-# TODO would be nicer to have another format (yml array style)
-dialog --infobox "Disable the famous BIP sound we all love" 10 50
-rmmod pcspkr
-echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
-
 dry_run=${dry_run:-false}
 output=${/tmp/arch-install-logs}
 while getopts d:o: option
@@ -166,6 +160,12 @@ function install_user() {
         rm -f /tmp/install_user.sh
     fi
 }
+
+# Path to your CSV where every possible programs are listed
+# TODO would be nicer to have another format (yml array style)
+dialog --infobox "Disable the famous BIP sound we all love" 10 50
+rmmod pcspkr
+echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
 
 # Run!
 config_user
