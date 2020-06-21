@@ -20,20 +20,13 @@ dialog --defaultno --title "Are you sure?" --yesno "This is my personnal arch li
 dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 
 hd=${hd:-/dev/sda}
-select_device() {
+function select_device() {
     devices_list=($(lsblk -d | awk '{print "/dev/" $1 " " $4 " off"}' | grep -E 'sd|hd|vd|nvme|mmcblk' | sed -e "s/off/on/"))
-    hd=$(dialog --title "Choose your hard drive" \
-        --radiolist --stdout "Where do you want to install your new system?\n\nSelect with SPACE, valid with ENTER.\n\nWARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 ${devices_list[@]} --output-fd 1 || exit)
+    hd=$(dialog --title "Choose your hard drive" --no-cancel \
+        --radiolist --no-cancel --stdout "Where do you want to install your new system?\n\nSelect with SPACE, valid with ENTER.\n\nWARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 ${devices_list[@]} --output-fd 1)
 }
 
 select_device
-
-hderaser=$(dialog --no-cancel \
-    --title "!!! DELETE EVERYTHING !!!" \
-    --menu "Choose the way to destroy everything on your hard disk ($hd)" 15 60 4 \
-    1 "Use dd (wipe all disk)" \
-    2 "Use schred (slow & secure)" \
-    3 "No need - my hard disk is empty" --output-fd 1)
 
 dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Home. \n\n\
     Boot will be 200M.\n\n\
@@ -50,6 +43,13 @@ if ! [[ ${#SIZE[@]} -eq 2 ]] || ! [[ ${SIZE[0]} =~ $number ]] || ! [[ ${SIZE[1]}
     SIZE=(60 16);
 fi
 
+hderaser=$(dialog --no-cancel \
+    --title "!!! DELETE EVERYTHING !!!" \
+    --menu "Choose the way to destroy everything on your hard disk ($hd)" 15 60 4 \
+    1 "Use dd (wipe all disk)" \
+    2 "Use schred (slow & secure)" \
+    3 "No need - my hard disk is empty" --output-fd 1)
+
 function eraseDisk() {
     case $1 in
         1) dd if=/dev/zero of=$hd status=progress 2>&1 | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
@@ -58,16 +58,14 @@ function eraseDisk() {
     esac
 }
 
-
-if [ "$dry_run" != true ]; then
-    eraseDisk hderaser
+if [[ "$dry_run" != true ]]; then
+    eraseDisk $hderaser
+    timedatectl set-ntp true
 fi
 
 dialog --infobox "Creating partitions..." 4 40
 
-timedatectl set-ntp true
-
-if [ "$dry_run" != true ]; then
+if [[ "$dry_run" != true ]]; then
 #o - create a new MBR partition table
 #n - create new partition
 #p - primary partition
