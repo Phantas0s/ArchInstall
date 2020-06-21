@@ -23,7 +23,7 @@ hd=${hd:-/dev/sda}
 select_device() {
     devices_list=($(lsblk -d | awk '{print "/dev/" $1 " " $4 " off"}' | grep -E 'sd|hd|vd|nvme|mmcblk' | sed -e "s/off/on/"))
     hd=$(dialog --title "Choose your hard drive" \
-        --radiolist --stdout "Where do you want to install your new system?\n\nSelect with SPACE.\n\nWARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 ${devices_list[@]} --output-fd 1)
+        --radiolist --stdout "Where do you want to install your new system?\n\nSelect with SPACE, valid with ENTER.\n\nWARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 ${devices_list[@]} --output-fd 1 || exit)
 }
 
 select_device
