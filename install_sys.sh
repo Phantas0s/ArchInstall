@@ -1,8 +1,16 @@
 #!/bin/bash
 
-# inspired by aui
-# to install: wget ow.ly/wnFgh -O aui.zip && mkdir aui && bsdtar -x -f aui.zip -C aui
-
+# TODO redirect output
+dry_run=${dry_run:-false}
+output=${output:-/tmp/arch-install-logs}
+while getopts d:o: option
+do
+    case "${option}"
+        in
+        d) dry_run=${OPTARG};;
+        o) output=${OPTARG};;
+    esac
+done
 
 dialog --defaultno --title "Are you sure?" --yesno "This is my personnal arch linux install. \n\n\
     It will just DESTROY EVERYTHING on the hard disk of your choice. \n\n\
@@ -13,7 +21,7 @@ dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 
 hd=${hd:-/dev/sda}
 select_device() {
-    devices_list=($(lsblk -d | awk '{print "/dev/" $1 " " $4 " off"}' | grep -E 'sd|hd|vd|nvme|mmcblk'))
+    devices_list=($(lsblk -d | awk '{print "/dev/" $1 " " $4 " off"}' | grep -E 'sd|hd|vd|nvme|mmcblk' | sed -e "s/off/on/"))
     hd=$(dialog --title "Choose your hard drive" \
         --radiolist --stdout "Where do you want to install your new system?\n\nSelect with SPACE.\n\nWARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 ${devices_list[@]} --output-fd 1)
 }
@@ -31,27 +39,35 @@ dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Ho
     Boot will be 200M.\n\n\
     Enter partitionsize in gb, separated by space for root & swap.\n\n\
     If you dont enter anything: \n\
-        root -> 40G \n\
+        root -> 60G \n\
         swap -> 16G \n\n\
         Home will take the rest of the space available" 20 60 2> psize
 
 IFS=' ' read -ra SIZE <<< $(cat psize)
 
-re='^[0-9]+$'
-if ! [ ${#SIZE[@]} -eq 2 ] || ! [[ ${SIZE[0]} =~ $re ]] || ! [[ ${SIZE[1]} =~ $re ]] ; then
-    SIZE=(40 16);
+number='^[0-9]+$'
+if ! [[ ${#SIZE[@]} -eq 2 ]] || ! [[ ${SIZE[0]} =~ $number ]] || ! [[ ${SIZE[1]} =~ $number ]] ; then
+    SIZE=(60 16);
 fi
 
-case $hderaser in
-    1) dd if=/dev/zero of=$hd status=progress 2>&1 | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
-    2) shred -v $hd | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
-    3) ;;
-esac
+function eraseDisk() {
+    case $1 in
+        1) dd if=/dev/zero of=$hd status=progress 2>&1 | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
+        2) shred -v $hd | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
+        3) ;;
+    esac
+}
+
+
+if [ "$dry_run" != true ]; then
+    eraseDisk hderaser
+fi
 
 dialog --infobox "Creating partitions..." 4 40
 
 timedatectl set-ntp true
 
+if [ "$dry_run" != true ]; then
 #o - create a new MBR partition table
 #n - create new partition
 #p - primary partition
@@ -84,8 +100,10 @@ partprobe
 
 mkfs.ext4 "${hd}3"
 mkfs.ext4 "${hd}1"
+
 mkswap "${hd}2"
 swapon "${hd}2"
+
 mount "${hd}3" /mnt
 mkdir /mnt/boot
 mount "${hd}1" /mnt/boot
@@ -122,11 +140,13 @@ pacstrap /mnt base base-devel linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
 ### Continue installation
-curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh && arch-chroot /mnt bash install_chroot.sh \
-    && rm /mnt/install_chroot.sh
+curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh
+arch-chroot /mnt bash install_chroot.sh
+rm /mnt/install_chroot.sh
 
 cat comp > /mnt/etc/hostname \
     && rm comp
+fi
 
 dialog --title "Reboot time" \
     --yesno "Congrats! The install is done! \n\nTo run the new graphical environment, you need to restart your computer. \n\nDo you want to restart now?" 20 60
