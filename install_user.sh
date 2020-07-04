@@ -65,5 +65,5 @@ cd /home/$(whoami)/.dotfiles
 cd -
 
 # TODO doesn't really work... to fix
-dialog --infobox "[$(whoami)] Install composer global tools" 10 60
-composer global update
+# dialog --infobox "[$(whoami)] Install composer global tools" 10 60
+# composer global update

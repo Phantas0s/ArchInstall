@@ -146,6 +146,10 @@ function install_progs() {
                 systemctl enable atd.service
             fi
 
+            if [ $line = "dhcpcd" ]; then
+                systemctl enable dhcpcd.service
+            fi
+
             if [ $line = "mariadb" ]; then
                 mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
             fi
