@@ -48,7 +48,7 @@ count=$(cat /tmp/aur_queue | wc -l)
 c=0
 for prog in $(cat /tmp/aur_queue)
 do
-    c=$((n+1))
+    c=$((c+1))
     dialog --infobox "[$(whoami)] AUR install - Downloading and installing program $c out of $count: $prog..." 10 60
     aur_check $prog >/dev/null
 done
