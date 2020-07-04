@@ -53,7 +53,6 @@ function fake_install() {
 
 function install_progs() {
     choices=$(dialog --checklist --stdout "You can here choose the programs you want, according to your own CSV file:" 0 0 0  \
-            vmware "Essentials" on \
             essential "Essentials" on \
             compression "Compression Tools" on \
             tools "Very nice tools to have (highly recommended)" on \
@@ -71,7 +70,7 @@ function install_progs() {
             programming "Programming environments (PHP, Ruby, Go, Docker, Clojure)" on \
             keepass "KeepassX" on \
             sql "Mysql (mariadb) & mysql tools" on \
-            jrnl "Note taking systems" on \
+            jrnl "Simple CLI journal" on \
             joplin "Note taking system" off \
             thunderbird "Thunderbird" off \
             graphism "Design" off \
@@ -145,10 +144,6 @@ function install_progs() {
 
             if [ $line = "at" ]; then
                 systemctl enable atd.service
-            fi
-
-            if [ $line = "dhcpcd" ]; then
-                systemctl enable dhcpcd.service
             fi
 
             if [ $line = "mariadb" ]; then
