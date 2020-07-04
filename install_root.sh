@@ -53,6 +53,7 @@ function fake_install() {
 
 function install_progs() {
     choices=$(dialog --checklist --stdout "You can here choose the programs you want, according to your own CSV file:" 0 0 0  \
+            vmware "Essentials" on \
             essential "Essentials" on \
             compression "Compression Tools" on \
             tools "Very nice tools to have (highly recommended)" on \
@@ -73,7 +74,7 @@ function install_progs() {
             sql "Mysql (mariadb) & mysql tools" on \
             thunderbird "Thunderbird" off \
             graphism "Design" off \
-            office "Office tools (Libreoffice...)" \ off
+            office "Office tools (Libreoffice...)" off \
             vmware "Vmware tools" off \
             language "Language tools" off \
             multimedia "Multimedia" off \
