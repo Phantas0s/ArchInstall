@@ -70,8 +70,9 @@ function install_progs() {
             vifm "vifm (terminal file manager)" on \
             programming "Programming environments (PHP, Ruby, Go, Docker, Clojure)" on \
             keepass "KeepassX" on \
-            notes "Note taking systems" on \
             sql "Mysql (mariadb) & mysql tools" on \
+            jrnl "Note taking systems" on \
+            joplin "Note taking system" off \
             thunderbird "Thunderbird" off \
             graphism "Design" off \
             office "Office tools (Libreoffice...)" off \
