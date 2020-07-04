@@ -58,14 +58,14 @@ function eraseDisk() {
     esac
 }
 
-if [[ "$dry_run" != true ]]; then
+if [[ "$dry_run" = false ]]; then
     eraseDisk $hderaser
     timedatectl set-ntp true
 fi
 
 dialog --infobox "Creating partitions..." 4 40
 
-if [[ "$dry_run" != true ]]; then
+if [[ "$dry_run" = false ]]; then
 #o - create a new MBR partition table
 #n - create new partition
 #p - primary partition

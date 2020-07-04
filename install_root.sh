@@ -35,7 +35,7 @@ function config_user() {
     done
 
     dialog --infobox "Adding user $name..." 4 50
-    if [ "$dry_run" != true ]; then
+    if [ "$dry_run" = false ]; then
         useradd -m -g wheel -s /bin/bash $name >> $output
         echo "$name:$pass1" | chpasswd >> $output
     fi
@@ -90,7 +90,7 @@ function install_progs() {
 
     clear
 
-    if [ "$dry_run" != true ]; then
+    if [ "$dry_run" = false ]; then
         dialog --infobox "Refreshing Arch Keyring..." 4 40
         pacman --noconfirm -Sy archlinux-keyring >> $output
 
@@ -108,7 +108,7 @@ function install_progs() {
     count=$(echo "$lines" | wc -l)
     progs=$(echo "$lines" | awk -F, {'print $2'})
 
-    if [ "$dry_run" == true ]; then
+    if [ "$dry_run" = false ]; then
         echo "$selection" >> $output
         echo "$lines" >> $output
         echo "$count" >> $output
@@ -122,7 +122,7 @@ function install_progs() {
         "Downloading and installing program $c out of $count: $line...\n\n.
         You can watch the output on tty6 (ctrl + alt + F6)." 8 70
 
-        if [ "$dry_run" != true ]; then
+        if [ "$dry_run" = false ]; then
             pacman_install $line
 
             # Needed if system installed in VMWare
@@ -158,7 +158,7 @@ function install_progs() {
 function install_user() {
     dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
     # Change user and begin the install use script
-    if [ "$dry_run" != true ]; then
+    if [ "$dry_run" = false ]; then
         sudo -u $name sh /tmp/install_user.sh
         rm -f /tmp/install_user.sh
     fi
