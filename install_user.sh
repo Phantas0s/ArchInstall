@@ -56,7 +56,7 @@ done
 if [ ! -d /home/$(whoami)/.dotfiles ];
     then
         dialog --infobox "[$(whoami)] Downloading .dotfiles..." 10 60
-        git clone --recurse-submodules https://github.com/Phantas0s/.dotfiles.git /home/$(whoami)/.dotfiles >/dev/null
+        git clone --recursive https://github.com/Phantas0s/.dotfiles.git /home/$(whoami)/.dotfiles >/dev/null
 fi
 
 dialog --infobox "[$(whoami)] Installing dotfiles..." 10 60
