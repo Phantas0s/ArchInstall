@@ -29,7 +29,6 @@ function select_device() {
 select_device
 
 dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Home. \n\n\
-    Boot will be 200M.\n\n\
     Enter partitionsize in gb, separated by space for root & swap.\n\n\
     If you dont enter anything: \n\
         root -> 60G \n\
@@ -77,11 +76,6 @@ n
 p
 
 
-+200M
-n
-p
-
-
 +${SIZE[1]}G
 n
 p
@@ -96,20 +90,15 @@ w
 EOF
 partprobe
 
-mkfs.ext4 "${hd}3"
-mkfs.ext4 "${hd}1"
+mkswap "${hd}1"
+swapon "${hd}1"
 
-mkswap "${hd}2"
-swapon "${hd}2"
-
-mount "${hd}3" /mnt
-mkdir /mnt/boot
-mount "${hd}1" /mnt/boot
+mkfs.ext4 "${hd}2"
 
 # to comment to come back to home partition encrypted
-mkfs.ext4 "${hd}4"
+mkfs.ext4 "${hd}3"
 mkdir /mnt/home
-mount "${hd}4" /mnt/home
+mount "${hd}3" /mnt/home
 
 # dialog --infobox "Encrypt /home partition..." 4 40
 
