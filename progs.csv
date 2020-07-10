@@ -127,6 +127,8 @@ multimedia,ffmpeg,Complete solution to record stream audio / video
 office,libreoffice,Office suite
 office,okular,PDF Reader
 office,scribus,Document editing software
+pandoc,pandoc,Document converter
+pandoc,textlive-most,Tex Document Production System
 firefox,firefox,Browser Firefox
 min,min,Minimum browser
 keepass,keepassx,Secure password management

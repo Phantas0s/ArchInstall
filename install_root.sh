@@ -74,6 +74,7 @@ function install_progs() {
             joplin "Note taking system" off \
             thunderbird "Thunderbird" off \
             graphism "Design" off \
+            pandoc "Pandoc and usefull dependencies" off \
             office "Office tools (Libreoffice...)" off \
             vmware "Vmware tools" off \
             language "Language tools" off \
