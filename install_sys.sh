@@ -71,19 +71,16 @@ if [[ "$dry_run" = false ]]; then
 #e - extended partition
 #w - write the table to disk and exit
 cat <<EOF | fdisk $hd
-o
+g
 n
-p
 
 
 +${SIZE[1]}G
 n
-p
 
 
 +${SIZE[0]}G
 n
-p
 
 
 w
@@ -94,6 +91,7 @@ mkswap "${hd}1"
 swapon "${hd}1"
 
 mkfs.ext4 "${hd}2"
+mount "${hd}2" /mnt
 
 # to comment to come back to home partition encrypted
 mkfs.ext4 "${hd}3"

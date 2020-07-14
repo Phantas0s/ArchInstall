@@ -2,7 +2,7 @@
 passwd
 
 # Set the timezone
-ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+timedatectl set-timezone Europe/Berlin
 
 # Set hardware clock from system clock
 hwclock --systohc
