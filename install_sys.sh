@@ -35,7 +35,7 @@ dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Ho
         swap -> 16G \n\n\
         Home will take the rest of the space available" 20 60 2> psize
 
-IFS=' ' read -ra SIZE <<< $(cat psize)
+IFS=' ' read -ra SIZE <<< $(cat psize) && rm psize
 
 number='^[0-9]+$'
 if ! [[ ${#SIZE[@]} -eq 2 ]] || ! [[ ${SIZE[0]} =~ $number ]] || ! [[ ${SIZE[1]} =~ $number ]] ; then
@@ -129,8 +129,8 @@ curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chro
 arch-chroot /mnt bash install_chroot.sh
 rm /mnt/install_chroot.sh
 
-cat comp > /mnt/etc/hostname \
-    && rm comp
+cat comp > /mnt/etc/hostname && echo -e "127.0.0.1\t$(cat comp).localdomain $(cat comp)" && rm comp
+
 fi
 
 dialog --title "Reboot time" \
