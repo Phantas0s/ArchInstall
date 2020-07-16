@@ -17,8 +17,10 @@ echo "LANG=en_US.UTF-8" > /etc/locale.conf
 pacman --noconfirm --needed -S dialog
 dialog --infobox "Install grub for boot..." 4 40
 
-# Install boot
-pacman --noconfirm --needed -S grub && grub-install --target=i386-pc /dev/sda && grub-mkconfig -o /boot/grub/grub.cfg >/dev/null
+# Install GRUB
+pacman --noconfirm --needed -S grub && grub-install --target=i386-pc /dev/sda
+# Generate GRUM main config
+grub-mkconfig -o /boot/grub/grub.cfg >/dev/null
 
 # For encrypted home
 # sed -i -e 's/GRUB_CMDLINE_LINUX="\(.\+\)"/GRUB_CMDLINE_LINUX="\1 cryptdevice=\/dev\/sda4:crypt"/g' -e 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cryptdevice=\/dev\/sda4:crypt"/g' /etc/default/grub

@@ -75,6 +75,10 @@ g
 n
 
 
++512M
+n
+
+
 +${SIZE[1]}G
 n
 
@@ -87,16 +91,16 @@ w
 EOF
 partprobe
 
-mkswap "${hd}1"
-swapon "${hd}1"
+mkswap "${hd}2"
+swapon "${hd}2"
 
-mkfs.ext4 "${hd}2"
-mount "${hd}2" /mnt
+mkfs.ext4 "${hd}3"
+mount "${hd}3" /mnt
 
 # to comment to come back to home partition encrypted
-mkfs.ext4 "${hd}3"
+mkfs.ext4 "${hd}4"
 mkdir /mnt/home
-mount "${hd}3" /mnt/home
+mount "${hd}4" /mnt/home
 
 # dialog --infobox "Encrypt /home partition..." 4 40
 
