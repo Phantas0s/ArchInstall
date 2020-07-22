@@ -1,16 +1,11 @@
-vmware,open-vm-tools,vmware tools
-vmware,xf86-video-vmware,vmware video
-vmware,xf86-input-vmmouse,vmware mouse
 essential,mesa-libgl,opengl
-essential,xorg-server,Display server
+essential,xorg,Display server boot
 essential,xorg-xinit,Display server boot
-essential,xorg-apps,Display server utilities
-essential,wpa_supplicant,Cross plateform supplicant for WIFI
 essential,man,Manual
 essential,man-pages,Manual pages
 essential,openssh,Remote login tool for SSH protocol
-essential,openssh,Remote login tool for SSH protocol
 zsh,zsh,Unix shell (Z-Shell)
+network,wpa_supplicant,Cross plateform supplicant for WIFI
 network,iw,Utility for wireless devices
 network,netctl,Network manager
 network,dhcpcd,dhcp client
@@ -133,3 +128,6 @@ firefox,firefox,Browser Firefox
 min,min,Minimum browser
 keepass,keepassx,Secure password management
 thunderbird,thunderbird,Thunderbird
+vmware,open-vm-tools,vmware tools
+vmware,xf86-video-vmware,vmware video
+vmware,xf86-input-vmmouse,vmware mouse
