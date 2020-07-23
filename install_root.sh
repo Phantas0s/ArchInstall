@@ -20,27 +20,6 @@ dialog --infobox "Get necessary files..." 4 40
     curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_user.sh > /tmp/install_user.sh;
     curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers_tmp > /etc/sudoers
 
-function config_user() {
-    dialog --title "Welcome!" --msgbox "Welcome to Phantas0s dotfiles and software installation script for Arch linux.\n" 10 60
-
-    name=$(dialog --no-cancel --inputbox "First, please enter your username" 10 60 --output-fd 1)
-    pass1=$(dialog --no-cancel --passwordbox "Enter your password" 10 60 --output-fd 1)
-    pass2=$(dialog --no-cancel --passwordbox "Enter your password again. To be sure..." 10 60 --output-fd 1)
-
-    while [ $pass1 != $pass2 ]
-    do
-        pass1=$(dialog --no-cancel --passwordbox "Passwords do not match.\n\nEnter password again." 10 60 --output-fd 1)
-        pass2=$(dialog --no-cancel --passwordbox "Retype password." 10 60 --output-fd 1)
-        unset pass2
-    done
-
-    dialog --infobox "Adding user $name..." 4 50
-    if [ "$dry_run" = false ]; then
-        useradd -m -g wheel -s /bin/bash $name >> $output
-        echo "$name:$pass1" | chpasswd >> $output
-    fi
-}
-
 function pacman_install() {
     ((pacman --noconfirm --needed -S $1 &> $output && echo $1 installed!) \
     || echo $1 >> /tmp/aur_queue) \
@@ -52,6 +31,8 @@ function fake_install() {
 }
 
 function install_progs() {
+    dialog --title "Welcome!" --msgbox "Welcome to Phantas0s dotfiles and software installation script for Arch linux.\n" 10 60
+
     choices=$(dialog --checklist --stdout "You can here choose the programs you want, according to your own CSV file:" 0 0 0  \
             essential "Essentials" on \
             compression "Compression Tools" on \
