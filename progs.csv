@@ -1,10 +1,9 @@
 essential,mesa-libgl,opengl
-essential,xorg,Display server boot
+essential,xorg,X server
 essential,xorg-xinit,Display server boot
 essential,man,Manual
 essential,man-pages,Manual pages
 essential,openssh,Remote login tool for SSH protocol
-zsh,zsh,Unix shell (Z-Shell)
 network,wpa_supplicant,Cross plateform supplicant for WIFI
 network,iw,Utility for wireless devices
 network,netctl,Network manager
@@ -90,6 +89,7 @@ programming,racket,Language Racket
 sql,mariadb,Implementation of Mysql
 sql,mycli,command line interface for MySQL (AUR)
 sql,litecli,command line interface for SQLite
+zsh,zsh,Unix shell (Z-Shell)
 neovim,neovim,Editor... and much more
 neovim,python-neovim,Python for neovim
 neovim,python2-neovim,Python2 for neovim
