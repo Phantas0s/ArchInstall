@@ -45,8 +45,8 @@ function config_user() {
     done
 
     dialog --infobox "Adding user $name..." 4 50
-    useradd -m -g wheel -s /bin/bash $name >> $output
-    echo "$name:$pass1" | chpasswd >> $output
+    useradd -m -g wheel -s /bin/bash $name
+    echo "$name:$pass1" | chpasswd
 }
 
 config_user
