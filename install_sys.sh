@@ -12,6 +12,9 @@ do
     esac
 done
 
+pacman -Sy
+pacman --noconfirm -S dialog
+
 dialog --defaultno \
     --title "Are you sure?" \
     --yesno "This is my personnal arch linux install. \n\n\
