@@ -19,14 +19,12 @@ dialog --defaultno --title "Are you sure?" --yesno "This is my personnal arch li
 
 dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 
-hd=${hd:-/dev/sda}
-function select_device() {
-    devices_list=($(lsblk -d | awk '{print "/dev/" $1 " " $4 " off"}' | grep -E 'sd|hd|vd|nvme|mmcblk' | sed -e "s/off/on/"))
-    hd=$(dialog --title "Choose your hard drive" --no-cancel \
-        --radiolist --stdout "Where do you want to install your new system?\n\nSelect with SPACE, valid with ENTER.\n\nWARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 ${devices_list[@]} --output-fd 1)
-}
-
-select_device
+devices_list=($(lsblk -d | awk '{print "/dev/" $1 " " $4 " off"}' | grep -E 'sd|hd|vd|nvme|mmcblk' | sed "s/off/on/"))
+dialog --title "Choose your hard drive" --no-cancel --radiolist \
+    "Where do you want to install your new system?\n\n\
+    Select with SPACE, valid with ENTER.\n\n\
+    WARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 ${devices_list[@]} 2> hd
+hd=$(cat hd); rm hd
 
 dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Home. \n\n\
     Enter partitionsize in gb, separated by space for root & swap.\n\n\
