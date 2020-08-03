@@ -78,11 +78,7 @@ n
 n
 
 
-+${SIZE[1]}G
-n
-
-
-+${SIZE[0]}G
++${size}G
 n
 
 
