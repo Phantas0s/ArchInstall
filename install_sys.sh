@@ -28,14 +28,16 @@ dialog --title "Choose your hard drive" --no-cancel --radiolist \
     WARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 ${devices_list[@]} 2> hd
 hd=$(cat hd); rm hd
 
-defaultSwap="8"
-dialog --no-cancel --inputbox "You need four partitions: Boot, Root and Swap \n\n\
+default_size="8"
+dialog --no-cancel --inputbox "You need four partitions: Boot, Root and Swap \n\
+    The boot will be 512M\n\
+    The root will be the rest of the hard disk\n\
     Enter partitionsize in gb for the Swap. \n\n\
     If you dont enter anything: \n\
-        swap -> ${defaultSwap}G \n\n" 20 60 2> psize
+        swap -> ${default_size}G \n\n" 20 60 2> swap_size
 
-size=$(cat psize) && rm psize
-[[ $size =~ ^[0-9]+$ ]] || size=$defaultSwap
+size=$(cat swap_size) && rm swap_size
+[[ $size =~ ^[0-9]+$ ]] || size=$default_size
 
 dialog --no-cancel \
     --title "!!! DELETE EVERYTHING !!!" \
@@ -44,7 +46,7 @@ dialog --no-cancel \
     2 "Use schred (slow & secure)" \
     3 "No need - my hard disk is empty" 2> eraser
 
-hderaser=(cat eraser); rm eraser
+hderaser=$(cat eraser); rm eraser
 
 function eraseDisk() {
     case $1 in
