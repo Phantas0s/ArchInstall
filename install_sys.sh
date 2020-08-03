@@ -12,7 +12,9 @@ do
     esac
 done
 
-dialog --defaultno --title "Are you sure?" --yesno "This is my personnal arch linux install. \n\n\
+dialog --defaultno \
+    --title "Are you sure?" \
+    --yesno "This is my personnal arch linux install. \n\n\
     It will just DESTROY EVERYTHING on the hard disk of your choice. \n\n\
     Don't say YES if you are not sure about what your are doing! \n\n\
     Are you sure?"  15 60 || exit
@@ -26,26 +28,23 @@ dialog --title "Choose your hard drive" --no-cancel --radiolist \
     WARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 ${devices_list[@]} 2> hd
 hd=$(cat hd); rm hd
 
-dialog --no-cancel --inputbox "You need four partitions: Boot, Swap, Root and Home. \n\n\
-    Enter partitionsize in gb, separated by space for root & swap.\n\n\
+defaultSwap="8"
+dialog --no-cancel --inputbox "You need four partitions: Boot, Root and Swap \n\n\
+    Enter partitionsize in gb for the Swap. \n\n\
     If you dont enter anything: \n\
-        root -> 60G \n\
-        swap -> 16G \n\n\
-        Home will take the rest of the space available" 20 60 2> psize
+        swap -> ${defaultSwap}G \n\n" 20 60 2> psize
 
-IFS=' ' read -ra SIZE <<< $(cat psize) && rm psize
+size=$(cat psize) && rm psize
+[[ $size =~ ^[0-9]+$ ]] || size=$defaultSwap
 
-number='^[0-9]+$'
-if ! [[ ${#SIZE[@]} -eq 2 ]] || ! [[ ${SIZE[0]} =~ $number ]] || ! [[ ${SIZE[1]} =~ $number ]] ; then
-    SIZE=(60 16);
-fi
-
-hderaser=$(dialog --no-cancel \
+dialog --no-cancel \
     --title "!!! DELETE EVERYTHING !!!" \
     --menu "Choose the way to destroy everything on your hard disk ($hd)" 15 60 4 \
     1 "Use dd (wipe all disk)" \
     2 "Use schred (slow & secure)" \
-    3 "No need - my hard disk is empty" --output-fd 1)
+    3 "No need - my hard disk is empty" 2> eraser
+
+hderaser=(cat eraser); rm eraser
 
 function eraseDisk() {
     case $1 in
