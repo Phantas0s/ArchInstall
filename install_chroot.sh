@@ -45,10 +45,8 @@ function config_user() {
     done
 
     dialog --infobox "Adding user $name..." 4 50
-    if [ "$dry_run" = false ]; then
-        useradd -m -g wheel -s /bin/bash $name >> $output
-        echo "$name:$pass1" | chpasswd >> $output
-    fi
+    useradd -m -g wheel -s /bin/bash $name >> $output
+    echo "$name:$pass1" | chpasswd >> $output
 }
 
 config_user
