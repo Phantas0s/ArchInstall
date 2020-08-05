@@ -96,10 +96,10 @@ swapon "${hd}2"
 mkfs.ext4 "${hd}3"
 mount "${hd}3" /mnt
 
-# to comment to come back to home partition encrypted
-mkfs.ext4 "${hd}4"
-mkdir /mnt/home
-mount "${hd}4" /mnt/home
+# home
+# mkfs.ext4 "${hd}4"
+# mkdir /mnt/home
+# mount "${hd}4" /mnt/home
 
 # dialog --infobox "Encrypt /home partition..." 4 40
 
@@ -123,6 +123,8 @@ mount "${hd}4" /mnt/home
 # mkdir /mnt/home
 # mount /dev/mapper/home /mnt/home
 
+cat comp > /mnt/etc/hostname && echo "127.0.0.1    $(cat comp).localdomain $(cat comp)" >> /etc/hosts && rm comp
+
 pacstrap /mnt base base-devel linux linux-firmware
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -131,8 +133,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh
 arch-chroot /mnt bash install_chroot.sh
 rm /mnt/install_chroot.sh
-
-cat comp > /mnt/etc/hostname && echo -e "127.0.0.1\t$(cat comp).localdomain $(cat comp)" && rm comp
 
 fi
 
