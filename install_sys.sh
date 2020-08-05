@@ -38,8 +38,8 @@ dialog --no-cancel --inputbox "You need four partitions: Boot, Root and Swap \n\
     Enter partitionsize in gb for the Swap. \n\n\
     If you dont enter anything: \n\
         swap -> ${default_size}G \n\n" 20 60 2> swap_size
-
 size=$(cat swap_size) && rm swap_size
+
 [[ $size =~ ^[0-9]+$ ]] || size=$default_size
 
 dialog --no-cancel \
@@ -64,10 +64,8 @@ if [[ "$dry_run" = false ]]; then
     timedatectl set-ntp true
 fi
 
-dialog --infobox "Creating partitions..." 4 40
-
 if [[ "$dry_run" = false ]]; then
-#o - create a new MBR partition table
+#g - create non empty GPT partition table
 #n - create new partition
 #p - primary partition
 #e - extended partition
