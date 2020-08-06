@@ -1,9 +1,9 @@
 uefi=$(cat /var_uefi) && hd=$(cat /var_hd) && rm hd uefi
 
-pacman -S --no-confirm grub
+pacman -S --noconfirm grub
 
 if [[ $uefi == 1 ]]; then
-    pacman -S --no-confirm efibootmgr
+    pacman -S --noconfirm efibootmgr
     grub-install --target=x86_64-efi --bootloader-id=GRUB --efi-directory=/boot/efi
 else
     grub-install $hd
@@ -48,8 +48,7 @@ function config_user() {
         dialog --no-cancel --passwordbox "Retype password." 10 60 2> pass2
     done
     name=$(cat name)
-    $pass1=$(cat pass1)
-    $pass2=$(cat pass2)
+    pass1=$(cat pass1)
 
     rm name pass1 pass2
 
