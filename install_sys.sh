@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# TODO redirect output
 dry_run=${dry_run:-false}
+uefi=${uefi:-false}
+
+# TODO redirect output?
 output=${output:-/tmp/arch-install-logs}
 while getopts d:o: option
 do
@@ -24,6 +26,11 @@ dialog --defaultno \
 
 dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 
+# Verify boot (UEFI or BIOS)
+uefi=0
+ls /sys/firmware/efi/efivars 2> /dev/null && uefi=1
+
+# Find and display available disks where Arch Linux can be installed
 devices_list=($(lsblk -d | awk '{print "/dev/" $1 " " $4 " off"}' | grep -E 'sd|hd|vd|nvme|mmcblk' | sed "s/off/on/"))
 dialog --title "Choose your hard drive" --no-cancel --radiolist \
     "Where do you want to install your new system?\n\n\
@@ -64,6 +71,9 @@ if [[ "$dry_run" = false ]]; then
     timedatectl set-ntp true
 fi
 
+boot_partition_type=1
+[[ "$uefi" == 0 ]] && boot_partition_type=4
+
 if [[ "$dry_run" = false ]]; then
 #g - create non empty GPT partition table
 #n - create new partition
@@ -77,7 +87,7 @@ n
 
 +512M
 t
-4
+$boot_partition_type
 n
 
 
@@ -90,38 +100,13 @@ w
 EOF
 partprobe
 
+[[ "$uefi" == 1 ]] && mkfs.fat -F32 "${hd}1"
+
 mkswap "${hd}2"
 swapon "${hd}2"
 
 mkfs.ext4 "${hd}3"
 mount "${hd}3" /mnt
-
-# home
-# mkfs.ext4 "${hd}4"
-# mkdir /mnt/home
-# mount "${hd}4" /mnt/home
-
-# dialog --infobox "Encrypt /home partition..." 4 40
-
-# mkdir /mnt/etc/
-# mkdir -m 700 /mnt/etc/luks-keys
-# dd if=/dev/random of=/mnt/etc/luks-keys/home bs=1 count=256
-# cat << EOF | cryptsetup --cipher aes-xts-plain64\
-#     --key-size 512\
-#     --hash sha512\
-#     --iter-time 5000\
-#     --use-random\
-#     luksFormat\
-#     /dev/sda4 \
-#     /mnt/etc/luks-keys/home
-# YES
-# EOF
-
-# cryptsetup -d /mnt/etc/luks-keys/home open /dev/sda4 home
-
-# mkfs.ext4 /dev/mapper/home
-# mkdir /mnt/home
-# mount /dev/mapper/home /mnt/home
 
 cat comp > /mnt/etc/hostname && echo "127.0.0.1    $(cat comp).localdomain $(cat comp)" >> /etc/hosts && rm comp
 
