@@ -1,4 +1,4 @@
-uefi=$(cat /mnt/tmp/uefi) && hd=$(cat /mnt/tmp/hd) && rm hd uefi
+uefi=$(cat /tmp/uefi) && hd=$(cat /tmp/hd) && rm hd uefi
 
 pacman -S --no-confirm grub
 
