@@ -117,12 +117,15 @@ pacstrap /mnt base base-devel linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Save some variables in files for next script
-echo $uefi > /mnt/tmp/uefi
-echo $hd > /mnt/tmp/hd
+echo $uefi > /mnt/var_uefi
+echo $hd > /mnt/var_hd
 
 ### Continue installation
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh
 arch-chroot /mnt bash install_chroot.sh
+
+rm /mnt/var_uefi
+rm /mnt/var_hd
 rm /mnt/install_chroot.sh
 
 fi
