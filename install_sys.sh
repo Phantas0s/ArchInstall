@@ -1,8 +1,6 @@
 #!/bin/bash
 
 dry_run=${dry_run:-false}
-uefi=${uefi:-false}
-
 # TODO redirect output?
 output=${output:-/tmp/arch-install-logs}
 while getopts d:o: option
@@ -100,19 +98,27 @@ w
 EOF
 partprobe
 
-[[ "$uefi" == 1 ]] && mkfs.fat -F32 "${hd}1"
-
 mkswap "${hd}2"
 swapon "${hd}2"
 
 mkfs.ext4 "${hd}3"
 mount "${hd}3" /mnt
 
+if [[ "$uefi" == 1 ]]; then
+    mkfs.fat -F32 "${hd}1"
+    mkdir -p /mnt/boot/efi
+    mount ${hd}1 /mnt/boot/efi
+fi
+
 cat comp > /mnt/etc/hostname && echo "127.0.0.1    $(cat comp).localdomain $(cat comp)" >> /etc/hosts && rm comp
 
 pacstrap /mnt base base-devel linux linux-firmware
 
 genfstab -U /mnt >> /mnt/etc/fstab
+
+# Save some variables in files for next script
+echo $uefi > uefi
+echo $hd > hd
 
 ### Continue installation
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh

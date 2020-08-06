@@ -1,4 +1,10 @@
-# LUCKS encryption (install_sys when formatting partitions)
+#
+#
+# +-----------------------------------------------------------+
+# | LUCKS encryption (install_sys when formatting partitions) |
+# +-----------------------------------------------------------+
+#
+#
 
 # home
 # mkfs.ext4 "${hd}4"
@@ -26,3 +32,19 @@
 # mkfs.ext4 /dev/mapper/home
 # mkdir /mnt/home
 # mount /dev/mapper/home /mnt/home
+
+# In install_chroot
+
+# For encrypted home
+# sed -i -e 's/GRUB_CMDLINE_LINUX="\(.\+\)"/GRUB_CMDLINE_LINUX="\1 cryptdevice=\/dev\/sda4:crypt"/g' -e 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cryptdevice=\/dev\/sda4:crypt"/g' /etc/default/grub
+
+# To boot with encrypted home
+# echo "home /dev/sda4 /etc/luks-keys/home" >> /etc/crypttab
+# echo "/dev/mapper/home      /home               ext4    defaults,errors=remount-ro  0  2" >> /etc/fstab
+
+
+#######################
+
+
+
+
