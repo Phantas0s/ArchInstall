@@ -1,5 +1,7 @@
 #!/bin/bash
 
+name=$(cat user_name)
+
 dry_run=${dry_run:-false}
 output=${output:-/tmp/arch-install-logs}
 progs_path=${progs_path:-/tmp/progs.csv}

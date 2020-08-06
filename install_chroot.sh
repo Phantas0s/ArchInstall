@@ -68,6 +68,10 @@ config_user root
 dialog --title "Add User" --msgbox "We can't always be root. Too many responsibilities. Let's create another user." 10 60
 config_user
 
+echo $name > user_name
+
 dialog --title "Continue installation" --yesno "Do you want to install all the softwares and the dotfiles?" 10 60 \
     && curl -LO https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_root.sh \
     && sh ./install_root.sh
+
+rm user_name
