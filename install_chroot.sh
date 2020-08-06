@@ -20,17 +20,11 @@ hwclock --systohc
 # Configure locale
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
-
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
 # Install dialog for chroot
-pacman --noconfirm --needed -S dialog
-dialog --infobox "Install grub for boot..." 4 40
-
-# Install GRUB
-pacman --noconfirm --needed -S grub && grub-install --target=i386-pc /dev/sda
-# Generate GRUM main config
-grub-mkconfig -o /boot/grub/grub.cfg >/dev/null
+# TODO not sure if we need that - we install it now at the beginning
+# pacman --noconfirm --needed -S dialog
 
 function config_user() {
     if [[ -z $1 ]]; then
