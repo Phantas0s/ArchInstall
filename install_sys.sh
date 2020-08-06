@@ -73,6 +73,8 @@ boot_partition_type=1
 [[ "$uefi" == 0 ]] && boot_partition_type=4
 
 if [[ "$dry_run" = false ]]; then
+
+partprobe $hd
 #g - create non empty GPT partition table
 #n - create new partition
 #p - primary partition
@@ -96,7 +98,7 @@ n
 
 w
 EOF
-partprobe
+partprobe $hd
 
 mkswap "${hd}2"
 swapon "${hd}2"
