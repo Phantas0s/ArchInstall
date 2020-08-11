@@ -40,13 +40,11 @@ tools,pv,Display progress bar through pipeline
 tools,the_silver_searcher,A fast code searching tool
 tools,bat,A cat clone with winds
 tools,noto-fonts-cjk,Fonts for asian display
-tools,at,Take command input which is executed as a later time
 tools,whois,Display web domain information
 tools,time,Measure time takes a specific command
 tools,downgrader,Utility to downgrad Arch packages (AUR)
 tools,simple-mtpfs,Can mount MTP filesystems (thanks Android) (AUR)
 tools,scrot,Screenshot software for i3lock
-tools,libnotify,Notifier
 tools,xclip,CLI to Clipboard
 tools,redshift,Adjust color of screen
 tools,udiskie,Automount devices
@@ -68,7 +66,8 @@ i3,feh,X11 image viewer
 i3,xdg-utils,Allow application to interact with the desktop
 i3,arc-gtk-theme,Desktop themes
 i3,gtk-theme-arc-red,Desktop theme... but in red! (AUR)
-i3,dunst,Notification system
+notify,dunst,Notification system
+notify,libnotify,Notifier
 programming,php,PHP programming language
 programming,regexxer,Search/replace tool featuring Perl-style regular expressions
 programming,composer,Dependency management for PHP

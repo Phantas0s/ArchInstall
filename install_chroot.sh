@@ -1,5 +1,6 @@
 uefi=$(cat /var_uefi) && hd=$(cat /var_hd)
 
+pacman --noconfirm --needed -S dialog
 pacman -S --noconfirm grub
 
 if [[ $uefi == 1 ]]; then
@@ -21,10 +22,6 @@ hwclock --systohc
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
-
-# Install dialog for chroot
-# TODO not sure if we need that - we install it now at the beginning
-# pacman --noconfirm --needed -S dialog
 
 function config_user() {
     if [[ -z $1 ]]; then
@@ -65,5 +62,5 @@ config_user
 echo $name > /tmp/user_name
 
 dialog --title "Continue installation" --yesno "Do you want to install all the softwares and the dotfiles?" 10 60 \
-    && curl -LO https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_root.sh \
-    && sh ./install_root.sh
+    && curl -LO https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_apps.sh \
+    && sh ./install_apps.sh

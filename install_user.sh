@@ -1,11 +1,11 @@
 #!/bin/bash
 
 dialog --infobox "[$(whoami)] Create base folders" 10 60
-mkdir -p /home/$(whoami)/Documents/ >/dev/null
-mkdir -p /home/$(whoami)/Downloads/ >/dev/null
+mkdir -p /home/$(whoami)/Documents
+mkdir -p /home/$(whoami)/Downloads
 
-mkdir -p /home/$(whoami)/workspace/ >/dev/null
-mkdir -p /home/$(whoami)/composer/ >/dev/null
+mkdir -p /home/$(whoami)/workspace
+mkdir -p /home/$(whoami)/composer
 
 command -v "go" >/dev/null && mkdir -p /home/$(whoami)/workspace/go/bin >/dev/null
 command -v "go" >/dev/null && mkdir -p /home/$(whoami)/workspace/go/pkg >/dev/null
@@ -31,10 +31,7 @@ aur_check() {
     qm=$(pacman -Qm | awk '{print $1}')
     for arg in "$@"
     do
-        if [[ $qm = *"$arg"* ]]; then
-            echo $arg is already installed.
-        else
-            echo $arg not installed.
+        if [[ $qm != *"$arg"* ]]; then
             yay --noconfirm -S $arg >/dev/null || aur_install $arg
         fi
     done
@@ -63,7 +60,6 @@ dialog --infobox "[$(whoami)] Installing dotfiles..." 10 60
 cd /home/$(whoami)/.dotfiles
 
 (command -v "zsh" >/dev/null && zsh ./install.sh -y) || sh ./install.sh -y
-cd -
 
 # TODO doesn't really work... to fix
 # dialog --infobox "[$(whoami)] Install composer global tools" 10 60
