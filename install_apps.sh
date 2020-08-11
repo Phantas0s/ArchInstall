@@ -15,11 +15,11 @@ do
     esac
 done
 
-local apps_path="/tmp/apps.csv"
+apps_path="/tmp/apps.csv"
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/apps.csv > $apps_path
 
 function pacman_install() {
-    ((pacman --noconfirm --needed -S $1 &> $output && echo $1 installed!) \
+    ((pacman --noconfirm --needed -S $1 &> $output) \
     || echo $1 >> /tmp/aur_queue) \
     || echo $1 >> /tmp/arch_install_failed ;
 }
@@ -69,11 +69,9 @@ lines=$(cat "$apps_path" | grep -E "$selection")
 count=$(echo "$lines" | wc -l)
 apps=$(echo "$lines" | awk -F, {'print $2'})
 
-if [ "$dry_run" = false ]; then
-    echo "$selection" >> $output
-    echo "$lines" >> $output
-    echo "$count" >> $output
-fi
+echo "$selection" >> $output
+echo "$lines" >> $output
+echo "$count" >> $output
 
 if [ "$dry_run" = false ]; then
     pacman -Syu --noconfirm >> $output
