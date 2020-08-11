@@ -31,37 +31,37 @@ function fake_install() {
 dialog --title "Welcome!" --msgbox "Welcome to Phantas0s dotfiles and software installation script for Arch linux.\n" 10 60
 
 apps=("essential" "Essentials" on
-        "compression" "Compression Tools" on
-        "tools" "Very nice tools to have (highly recommended)" on
-        "git" "Git & git tools" on
-        "i3" "i3 Tile manager & Desktop" on
-        "tmux" "Tmux" on
-        "neovim" "Neovim" on
-        "keyring" "Keyring applications" on
-        "urxvt" "Urxvt unicode" on
-        "zsh" "Unix Z-Shell (zsh)" on
-        "ripgrep" "Ripgrep" on \
-        "firefox" "Firefox (browser)" on
-        "min" "Min (browser)" on
-        "vifm" "vifm (terminal file manager)" on
-        "programming" "Programming environments (PHP, Ruby, Go, Docker, Clojure)" on
-        "keepass" "KeepassX" on
-        "sql" "Mysql (mariadb) & mysql tools" on
-        "jrnl" "Simple CLI journal" on
-        "joplin" "Note taking system" off
-        "thunderbird" "Thunderbird" off
-        "graphism" "Design" off
-        "pandoc" "Pandoc and usefull dependencies" off
-        "office" "Office tools (Libreoffice...)" off
-        "vmware" "Vmware tools" off
-        "language" "Language tools" off
-        "multimedia" "Multimedia" off
-        "nextcloud" "Nextcloud client" off
-        "network" "Network Configuration" off
-        "hugo" "Hugo static site generator" off
-        "freemind" "Freemind - mind mapping software" off)
+      "compression" "Compression Tools" on
+      "tools" "Very nice tools to have (highly recommended)" on
+      "git" "Git & git tools" on
+      "i3" "i3 Tile manager & Desktop" on
+      "tmux" "Tmux" on
+      "neovim" "Neovim" on
+      "keyring" "Keyring applications" on
+      "urxvt" "Urxvt unicode" on
+      "zsh" "Unix Z-Shell (zsh)" on
+      "ripgrep" "Ripgrep" on \
+      "firefox" "Firefox (browser)" on
+      "min" "Min (browser)" on
+      "vifm" "vifm (terminal file manager)" on
+      "programming" "Programming environments (PHP, Ruby, Go, Docker, Clojure)" on
+      "keepass" "KeepassX" on
+      "sql" "Mysql (mariadb) & mysql tools" on
+      "jrnl" "Simple CLI journal" on
+      "joplin" "Note taking system" off
+      "thunderbird" "Thunderbird" off
+      "graphism" "Design" off
+      "pandoc" "Pandoc and usefull dependencies" off
+      "office" "Office tools (Libreoffice...)" off
+      "vmware" "Vmware tools" off
+      "language" "Language tools" off
+      "multimedia" "Multimedia" off
+      "nextcloud" "Nextcloud client" off
+      "network" "Network Configuration" off
+      "hugo" "Hugo static site generator" off
+      "freemind" "Freemind - mind mapping software" off)
 
-dialog --checklist "You can here choose the programs you want, according to your own CSV file:" 0 0 0 $apps 2> app_choices
+dialog --checklist "You can here choose the application to install, according to your CSV file:" 0 0 0 "${apps[@]}" 2> app_choices
 choices=$(cat app_choices) && rm app_choices
 
 selection="^$(echo $choices | sed -e 's/ /,|^/g'),"
