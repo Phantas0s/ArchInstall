@@ -50,7 +50,8 @@ do
     aur_check $prog >/dev/null
 done
 
-DOTFILES=/home/$(whoami)/.dotfiles
+source /home/$(whoami)/.dotfiles/zsh/.zshenv
+
 if [ ! -d $DOTFILES ];
     then
         dialog --infobox "[$(whoami)] Downloading .dotfiles..." 10 60
