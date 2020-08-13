@@ -32,7 +32,7 @@ aur_check() {
     for arg in "$@"
     do
         if [[ $qm != *"$arg"* ]]; then
-            yay --noconfirm -S $arg >/dev/null || aur_install $arg
+            yay --noconfirm -S $arg &> /dev/null || aur_install $arg
         fi
     done
 }
@@ -47,7 +47,7 @@ for prog in $(cat /tmp/aur_queue)
 do
     c=$((c+1))
     dialog --infobox "[$(whoami)] AUR install - Downloading and installing program $c out of $count: $prog..." 10 60
-    aur_check $prog >/dev/null
+    aur_check $prog
 done
 
 
@@ -55,7 +55,7 @@ DOTFILES=/home/$(whoami)/.dotfiles
 if [ ! -d $DOTFILES ];
     then
         dialog --infobox "[$(whoami)] Downloading .dotfiles..." 10 60
-        git clone --recursive https://github.com/Phantas0s/.dotfiles.git $DOTFILES >/dev/null
+        git clone --recurse-submodules https://github.com/Phantas0s/.dotfiles.git $DOTFILES >/dev/null
 fi
 
 source /home/$(whoami)/.dotfiles/zsh/zshenv
