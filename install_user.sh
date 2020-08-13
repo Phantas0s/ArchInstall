@@ -58,9 +58,8 @@ if [ ! -d $DOTFILES ];
         git clone --recursive https://github.com/Phantas0s/.dotfiles.git $DOTFILES >/dev/null
 fi
 
-source /home/$(whoami)/.dotfiles/zsh/.zshenv
+source /home/$(whoami)/.dotfiles/zsh/zshenv
 cd $DOTFILES
-
 (command -v "zsh" >/dev/null && zsh ./install.sh -y) || sh ./install.sh -y
 
 # TODO doesn't really work... to fix
