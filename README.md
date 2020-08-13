@@ -1,7 +1,6 @@
 # Phantas0s Arch Install
 
 [![Mousless Development Environment](screen_780.png)](screen.png)
-*Click to get a bigger picture*
 
 This is my scripts to install my whole Mouseless Development Environment.
 
