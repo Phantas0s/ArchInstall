@@ -112,7 +112,8 @@ if [[ "$uefi" == 1 ]]; then
     mount ${hd}1 /mnt/boot/efi
 fi
 
-cat comp > /mnt/etc/hostname && echo "127.0.0.1    $(cat comp).localdomain $(cat comp)" >> /etc/hosts && rm comp
+# TODO doesn't work
+cat comp > /mnt/etc/hostname && rm comp
 
 pacstrap /mnt base base-devel linux linux-firmware
 
