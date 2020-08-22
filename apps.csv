@@ -86,6 +86,7 @@ programming,vint,Linter for VimScript
 programming,rlwrap,Intercepting user input (used for Clojure cli)
 programming,leiningen,REPL for Clojure
 programming,racket,Language Racket
+programming,shellcheck-bin,linter for the shell (AUR)
 sql,mariadb,Implementation of Mysql
 sql,mycli,command line interface for MySQL (AUR)
 sql,litecli,command line interface for SQLite

@@ -98,7 +98,7 @@ n
 
 w
 EOF
-partprobe $hd
+partprobe "$hd"
 
 mkswap "${hd}2"
 swapon "${hd}2"
@@ -109,7 +109,7 @@ mount "${hd}3" /mnt
 if [[ "$uefi" == 1 ]]; then
     mkfs.fat -F32 "${hd}1"
     mkdir -p /mnt/boot/efi
-    mount ${hd}1 /mnt/boot/efi
+    mount "${hd}1" "/mnt/boot/efi"
 fi
 
 # TODO doesn't work
@@ -121,7 +121,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 # Save some variables in files for next script
 echo $uefi > /mnt/var_uefi
-echo $hd > /mnt/var_hd
+echo "$hd" > /mnt/var_hd
 
 ### Continue installation
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh
