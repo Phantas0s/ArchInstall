@@ -29,11 +29,11 @@ uefi=0
 ls /sys/firmware/efi/efivars 2> /dev/null && uefi=1
 
 # Find and display available disks where Arch Linux can be installed
-devices_list=($(lsblk -d | awk '{print "/dev/" $1 " " $4 " off"}' | grep -E 'sd|hd|vd|nvme|mmcblk' | sed "s/off/on/"))
+devices_list=($(lsblk -d | awk '{print "/dev/" $1 " " $4 " on"}' | grep -E 'sd|hd|vd|nvme|mmcblk'))
 dialog --title "Choose your hard drive" --no-cancel --radiolist \
     "Where do you want to install your new system?\n\n\
     Select with SPACE, valid with ENTER.\n\n\
-    WARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 ${devices_list[@]} 2> hd
+    WARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 "${devices_list[@]}" 2> hd
 hd=$(cat hd); rm hd
 
 default_size="8"
