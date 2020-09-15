@@ -58,14 +58,14 @@ hderaser=$(cat eraser); rm eraser
 
 function eraseDisk() {
     case $1 in
-        1) dd if=/dev/zero of=$hd status=progress 2>&1 | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
-        2) shred -v $hd | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
+        1) dd if=/dev/zero of="$hd" status=progress 2>&1 | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
+        2) shred -v "$hd" | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
         3) ;;
     esac
 }
 
 if [[ "$dry_run" = false ]]; then
-    eraseDisk $hderaser
+    eraseDisk "$hderaser"
     timedatectl set-ntp true
 fi
 
@@ -74,13 +74,13 @@ boot_partition_type=1
 
 if [[ "$dry_run" = false ]]; then
 
-partprobe $hd
 #g - create non empty GPT partition table
 #n - create new partition
 #p - primary partition
 #e - extended partition
 #w - write the table to disk and exit
-cat <<EOF | fdisk $hd
+partprobe "$hd"
+fdisk "$hd" <<EOF
 g
 n
 
