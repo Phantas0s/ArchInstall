@@ -106,10 +106,10 @@ swapon "${hd}2"
 mkfs.ext4 "${hd}3"
 mount "${hd}3" /mnt
 
-if [[ "$uefi" == 1 ]]; then
+if [ "$uefi" = 1 ]; then
     mkfs.fat -F32 "${hd}1"
     mkdir -p /mnt/boot/efi
-    mount "${hd}1" "/mnt/boot/efi"
+    mount "${hd}"1 /mnt/boot/efi
 fi
 
 # TODO doesn't work
@@ -120,7 +120,7 @@ pacstrap /mnt base base-devel linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Save some variables in files for next script
-echo $uefi > /mnt/var_uefi
+echo "$uefi" > /mnt/var_uefi
 echo "$hd" > /mnt/var_hd
 
 ### Continue installation
