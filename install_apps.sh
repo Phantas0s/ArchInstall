@@ -67,59 +67,56 @@ choices=$(cat app_choices) && rm app_choices
 selection="^$(echo $choices | sed -e 's/ /,|^/g'),"
 lines=$(cat "$apps_path" | grep -E "$selection")
 count=$(echo "$lines" | wc -l)
-apps=$(echo "$lines" | awk -F, {'print $2'})
+final_apps=$(echo "$lines" | awk -F, '{print $2}')
 
-echo "$selection" >> $output
-echo "$lines" >> $output
-echo "$count" >> $output
+echo "$selection" "$lines" "$count" >> "$output"
 
 if [ "$dry_run" = false ]; then
     pacman -Syu --noconfirm >> $output
 fi
 
-[ -f /tmp/aur_queue ] && rm /tmp/aur_queue
+rm -f /tmp/aur_queue
 
 dialog --title "Let's go!" --msgbox \
 "The system will now install everything you need.\n\n\
 It will take some time.\n\n " 13 60
 
 c=0
-echo "$apps" | while read line; do
-    c=$(( $c + 1 ))
+echo "$final_apps" | while read -r line; do
+    c=$(( "$c" + 1 ))
 
     dialog --title "Arch Linux Installation" --infobox \
-    "Downloading and installing program $c out of $count: $line...\n\n.
-    You can watch the output on tty6 (ctrl + alt + F6)." 8 70
+    "Downloading and installing program $c out of $count: $line..." 8 70
 
     if [ "$dry_run" = false ]; then
-        pacman_install $line
+        pacman_install "$line"
 
         # Needed if system installed in VMWare
-        if [ $line = "open-vm-tools" ]; then
+        if [ "$line" = "open-vm-tools" ]; then
             systemctl enable vmtoolsd.service
             systemctl enable vmware-vmblock-fuse.service
         fi
 
-        if [ $line = "zsh" ]; then
+        if [ "$line" = "zsh" ]; then
             # zsh as default terminal for user
-            chsh -s $(which zsh) $name
+            chsh -s "$(which zsh)" "$name"
         fi
 
-        if [ $line = "docker" ]; then
+        if [ "$line" = "docker" ]; then
             groupadd docker
-            gpasswd -a $name docker
+            gpasswd -a "$name" docker
             systemctl enable docker.service
         fi
 
-        if [ $line = "at" ]; then
+        if [ "$line" = "at" ]; then
             systemctl enable atd.service
         fi
 
-        if [ $line = "mariadb" ]; then
+        if [ "$line" = "mariadb" ]; then
             mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
         fi
     else
-        fake_install $line
+        fake_install "$line"
     fi
 done
 
@@ -129,7 +126,7 @@ curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers > /e
 dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
 if [ "$dry_run" = false ]; then
     # Change user and begin the install use script
-    sudo -u $name sh /tmp/install_user.sh
+    sudo -u "$name" sh /tmp/install_user.sh
     rm -f /tmp/install_user.sh
 fi
 
