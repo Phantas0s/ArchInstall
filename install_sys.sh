@@ -9,6 +9,7 @@ do
         in
         d) dry_run=${OPTARG};;
         o) output=${OPTARG};;
+        *);;
     esac
 done
 

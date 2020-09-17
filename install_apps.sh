@@ -19,13 +19,13 @@ apps_path="/tmp/apps.csv"
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/apps.csv > $apps_path
 
 function pacman_install() {
-    ((pacman --noconfirm --needed -S $1 &> $output) \
-    || echo $1 >> /tmp/aur_queue) \
-    || echo $1 >> /tmp/arch_install_failed ;
+    ((pacman --noconfirm --needed -S "$1" &> "$output") \
+    || echo "$1" >> /tmp/aur_queue) \
+    || echo "$1" >> /tmp/arch_install_failed ;
 }
 
 function fake_install() {
-    echo "$1 fakely installed!" >> $output
+    echo "$1 fakely installed!" >> "$output"
 }
 
 dialog --title "Welcome!" --msgbox "Welcome to Phantas0s dotfiles and software installation script for Arch linux.\n" 10 60
@@ -65,14 +65,14 @@ dialog --checklist "You can here choose the application to install, according to
 choices=$(cat app_choices) && rm app_choices
 
 selection="^$(echo $choices | sed -e 's/ /,|^/g'),"
-lines=$(cat "$apps_path" | grep -E "$selection")
+lines=$(grep -E "$selection" "$apps_path")
 count=$(echo "$lines" | wc -l)
 final_apps=$(echo "$lines" | awk -F, '{print $2}')
 
 echo "$selection" "$lines" "$count" >> "$output"
 
 if [ "$dry_run" = false ]; then
-    pacman -Syu --noconfirm >> $output
+    pacman -Syu --noconfirm >> "$output"
 fi
 
 rm -f /tmp/aur_queue
