@@ -65,4 +65,4 @@ echo "$name" > /tmp/user_name
 
 dialog --title "Continue installation" --yesno "Do you want to install all the softwares and the dotfiles?" 10 60 \
     && curl -LO https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_apps.sh \
-    && sh ./install_apps.sh
+    && bash ./install_apps.sh
