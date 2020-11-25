@@ -49,6 +49,7 @@ apps=("essential" "Essentials" on
       "sql" "Mysql (mariadb) & mysql tools" on
       "jrnl" "Simple CLI journal" on
       "joplin" "Note taking system" off
+      "thunar" "Graphical file manager" off
       "thunderbird" "Thunderbird" off
       "graphism" "Design" off
       "pandoc" "Pandoc and usefull dependencies" off

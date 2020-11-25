@@ -51,6 +51,7 @@ tools,redshift,Adjust color of screen
 tools,udiskie,Automount devices
 tools,gparted,Partitioning tool
 graphism,gcolor2,Simple color selector
+graphism,gcolor2,Simple color selector
 graphism,pinta,Easy to use image editor
 graphism,libwebp,Image converter from jpg to webp
 graphism,drawio-desktop,Desktop diagramming application (AUR)
@@ -129,6 +130,7 @@ pandoc,pandoc,Document converter
 pandoc,textlive-most,Tex Document Production System
 firefox,firefox,Browser Firefox
 min,min,Minimum browser
+thunar,thunar,Graphical file manager
 keepass,keepassx,Secure password management
 thunderbird,thunderbird,Thunderbird
 vmware,open-vm-tools,vmware tools
