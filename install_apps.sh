@@ -44,6 +44,7 @@ apps=("essential" "Essentials" on
       "firefox" "Firefox (browser)" on
       "min" "Min (browser)" on
       "vifm" "vifm (terminal file manager)" on
+      "gtk" "GTK 3 themes and icons" on
       "programming" "Programming environments (PHP, Ruby, Go, Docker, Clojure)" on
       "keepass" "KeepassX" on
       "sql" "Mysql (mariadb) & mysql tools" on

@@ -67,8 +67,9 @@ i3,dmenu,Dynamic menu for X
 i3,feh,X11 image viewer
 i3,xdg-utils,Allow application to interact with the desktop
 i3,arc-gtk-theme,GTK themes
-i3,gtk-theme-shades-of-gray,GTK themes (AUR),
-i3,gtk-theme-arc-red,Desktop theme... but in red! (AUR)
+gtk,gtk-theme-shades-of-gray,GTK themes (AUR),
+gtk,gtk-theme-arc-red,Desktop theme... but in red! (AUR)
+gtk,flatery-icon-theme-git,GTK icons (AUR)
 notify,dunst,Notification system
 notify,libnotify,Notifier
 programming,php,PHP programming language
