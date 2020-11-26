@@ -66,7 +66,8 @@ i3,i3lock,i3 lock monitor
 i3,dmenu,Dynamic menu for X
 i3,feh,X11 image viewer
 i3,xdg-utils,Allow application to interact with the desktop
-i3,arc-gtk-theme,Desktop themes
+i3,arc-gtk-theme,GTK themes
+i3,gtk-theme-shades-of-gray,GTK themes (AUR),
 i3,gtk-theme-arc-red,Desktop theme... but in red! (AUR)
 notify,dunst,Notification system
 notify,libnotify,Notifier
@@ -130,7 +131,7 @@ pandoc,pandoc,Document converter
 pandoc,textlive-most,Tex Document Production System
 firefox,firefox,Browser Firefox
 min,min,Minimum browser
-thunar,thunar,Graphical file manager
+doublecmd,doublecmd,Graphical file manager
 keepass,keepassx,Secure password management
 thunderbird,thunderbird,Thunderbird
 vmware,open-vm-tools,vmware tools
