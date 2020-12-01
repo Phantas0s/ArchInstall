@@ -79,6 +79,7 @@ programming,ruby,Ruby programming language
 programming,go,Golang programming language
 programming,goreleaser,Release tool for Golang (AUR)
 programming,go-tools,Tools for Goland
+programming,gopls,Golang langauge server
 programming,npm,Infamous javascript package manager
 programming,yarn,Wrapper for npm
 programming,docker,Build ship and run distributed applications
