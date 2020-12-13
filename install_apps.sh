@@ -19,12 +19,15 @@ apps_path="/tmp/apps.csv"
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/apps.csv > $apps_path
 
 function pacman_install() {
-    ((pacman --noconfirm --needed -S "$1" &>> "$output") || echo "$1" >> /tmp/aur_queue);
+    ((pacman --noconfirm --needed -S "$1" &>> "$output") || echo "$1" &>> "$output");
 }
 
 function fake_install() {
     echo "$1 fakely installed!" >> "$output"
 }
+
+# Add multilib repo for steam
+echo "[multilib]" >> /etc/pacman.conf && echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 
 dialog --title "Welcome!" --msgbox "Welcome to Phantas0s dotfiles and software installation script for Arch linux.\n" 10 60
 
