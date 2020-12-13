@@ -34,6 +34,7 @@ dialog --title "Welcome!" --msgbox "Welcome to Phantas0s dotfiles and software i
 apps=("essential" "Essentials" on
       "compression" "Compression Tools" on
       "tools" "Very nice tools to have (highly recommended)" on
+      "audio" "Audio tools" on
       "git" "Git & git tools" on
       "i3" "i3 Tile manager & Desktop" on
       "tmux" "Tmux" on
