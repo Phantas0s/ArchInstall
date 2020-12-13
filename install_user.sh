@@ -31,7 +31,7 @@ aur_check() {
     for arg in "$@"
     do
         if [[ "$qm" != *"$arg"* ]]; then
-            yay --noconfirm -S "$arg" &> /dev/null || aur_install "$arg" &> /dev/null
+            yay --noconfirm -S "$arg" &> /dev/null || aur_install "$arg" &>> /tmp/aur_install_log
         fi
     done
 }

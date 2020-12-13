@@ -19,7 +19,7 @@ apps_path="/tmp/apps.csv"
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/apps.csv > $apps_path
 
 function pacman_install() {
-    ((pacman --noconfirm --needed -S "$1" &> "$output") \
+    ((pacman --noconfirm --needed -S "$1" &>> "$output") \
     || echo "$1" >> /tmp/aur_queue) \
     || echo "$1" >> /tmp/arch_install_failed ;
 }
