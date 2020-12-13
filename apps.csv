@@ -141,3 +141,4 @@ vmware,xf86-video-vmware,vmware video
 vmware,xf86-input-vmmouse,vmware mouse
 gaming,lutris,Open gaming plateform
 gaming,steam,Video game distribution service
+gaming,ttf-liberation,Fonts for steam
