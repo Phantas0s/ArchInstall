@@ -24,7 +24,7 @@ dialog --defaultno \
     Are you sure?"  15 60 || exit
 
 dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> hn
-hostname=$(cat comp) && rm hn
+hostname=$(cat hn) && rm hn
 
 # Verify boot (UEFI or BIOS)
 uefi=0

@@ -3,7 +3,7 @@
 name=$(cat /tmp/user_name)
 
 dry_run=${dry_run:-false}
-output=${output:-/tmp/arch-install-logs}
+output=${output:-/tmp/arch_install}
 apps_path=${apps_path:-/tmp/apps.csv}
 while getopts d:o:p: option
 do
@@ -19,9 +19,7 @@ apps_path="/tmp/apps.csv"
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/apps.csv > $apps_path
 
 function pacman_install() {
-    ((pacman --noconfirm --needed -S "$1" &>> "$output") \
-    || echo "$1" >> /tmp/aur_queue) \
-    || echo "$1" >> /tmp/arch_install_failed ;
+    ((pacman --noconfirm --needed -S "$1" &>> "$output") || echo "$1" >> /tmp/aur_queue);
 }
 
 function fake_install() {
