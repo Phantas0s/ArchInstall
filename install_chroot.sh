@@ -2,6 +2,8 @@
 
 uefi=$(cat /var_uefi) && hd=$(cat /var_hd)
 
+cat /hostname > /etc/hostname
+
 pacman --noconfirm --needed -S dialog
 pacman -S --noconfirm grub
 

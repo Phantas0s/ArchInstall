@@ -23,7 +23,8 @@ dialog --defaultno \
     Don't say YES if you are not sure about what your are doing! \n\n\
     Are you sure?"  15 60 || exit
 
-dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
+dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> hn
+hostname=$(cat comp) && rm hn
 
 # Verify boot (UEFI or BIOS)
 uefi=0
@@ -113,9 +114,6 @@ if [ "$uefi" = 1 ]; then
     mount "${hd}"1 /mnt/boot/efi
 fi
 
-# TODO doesn't work
-cat comp > /mnt/etc/hostname && rm comp
-
 pacstrap /mnt base base-devel linux linux-firmware
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -123,6 +121,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # Save some variables in files for next script
 echo "$uefi" > /mnt/var_uefi
 echo "$hd" > /mnt/var_hd
+echo "$hostname" > /mnt/hostname
 
 ### Continue installation
 curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh
@@ -131,6 +130,7 @@ arch-chroot /mnt bash install_chroot.sh
 rm /mnt/var_uefi
 rm /mnt/var_hd
 rm /mnt/install_chroot.sh
+rm /mnt/hostname
 
 fi
 

@@ -61,9 +61,10 @@ apps=("essential" "Essentials" on
       "nextcloud" "Nextcloud client" off
       "network" "Network Configuration" off
       "hugo" "Hugo static site generator" off
-      "freemind" "Freemind - mind mapping software" off)
+      "freemind" "Freemind - mind mapping software" off
+      "gaming" "Almost everything for gaming on Linux" off)
 
-dialog --checklist "You can now choose the groups of applications you want to install, according to your own CSV file:" 0 0 0 "${apps[@]}" 2> app_choices
+dialog --checklist "You can now choose the groups of applications you want to install, according to your own CSV file.\n\n Press SPACE to select and ENTER to validate your choices." 0 0 0 "${apps[@]}" 2> app_choices
 choices=$(cat app_choices) && rm app_choices
 
 selection="^$(echo $choices | sed -e 's/ /,|^/g'),"
