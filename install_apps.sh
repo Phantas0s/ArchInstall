@@ -103,6 +103,11 @@ echo "$final_apps" | while read -r line; do
             systemctl enable vmware-vmblock-fuse.service
         fi
 
+        if [ "$line" = "networkmanager" ]; then
+            # Enable the systemd service NetworkManager.
+            systemctl enable NetworkManager.service
+        fi
+
         if [ "$line" = "zsh" ]; then
             # zsh as default terminal for user
             chsh -s "$(which zsh)" "$name"

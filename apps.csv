@@ -4,10 +4,7 @@ essential,xorg-xinit,Display server boot
 essential,man,Manual
 essential,man-pages,Manual pages
 essential,openssh,Remote login tool for SSH protocol
-network,wpa_supplicant,Cross plateform supplicant for WIFI
-network,iw,Utility for wireless devices
-network,netctl,Network manager
-network,dhcpcd,dhcp client
+network,networkmanager,Network manager
 network,netcat,Read and write to network
 network,nmap,Network mapper
 network,wget,Tool for retrieving files using HTTP HTTPS FTP and FTPS
@@ -134,7 +131,7 @@ pandoc,textlive-most,Tex Document Production System
 firefox,firefox,Browser Firefox
 min,min,Minimum browser
 doublecmd,doublecmd,Graphical file manager
-keepass,keepassx,Secure password management
+keepass,keepassxc,Secure password management
 thunderbird,thunderbird,Thunderbird
 vmware,open-vm-tools,vmware tools
 vmware,xf86-video-vmware,vmware video
