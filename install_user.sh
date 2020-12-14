@@ -59,4 +59,4 @@ fi
 
 source "/home/$(whoami)/.dotfiles/zsh/zshenv"
 cd "$DOTFILES"
-(command -v "zsh" >/dev/null && zsh ./install.sh -y) || sh ./install.sh -y
+command -v "zsh" >/dev/null && zsh ./install.sh -y
