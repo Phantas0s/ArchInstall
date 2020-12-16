@@ -123,6 +123,8 @@ multimedia,easytag,Tag Manager
 multimedia,mpd,Music Player Daemon
 multimedia,ncmpcpp,Client for mpd
 multimedia,ffmpeg,Complete solution to record stream audio / video
+multimedia,deadbeef,Clone of Foobar2000 music player
+multimedia,deadbeef-plugin-musical-spectrum-gtk3-git,Spectrun for deadbeef
 office,libreoffice,Office suite
 office,okular,PDF Reader
 office,scribus,Document editing software
