@@ -140,3 +140,6 @@ vmware,xf86-input-vmmouse,vmware mouse
 gaming,lutris,Open gaming plateform
 gaming,steam,Video game distribution service
 gaming,ttf-liberation,Fonts for steam
+photography,darktable,RAW developer
+photography,digikam,Photo organizer and developer
+photography,xf86-input-wacom,Drivers for Wacom tablet

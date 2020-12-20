@@ -65,6 +65,7 @@ apps=("essential" "Essentials" on
       "hugo" "Hugo static site generator" off
       "freemind" "Freemind - mind mapping software" off
       "doublecmd" "Double Commander - File explorer a la FreeCommander" off
+      "photography" "Photography tools" off
       "gaming" "Almost everything for gaming on Linux" off)
 
 dialog --checklist "You can now choose the groups of applications you want to install, according to your own CSV file.\n\n Press SPACE to select and ENTER to validate your choices." 0 0 0 "${apps[@]}" 2> app_choices
