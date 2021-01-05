@@ -124,7 +124,8 @@ multimedia,ncmpcpp,Client for mpd
 multimedia,ffmpeg,Complete solution to record stream audio / video
 multimedia,deadbeef,Clone of Foobar2000 music player
 office,libreoffice,Office suite
-office,okular,PDF Reader
+office,okular,PDF reader
+office,zathura-pdf-mupdf,Highly customizable PDF reader
 office,scribus,Document editing software
 pandoc,pandoc,Document converter
 pandoc,textlive-most,Tex Document Production System
