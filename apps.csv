@@ -10,6 +10,7 @@ network,nmap,Network mapper
 network,wget,Tool for retrieving files using HTTP HTTPS FTP and FTPS
 network,net-tools,Include netstats and others
 network,openvpn,VPN
+network,lynx,CLI Browser
 compression,unzip,Compress / uncompress zip files
 compression,p7zip,Compress / uncompress 7z files
 audio,pulseaudio,Sound system
