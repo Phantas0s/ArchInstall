@@ -44,7 +44,7 @@ apps=("essential" "Essentials" on
       "zsh" "Unix Z-Shell (zsh)" on
       "ripgrep" "Ripgrep" on \
       "firefox" "Firefox (browser)" on
-      "min" "Min (browser)" on
+      "qutebrowser" "Qutebrowser (browser)" on
       "vifm" "vifm (terminal file manager)" on
       "gtk" "GTK 3 themes and icons" on
       "programming" "Programming environments (PHP, Ruby, Go, Docker, Clojure)" on

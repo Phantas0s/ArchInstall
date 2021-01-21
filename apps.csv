@@ -131,7 +131,7 @@ office,scribus,Document editing software
 pandoc,pandoc,Document converter
 pandoc,textlive-most,Tex Document Production System
 firefox,firefox,Browser Firefox
-min,min,Minimum browser
+qutebrowser,qutebrowser,Mouseless browser
 doublecmd,doublecmd,Graphical file manager
 keepass,keepassxc,Secure password management
 thunderbird,thunderbird,Thunderbird
