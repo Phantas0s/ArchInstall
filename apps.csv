@@ -128,6 +128,7 @@ office,libreoffice,Office suite
 office,okular,PDF reader
 office,zathura-pdf-mupdf,Highly customizable PDF reader
 office,scribus,Document editing software
+newsboat,newsboat,RSS feed reader
 pandoc,pandoc,Document converter
 pandoc,textlive-most,Tex Document Production System
 firefox,firefox,Browser Firefox

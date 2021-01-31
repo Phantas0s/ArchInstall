@@ -44,13 +44,13 @@ apps=("essential" "Essentials" on
       "zsh" "Unix Z-Shell (zsh)" on
       "ripgrep" "Ripgrep" on \
       "firefox" "Firefox (browser)" on
-      "qutebrowser" "Qutebrowser (browser)" on
+      "qutebrowser" "Qutebrowser" on
       "vifm" "vifm (terminal file manager)" on
       "gtk" "GTK 3 themes and icons" on
       "programming" "Programming environments (PHP, Ruby, Go, Docker, Clojure)" on
-      "keepass" "KeepassX" on
+      "keepass" "Keepass" on
       "sql" "Mysql (mariadb) & mysql tools" on
-      "jrnl" "Simple CLI journal" on
+      "newsboat" "RSS Feed Reader" on
       "joplin" "Note taking system" off
       "thunar" "Graphical file manager" off
       "thunderbird" "Thunderbird" off
