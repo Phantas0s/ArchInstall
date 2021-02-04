@@ -3,6 +3,7 @@ essential,xorg,X server
 essential,xorg-xinit,Display server boot
 essential,man,Manual
 essential,man-pages,Manual pages
+essential,tldr,Examples for CLIs
 essential,openssh,Remote login tool for SSH protocol
 network,networkmanager,Network manager
 network,netcat,Read and write to network
@@ -117,8 +118,9 @@ freemind,freemind,Free mind mapping software in Java
 joplin,joplin-desktop,Note taking app open source (AUR)
 language,anki,Powerful intelligent flash cards.
 language,translate-shell,Command line translator
+language,dictd,Dictionary database server
 multimedia,mpv,Free video player
-multimedia,nomacs,Image visualizeur
+multimedia,nomacs,Image visualizer
 multimedia,easytag,Tag Manager
 multimedia,mpd,Music Player Daemon
 multimedia,ncmpcpp,Client for mpd
