@@ -49,7 +49,7 @@ tools,xclip,CLI to Clipboard
 tools,redshift,Adjust color of screen
 tools,udiskie,Automount devices
 tools,gparted,Partitioning tool
-graphism,gcolor2,Simple color selector
+tools,taskell,CLI kanban
 graphism,gcolor2,Simple color selector
 graphism,pinta,Easy to use image editor
 graphism,libwebp,Image converter from jpg to webp
