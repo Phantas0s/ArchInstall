@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /github_defaults
+
 name=$(cat /tmp/user_name)
 
 dry_run=${dry_run:-false}
@@ -16,7 +18,7 @@ do
 done
 
 apps_path="/tmp/apps.csv"
-curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/apps.csv > $apps_path
+curl https://raw.githubusercontent.com/$GITHUB_INSTALLER_USER/$GITHUB_INSTALLER_NAME/master/apps.csv > $apps_path
 
 function pacman_install() {
     ((pacman --noconfirm --needed -S "$1" &>> "$output") || echo "$1" &>> /tmp/aur_queue);
@@ -132,8 +134,8 @@ echo "$final_apps" | while read -r line; do
     fi
 done
 
-curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_user.sh > /tmp/install_user.sh;
-curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/sudoers > /etc/sudoers
+curl https://raw.githubusercontent.com/$GITHUB_INSTALLER_USER/$GITHUB_INSTALLER_NAME/master/install_user.sh > /tmp/install_user.sh;
+curl https://raw.githubusercontent.com/$GITHUB_INSTALLER_USER/$GITHUB_INSTALLER_NAME/master/sudoers > /etc/sudoers
 
 dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
 if [ "$dry_run" = false ]; then

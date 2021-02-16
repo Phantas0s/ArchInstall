@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /github_defaults
+
 uefi=$(cat /var_uefi) && hd=$(cat /var_hd)
 
 cat /hostname > /etc/hostname
@@ -66,5 +68,5 @@ config_user
 echo "$name" > /tmp/user_name
 
 dialog --title "Continue installation" --yesno "Do you want to install all the softwares and the dotfiles?" 10 60 \
-    && curl -LO https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_apps.sh \
+    && curl -LO https://raw.githubusercontent.com/$GITHUB_INSTALLER_USER/$GITHUB_INSTALLER_NAME/master/install_apps.sh \
     && bash ./install_apps.sh

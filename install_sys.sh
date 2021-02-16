@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Defaults related to Git repositories
+GITHUB_INSTALLER_USER=Phantas0s
+GITHUB_INSTALLER_NAME=ArchInstall
+GITHUB_DOTFILES_USER=Phantas0s
+GITHUB_DOTFILES_NAME=.dotfiles
+
+
 dry_run=${dry_run:-false}
 # TODO redirect output?
 output=${output:-/tmp/arch-install-logs}
@@ -22,6 +29,18 @@ dialog --defaultno \
     It will just DESTROY EVERYTHING on the hard disk of your choice. \n\n\
     Don't say YES if you are not sure about what you're doing! \n\n\
     Are you sure?"  15 60 || exit
+
+# Change and save defaults to a file so we can load
+# Defaults for Installer
+dialog --no-cancel --inputbox "Enter name of GitHub user for installer." 10 60 "$GITHUB_INSTALLER_USER" 2> temp_text
+GITHUB_INSTALLER_USER=$(cat temp_text) && rm temp_text
+dialog --no-cancel --inputbox "Enter name of GitHub project for installer." 10 60 "$GITHUB_INSTALLER_NAME" 2> temp_text
+GITHUB_INSTALLER_NAME=$(cat temp_text) && rm temp_text
+# Defaults for Dotfiles
+dialog --no-cancel --inputbox "Enter name of GitHub user for dotfiles." 10 60 "$GITHUB_DOTFILES_USER" 2> temp_text
+GITHUB_DOTFILES_USER=$(cat temp_text) && rm temp_text
+dialog --no-cancel --inputbox "Enter name of GitHub project for dotfiles." 10 60 "$GITHUB_DOTFILES_NAME" 2> temp_text
+GITHUB_DOTFILES_NAME=$(cat temp_text) && rm temp_text
 
 dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> hn
 hostname=$(cat hn) && rm hn
@@ -122,15 +141,20 @@ genfstab -U /mnt >> /mnt/etc/fstab
 echo "$uefi" > /mnt/var_uefi
 echo "$hd" > /mnt/var_hd
 echo "$hostname" > /mnt/hostname
+echo 'export GITHUB_INSTALLER_USER='"$GITHUB_INSTALLER_USER" >/mnt/github_defaults
+echo 'export GITHUB_INSTALLER_NAME='"$GITHUB_INSTALLER_NAME" >>/mnt/github_defaults
+echo 'export GITHUB_DOTFILES_USER='"$GITHUB_DOTFILES_USER" >>/mnt/github_defaults
+echo 'export GITHUB_DOTFILES_NAME='"$GITHUB_DOTFILES_NAME" >>/mnt/github_defaults
 
 ### Continue installation
-curl https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_chroot.sh > /mnt/install_chroot.sh
+curl https://raw.githubusercontent.com/$GITHUB_INSTALLER_USER/$GITHUB_INSTALLER_NAME/master/install_chroot.sh > /mnt/install_chroot.sh
 arch-chroot /mnt bash install_chroot.sh
 
 rm /mnt/var_uefi
 rm /mnt/var_hd
 rm /mnt/install_chroot.sh
 rm /mnt/hostname
+rm /mnt/github_defaults
 
 fi
 
