@@ -11,6 +11,8 @@
 # mkdir /mnt/home
 # mount "${hd}4" /mnt/home
 
+# Worked more or less, but I had problems when reading fstab (if I remember correctly...)
+
 # dialog --infobox "Encrypt /home partition..." 4 40
 
 # mkdir /mnt/etc/
