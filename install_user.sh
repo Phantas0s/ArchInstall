@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /github_defaults
+
 mkdir -p "/home/$(whoami)/Documents"
 mkdir -p "/home/$(whoami)/Downloads"
 
@@ -54,7 +56,7 @@ DOTFILES="/home/$(whoami)/.dotfiles"
 if [ ! -d "$DOTFILES" ];
     then
         dialog --infobox "[$(whoami)] Downloading .dotfiles..." 10 60
-        git clone --recurse-submodules https://github.com/Phantas0s/.dotfiles.git "$DOTFILES" >/dev/null
+        git clone --recurse-submodules https://github.com/$GITHUB_DOTFILES_USER/"$GITHUB_DOTFILES_NAME".git "$DOTFILES" >/dev/null
 fi
 
 source "/home/$(whoami)/.dotfiles/zsh/zshenv"
