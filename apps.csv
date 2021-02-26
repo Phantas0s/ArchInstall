@@ -54,6 +54,7 @@ graphism,gcolor2,Simple color selector
 graphism,pinta,Easy to use image editor
 graphism,libwebp,Image converter from jpg to webp
 graphism,drawio-desktop,Desktop diagramming application (AUR)
+graphism,sxiv,Simple X image viewer
 tmux,tmux,Terminal multiplexer
 tmux,tmuxp,Configure tmux session + windows + panes via config files
 git,git,Version control system

@@ -4,7 +4,7 @@
 
 This is my scripts to install my whole Mouseless Development Environment.
 
-**WARNING**: This set of script should be used for inspiration, don't run them on your system. 
+**WARNING**: This set of script should be used for inspiration, don't run them on your system.
 
 If you want to know how it works, [I'm writing a book](https://themouseless.dev) which will explain that, and many other things.
 
