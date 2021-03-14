@@ -38,3 +38,9 @@ The fourth script `install_user` will:
 ## What software are installed?
 
 Everything in apps.csv
+
+## Shameless Mouseless Plug
+
+Switching between a keyboard and mouse costs cognitive energy. [My book will help you set up a Linux-based development environment](https://themouseless.dev) that keeps your hands on your keyboard. Take the brain power you've been using to juggle input devices and focus it where it belongs: on the things you create.
+
+You'll learn how to write your own installation scripts too!
