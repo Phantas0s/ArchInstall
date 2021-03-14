@@ -39,7 +39,7 @@ The fourth script `install_user` will:
 
 Everything in apps.csv
 
-## Shameless Mouseless Plug
+## Building Your Mouseless Development Environment
 
 Switching between a keyboard and mouse costs cognitive energy. [My book will help you set up a Linux-based development environment](https://themouseless.dev) that keeps your hands on your keyboard. Take the brain power you've been using to juggle input devices and focus it where it belongs: on the things you create.
 
