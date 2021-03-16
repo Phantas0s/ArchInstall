@@ -59,6 +59,6 @@ if [ ! -d "$DOTFILES" ];
         git clone --recurse-submodules https://github.com/$GITHUB_DOTFILES_USER/"$GITHUB_DOTFILES_NAME".git "$DOTFILES" >/dev/null
 fi
 
-source "/home/$(whoami)/.dotfiles/zsh/zshenv"
+source $DOTFILES/zsh/.zshenv
 cd "$DOTFILES"
 command -v "zsh" >/dev/null && zsh ./install.sh -y
