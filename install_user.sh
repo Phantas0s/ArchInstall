@@ -52,7 +52,7 @@ do
 done
 
 
-DOTFILES="/home/$(whoami)/.dotfiles"
+DOTFILES="/home/$(whoami)/dotfiles"
 if [ ! -d "$DOTFILES" ];
     then
         dialog --infobox "[$(whoami)] Downloading .dotfiles..." 10 60
