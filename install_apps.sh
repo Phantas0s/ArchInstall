@@ -49,6 +49,7 @@ apps=("essential" "Essentials" on
       "qutebrowser" "Qutebrowser" on
       "vifm" "vifm (terminal file manager)" on
       "gtk" "GTK 3 themes and icons" on
+      "notify" "Notification System" on
       "programming" "Programming environments (PHP, Ruby, Go, Docker, Clojure)" on
       "keepass" "Keepass" on
       "sql" "Mysql (mariadb) & mysql tools" on

@@ -97,6 +97,9 @@ sql,mycli,command line interface for MySQL (AUR)
 sql,pgcli,command line interface for PostgreSQL (AUR)
 sql,litecli,command line interface for SQLite
 zsh,zsh,Unix shell (Z-Shell)
+zsh,fortune-mod,Fortune Teller for fun
+zsh,zsh-completions,Additional completions for Zsh
+zsh,zsh-syntax-highlighting,Syntax highlighting for ZSH
 neovim,neovim,Editor... and much more
 neovim,python-neovim,Python for neovim
 neovim,python2-neovim,Python2 for neovim
