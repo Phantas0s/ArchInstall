@@ -45,7 +45,7 @@ apps=("essential" "Essentials" on
       "urxvt" "Urxvt unicode" on
       "zsh" "Unix Z-Shell (zsh)" on
       "ripgrep" "Ripgrep" on \
-      "firefox" "Firefox (browser)" on
+      "brave" "Brave (browser)" on
       "qutebrowser" "Qutebrowser" on
       "vifm" "vifm (terminal file manager)" on
       "gtk" "GTK 3 themes and icons" on
@@ -53,6 +53,7 @@ apps=("essential" "Essentials" on
       "keepass" "Keepass" on
       "sql" "Mysql (mariadb) & mysql tools" on
       "newsboat" "RSS Feed Reader" on
+      "firefox" "Firefox (browser)" off
       "joplin" "Note taking system" off
       "thunar" "Graphical file manager" off
       "thunderbird" "Thunderbird" off
