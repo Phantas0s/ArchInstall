@@ -14,7 +14,6 @@ network,openvpn,VPN
 network,lynx,CLI Browser
 compression,unzip,Compress / uncompress zip files
 compression,p7zip,Compress / uncompress 7z files
-audio,alsa-utils,Utils to control sound card
 tools,rsync,Tool for transferring and synchronizing files across computer systems
 tools,ntfs-3g,Allow mounting NTFS formatted devices
 tools,compton,Compositor for X - manage transparency
