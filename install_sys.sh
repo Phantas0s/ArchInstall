@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Defaults related to Git repositories
-GITHUB_INSTALLER_USER=Phantas0s
+GITHUB_INSTALLER_USER=bimmerr2019
 GITHUB_INSTALLER_NAME=ArchInstall
-GITHUB_DOTFILES_USER=Phantas0s
-GITHUB_DOTFILES_NAME=.dotfiles
+GITHUB_DOTFILES_USER=bimmerr2019
+GITHUB_DOTFILES_NAME=dotfiles
 
 
 dry_run=${dry_run:-false}
