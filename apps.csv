@@ -105,6 +105,7 @@ neovim,markdown2ctags,Generates ctags-compatible output for the sections of a Ma
 neovim,python-sqlparse,sqlparse is a non-validating SQL parser module for Python
 neovim,clojure-lsp-bin,Clojure language client
 neovim,clj-kondo-bin,Clojure static analysis
+neovim,neomutt,command line email
 keyring,gnome-keyring,Gnome component to store passwords
 keyring,libsecret,Library for application to use gnome keyring
 keyring,seahorse,Gnome keyring GUI
