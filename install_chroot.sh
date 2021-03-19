@@ -19,7 +19,7 @@ fi
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Set the timezone
-timedatectl set-timezone "Phoenix/America"
+timedatectl set-timezone "America/Phoenix"
 
 # Set hardware clock from system clock
 hwclock --systohc
