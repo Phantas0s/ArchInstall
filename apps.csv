@@ -12,6 +12,10 @@ network,wget,Tool for retrieving files using HTTP HTTPS FTP and FTPS
 network,net-tools,Include netstats and others
 network,openvpn,VPN
 network,lynx,CLI Browser
+audio,pulseaudio,Sound system
+audio,pavucontrol,Control panel for input hardware
+audio,alsa-utils,Utils to control sound card
+audio,audacity,Audio recording
 compression,unzip,Compress / uncompress zip files
 compression,p7zip,Compress / uncompress 7z files
 tools,rsync,Tool for transferring and synchronizing files across computer systems
