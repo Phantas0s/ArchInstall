@@ -118,9 +118,11 @@ nextcloud,nextcloud-client,Client to nextcloud
 hugo,hugo,Static site generator written in Go
 freemind,freemind,Free mind mapping software in Java
 joplin,joplin-desktop,Note taking app open source (AUR)
-language,anki,Powerful intelligent flash cards.
+language,anki,Powerful intelligent flash cards
 language,translate-shell,Command line translator
 language,dictd,Dictionary database server
+videography,obs-studio,GUI for ffmpeg
+videography,losslesscut-bin,Simple video edition (AUR)
 multimedia,mpv,Free video player
 multimedia,nomacs,Image visualizer
 multimedia,easytag,Tag Manager

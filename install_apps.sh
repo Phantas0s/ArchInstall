@@ -63,6 +63,7 @@ apps=("essential" "Essentials" on
       "vmware" "Vmware tools" off
       "language" "Language tools" off
       "multimedia" "Multimedia" off
+      "videography" "Video creation" off
       "nextcloud" "Nextcloud client" off
       "network" "Network Configuration" off
       "hugo" "Hugo static site generator" off
