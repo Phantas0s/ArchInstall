@@ -28,7 +28,7 @@ install-dialog() {
     pacman --noconfirm -S dialog
 }
 
-dialog-are-you-sure?() {
+dialog-are-you-sure() {
     dialog --defaultno \
         --title "Are you sure?" \
         --yesno "This is my personnal arch linux install. \n\n\
@@ -37,19 +37,19 @@ dialog-are-you-sure?() {
         Are you sure?"  15 60 || exit
 }
 
-dialog-name-of-computer?() {
+dialog-name-of-computer() {
     local file=${1:?}
     dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> "$file"
 }
 
-is-uefi?() {
+is-uefi() {
     local -r uefi=0
     ls /sys/firmware/efi/efivars 2> /dev/null && uefi=1
 
     echo "$uefi"
 }
 
-dialog-what-disk-to-use?() {
+function dialog-what-disk-to-use() {
     local file=${1:?}
 
     devices_list=($(lsblk -d | awk '{print "/dev/" $1 " " $4 " on"}' | grep -E 'sd|hd|vd|nvme|mmcblk'))
@@ -59,7 +59,7 @@ dialog-what-disk-to-use?() {
         WARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 "${devices_list[@]}" 2> "$file"
 }
 
-dialog-what-swap-size?() {
+function dialog-what-swap-size() {
     local default_size="8"
     local file=${1:?}
     dialog --no-cancel --inputbox "You need four partitions: Boot, Root and Swap \n\
@@ -79,7 +79,7 @@ function set-timedate() {
     timedatectl set-ntp true
 }
 
-dialog-how-wipe-disk?() {
+dialog-how-wipe-disk() {
     local -r hd=${1:?}
     local -r file=${2:?}
 
@@ -91,7 +91,7 @@ dialog-how-wipe-disk?() {
         3 "No need - my hard disk is empty" 2> "$file"
 }
 
-function erase-disk!() {
+function erase-disk() {
     local -r choice=${1:?}
 
     case $choice in
@@ -103,30 +103,13 @@ function erase-disk!() {
 
 function boot-partition() {
     local -r uefi=${1:?}
-    local -r boot_partition_-type=1
+    local -r boot_partition_type=1
     [[ "$uefi" == 0 ]] && local -r boot_partition_type=4
 
     echo "$boot_partition_type"
 }
 
-function create-partitions!() {
-    local -r hd=${1:?}
-    local -r uefi=${2:?}
-
-    mkswap "${hd}2"
-    swapon "${hd}2"
-
-    mkfs.ext4 "${hd}3"
-    mount "${hd}3" /mnt
-
-    if [ "$uefi" = 1 ]; then
-        mkfs.fat -F32 "${hd}1"
-        mkdir -p /mnt/boot/efi
-        mount "${hd}"1 /mnt/boot/efi
-    fi
-}
-
-function fdisk-partition!() {
+function fdisk-partition() {
 local -r hd=${1:?}
 local -r boot_partition_type=${2:?}
 
@@ -157,31 +140,41 @@ w
 EOF
 }
 
-function install-arch-linux!() {
+function create-partitions() {
+    local -r hd=${1:?}
+    local -r uefi=${2:?}
+
+    mkswap "${hd}2"
+    swapon "${hd}2"
+
+    mkfs.ext4 "${hd}3"
+    mount "${hd}3" /mnt
+
+    if [ "$uefi" = 1 ]; then
+        mkfs.fat -F32 "${hd}1"
+        mkdir -p /mnt/boot/efi
+        mount "${hd}"1 /mnt/boot/efi
+    fi
+}
+
+
+function install-arch-linux() {
     pacstrap /mnt base base-devel linux linux-firmware
     genfstab -U /mnt >> /mnt/etc/fstab
 }
 
-function save-variables!() {
-    # Save some variables in files for next script
-    echo "$uefi" > /mnt/var_uefi
-    echo "$hd" > /mnt/var_hd
-    echo "$hostname" > /mnt/hostname
-}
-
 function chroot-install() {
-    ### Continue installation
     local -r installer_url=${1:?}
 
     curl "$installer_url/install_chroot.sh" > /mnt/install_chroot.sh
     arch-chroot /mnt bash install_chroot.sh
 }
 
-function clean!() {
+function clean() {
     rm /mnt/var_uefi
     rm /mnt/var_hd
-    rm /mnt/install_chroot.sh
     rm /mnt/hostname
+    rm /mnt/install_chroot.sh
     rm /mnt/github_defaults
 }
 
@@ -203,7 +196,7 @@ function run() {
     local output=${output:-/tmp/arch-install-logs}
 
     local uefi
-    uefi=is-uefi?
+    uefi=is-uefi
 
     while getopts d:o: option
     do
@@ -216,40 +209,45 @@ function run() {
     done
 
     local -r url=url-installer
-    log INFO "DRY RUN: $dry_run" $output
+    log INFO "DRY RUN: $dry_run" "$output"
 
     install-dialog
-    dialog-are-you-sure?
+    dialog-are-you-sure
 
     local hostname
-    dialog-name-of-computer? hn
+    dialog-name-of-computer hn
     hostname=$(cat hn) && rm hn
-    log INFO "HOSTNAME: $hostname" $output
+    log INFO "HOSTNAME: $hostname" "$output"
 
     local disk
-    dialog-what-disk-to-use? hd
+    dialog-what-disk-to-use hd
     disk=$(cat hd) && rm hd
-    log INFO "DISK CHOSEN: $disk" $output
+    log INFO "DISK CHOSEN: $disk" "$output"
 
     local swap_size
-    dialog-what-swap-size? swaps
+    dialog-what-swap-size swaps
     swap_size=$(cat swaps) && rm swaps
-    log INFO "SWAP SIZE: $swap_size" $output
+    log INFO "SWAP SIZE: $swap_size" "$output"
 
     set-timedate
 
     local wiper
-    dialog-how-wipe-disk? $disk dfile
+    dialog-how-wipe-disk "$disk" dfile
     wiper=$(cat dfile) && rm dfile
-    log INFO "WIPER CHOICE $wiper" $output
+    log INFO "WIPER CHOICE: $wiper" "$output"
 
-    [[ "$dry_run" = false ]] && erase-disk!
+    [[ "$dry_run" = false ]] && erase-disk
+    [[ "$dry_run" = false ]] && fdisk-partition "$disk" $(boot-partition)
+    [[ "$dry_run" = false ]] && create-partitions "$disk" $(is-uefi)
 
-    # set-timedate()
+    echo "$uefi" > /mnt/var_uefi
+    echo "$disk" > /mnt/var_hd
+    echo "$hostname" > /mnt/hostname
 
-    # local choice
-    # choice=dialog-how-wipe-disk? {
-    # [[ $dry_run = false ]] && erase-disk! $choice
+    [[ "$dry_run" = false ]] && chroot-install
+
+    clean
+    end-of-install
 }
 
 run "$@"
