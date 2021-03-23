@@ -113,6 +113,7 @@ function boot-partition() {
 function fdisk-partition() {
 local -r hd=${1:?}
 local -r boot_partition_type=${2:?}
+local -r swap_size=${3:?}
 
 partprobe "$hd"
 
@@ -132,7 +133,7 @@ $boot_partition_type
 n
 
 
-+${size}G
++${swap_size}G
 n
 
 
@@ -238,7 +239,7 @@ function run() {
     log INFO "WIPER CHOICE: $wiper" "$output"
 
     [[ "$dry_run" = false ]] && erase-disk "$wiper" "$disk"
-    [[ "$dry_run" = false ]] && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)")"
+    [[ "$dry_run" = false ]] && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)" "$swap_size")"
     [[ "$dry_run" = false ]] && create-partitions "$disk" "$(is-uefi)"
 
     echo "$uefi" > /mnt/var_uefi
