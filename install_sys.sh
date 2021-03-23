@@ -236,7 +236,7 @@ function run() {
     wiper=$(cat dfile) && rm dfile
     log INFO "WIPER CHOICE: $wiper" "$output"
 
-    [[ "$dry_run" = false ]] && erase-disk
+    [[ "$dry_run" = false ]] && erase-disk "$wiper"
     [[ "$dry_run" = false ]] && fdisk-partition "$disk" $(boot-partition)
     [[ "$dry_run" = false ]] && create-partitions "$disk" $(is-uefi)
 
