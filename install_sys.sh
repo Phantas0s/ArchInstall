@@ -93,6 +93,7 @@ dialog-how-wipe-disk() {
 
 function erase-disk() {
     local -r choice=${1:?}
+    local -r hd=${2:?}
 
     case $choice in
         1) dd if=/dev/zero of="$hd" status=progress 2>&1 | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
@@ -236,7 +237,7 @@ function run() {
     wiper=$(cat dfile) && rm dfile
     log INFO "WIPER CHOICE: $wiper" "$output"
 
-    [[ "$dry_run" = false ]] && erase-disk "$wiper"
+    [[ "$dry_run" = false ]] && erase-disk "$wiper" "$disk"
     [[ "$dry_run" = false ]] && fdisk-partition "$disk" $(boot-partition)
     [[ "$dry_run" = false ]] && create-partitions "$disk" $(is-uefi)
 
