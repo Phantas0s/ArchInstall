@@ -104,8 +104,8 @@ function erase-disk() {
 
 function boot-partition() {
     local -r uefi=${1:?}
-    local -r boot_partition_type=1
-    [[ "$uefi" == 0 ]] && local -r boot_partition_type=4
+    local boot_partition_type=1
+    [[ "$uefi" == 0 ]] && local boot_partition_type=4
 
     echo "$boot_partition_type"
 }
@@ -238,8 +238,8 @@ function run() {
     log INFO "WIPER CHOICE: $wiper" "$output"
 
     [[ "$dry_run" = false ]] && erase-disk "$wiper" "$disk"
-    [[ "$dry_run" = false ]] && fdisk-partition "$disk" $(boot-partition)
-    [[ "$dry_run" = false ]] && create-partitions "$disk" $(is-uefi)
+    [[ "$dry_run" = false ]] && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)")"
+    [[ "$dry_run" = false ]] && create-partitions "$disk" "$(is-uefi)"
 
     echo "$uefi" > /mnt/var_uefi
     echo "$disk" > /mnt/var_hd
