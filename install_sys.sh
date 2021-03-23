@@ -239,7 +239,7 @@ function run() {
     log INFO "WIPER CHOICE: $wiper" "$output"
 
     [[ "$dry_run" = false ]] && erase-disk "$wiper" "$disk"
-    [[ "$dry_run" = false ]] && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)" "$swap_size")"
+    [[ "$dry_run" = false ]] && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)")" "$swap_size"
     [[ "$dry_run" = false ]] && create-partitions "$disk" "$(is-uefi)"
 
     echo "$uefi" > /mnt/var_uefi
