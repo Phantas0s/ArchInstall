@@ -247,7 +247,7 @@ run() {
     echo "$disk" > /mnt/var_hd
     echo "$hostname" > /mnt/hostname
 
-    [[ "$dry_run" = false ]] && chroot-install url_installer
+    [[ "$dry_run" = false ]] && chroot-install "$(url-installer)"
 
     clean
     end-of-install
