@@ -49,7 +49,7 @@ is-uefi() {
     echo "$uefi"
 }
 
-function dialog-what-disk-to-use() {
+dialog-what-disk-to-use() {
     local file=${1:?}
 
     devices_list=($(lsblk -d | awk '{print "/dev/" $1 " " $4 " on"}' | grep -E 'sd|hd|vd|nvme|mmcblk'))
@@ -59,7 +59,7 @@ function dialog-what-disk-to-use() {
         WARNING: Everything will be DESTROYED on the hard disk!" 15 60 4 "${devices_list[@]}" 2> "$file"
 }
 
-function dialog-what-swap-size() {
+dialog-what-swap-size() {
     local default_size="8"
     local file=${1:?}
     dialog --no-cancel --inputbox "You need four partitions: Boot, Root and Swap \n\
@@ -75,7 +75,7 @@ function dialog-what-swap-size() {
     echo "$size" > "$file"
 }
 
-function set-timedate() {
+set-timedate() {
     timedatectl set-ntp true
 }
 
@@ -91,7 +91,7 @@ dialog-how-wipe-disk() {
         3 "No need - my hard disk is empty" 2> "$file"
 }
 
-function erase-disk() {
+erase-disk() {
     local -r choice=${1:?}
     local -r hd=${2:?}
 
@@ -102,7 +102,7 @@ function erase-disk() {
     esac
 }
 
-function boot-partition() {
+boot-partition() {
     local -r uefi=${1:?}
     local boot_partition_type=1
     [[ "$uefi" == 0 ]] && local boot_partition_type=4
@@ -110,7 +110,7 @@ function boot-partition() {
     echo "$boot_partition_type"
 }
 
-function fdisk-partition() {
+fdisk-partition() {
 local -r hd=${1:?}
 local -r boot_partition_type=${2:?}
 local -r swap_size=${3:?}
@@ -142,7 +142,7 @@ w
 EOF
 }
 
-function create-partitions() {
+format-partitions() {
     local -r hd=${1:?}
     local -r uefi=${2:?}
 
@@ -160,19 +160,20 @@ function create-partitions() {
 }
 
 
-function install-arch-linux() {
+install-arch-linux() {
     pacstrap /mnt base base-devel linux linux-firmware
     genfstab -U /mnt >> /mnt/etc/fstab
 }
 
-function chroot-install() {
+chroot-install() {
     local -r installer_url=${1:?}
+    log INFO "INSTALLER_URL: $installer_url"
 
     curl "$installer_url/install_chroot.sh" > /mnt/install_chroot.sh
     arch-chroot /mnt bash install_chroot.sh
 }
 
-function clean() {
+clean() {
     rm /mnt/var_uefi
     rm /mnt/var_hd
     rm /mnt/hostname
@@ -193,7 +194,7 @@ end-of-install() {
     clear
 }
 
-function run() {
+run() {
     local dry_run=${dry_run:-true}
     local output=${output:-/tmp/arch-install-logs}
 
@@ -240,7 +241,7 @@ function run() {
 
     [[ "$dry_run" = false ]] && erase-disk "$wiper" "$disk"
     [[ "$dry_run" = false ]] && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)")" "$swap_size"
-    [[ "$dry_run" = false ]] && create-partitions "$disk" "$(is-uefi)"
+    [[ "$dry_run" = false ]] && format-partitions "$disk" "$(is-uefi)"
 
     echo "$uefi" > /mnt/var_uefi
     echo "$disk" > /mnt/var_hd
