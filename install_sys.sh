@@ -18,7 +18,7 @@ log() {
     if [ -z "$3" ];then
         echo -e "${timestamp} [${level}] ${message}" 2> 1
     else
-        echo -e "${timestamp} [${level}] ${message}" >> "$3"
+        echo -e "${timestamp} [${level}] ${message}" >>"$3"
     fi
 }
 
@@ -196,7 +196,7 @@ end-of-install() {
 
 run() {
     local dry_run=${dry_run:-true}
-    local output=${output:-/tmp/arch-install-logs}
+    local output=${output:-/dev/tty2}
 
     local uefi
     uefi=is-uefi
