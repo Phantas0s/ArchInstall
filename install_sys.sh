@@ -211,8 +211,7 @@ run() {
         esac
     done
 
-    local -r url=url-installer
-    log INFO "DRY RUN: $dry_run" "$output"
+    log INFO "DRY RUN? $dry_run" "$output"
 
     install-dialog
     dialog-are-you-sure
@@ -232,6 +231,7 @@ run() {
     swap_size=$(cat swaps) && rm swaps
     log INFO "SWAP SIZE: $swap_size" "$output"
 
+    log INFO "SET TIME" "$output"
     set-timedate
 
     local wiper
@@ -239,15 +239,16 @@ run() {
     wiper=$(cat dfile) && rm dfile
     log INFO "WIPER CHOICE: $wiper" "$output"
 
-    [[ "$dry_run" = false ]] && erase-disk "$wiper" "$disk"
-    [[ "$dry_run" = false ]] && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)")" "$swap_size"
-    [[ "$dry_run" = false ]] && format-partitions "$disk" "$(is-uefi)"
+    [[ "$dry_run" = false ]] && log INFO "ERASE DISK" "$output" && erase-disk "$wiper" "$disk"
+    [[ "$dry_run" = false ]] && log INFO "CREATE PARTITIONs" "$output" && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)")" "$swap_size"
+    [[ "$dry_run" = false ]] && log INFO "FORMAT PARTITIONS" "$output" && format-partitions "$disk" "$(is-uefi)"
 
+    log INFO "CREATE VAR FILES"
     echo "$uefi" > /mnt/var_uefi
     echo "$disk" > /mnt/var_hd
     echo "$hostname" > /mnt/hostname
 
-    [[ "$dry_run" = false ]] && chroot-install "$(url-installer)"
+    [[ "$dry_run" = false ]] && log INFO "BEGIN CHROOT" "$output" && chroot-install "$(url-installer)"
 
     clean
     end-of-install
