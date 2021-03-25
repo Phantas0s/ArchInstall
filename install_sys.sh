@@ -95,11 +95,13 @@ erase-disk() {
     local -r choice=${1:?}
     local -r hd=${2:?}
 
+    set +e
     case $choice in
         1) dd if=/dev/zero of="$hd" status=progress 2>&1 | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
         2) shred -v "$hd" | dialog --title "Formatting $hd..." --progressbox --stdout 20 60;;
         3) ;;
     esac
+    set -e
 }
 
 boot-partition() {
@@ -240,7 +242,7 @@ run() {
     log INFO "WIPER CHOICE: $wiper" "$output"
 
     [[ "$dry_run" = false ]] && log INFO "ERASE DISK" "$output" && erase-disk "$wiper" "$disk"
-    [[ "$dry_run" = false ]] && log INFO "CREATE PARTITIONs" "$output" && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)")" "$swap_size"
+    [[ "$dry_run" = false ]] && log INFO "CREATE PARTITIONS" "$output" && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)")" "$swap_size"
     [[ "$dry_run" = false ]] && log INFO "FORMAT PARTITIONS" "$output" && format-partitions "$disk" "$(is-uefi)"
 
     log INFO "CREATE VAR FILES"
