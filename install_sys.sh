@@ -7,7 +7,7 @@ set -euo pipefail
 
 # YOU NEED TO MODIFY YOUR INSTALL URL
 url-installer() {
-    echo "https://raw.githubusercontent.com/Phantas0s/ArchInstall/master" > /mnt/installer-url
+    echo "https://raw.githubusercontent.com/Phantas0s/ArchInstall/master"
 }
 
 log() {
@@ -169,7 +169,6 @@ install-arch-linux() {
 
 chroot-install() {
     local -r installer_url=${1:?}
-    log INFO "INSTALLER_URL: $installer_url"
 
     curl "$installer_url/install_chroot.sh" > /mnt/install_chroot.sh
     arch-chroot /mnt bash install_chroot.sh
@@ -245,10 +244,11 @@ run() {
     [[ "$dry_run" = false ]] && log INFO "CREATE PARTITIONS" "$output" && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)")" "$swap_size"
     [[ "$dry_run" = false ]] && log INFO "FORMAT PARTITIONS" "$output" && format-partitions "$disk" "$(is-uefi)"
 
-    log INFO "CREATE VAR FILES"
+    log INFO "CREATE VAR FILES" "$output"
     echo "$uefi" > /mnt/var_uefi
     echo "$disk" > /mnt/var_hd
     echo "$hostname" > /mnt/hostname
+    url-installer > /mnt/installer-url
 
     [[ "$dry_run" = false ]] && log INFO "BEGIN CHROOT" "$output" && chroot-install "$(url-installer)"
 
