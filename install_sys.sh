@@ -13,13 +13,10 @@ url-installer() {
 log() {
     local -r level=${1:?}
     local -r message=${2:?}
+    local -r output=${3:?}
     local -r timestamp=$(date +"%Y-%m-%d %H:%M:%S")
 
-    if [ -z "$3" ];then
-        echo -e "${timestamp} [${level}] ${message}" 2> 1
-    else
-        echo -e "${timestamp} [${level}] ${message}" >>"$3"
-    fi
+    echo -e "${timestamp} [${level}] ${message}" >>"$output"
 }
 
 
