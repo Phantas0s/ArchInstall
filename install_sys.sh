@@ -250,6 +250,7 @@ run() {
     echo "$hostname" > /mnt/hostname
     url-installer > /mnt/installer-url
 
+    [[ "$dry_run" = false ]] && log INFO "BEGIN INSTALL ARCH LINUX" "$output" && install-arch-linux
     [[ "$dry_run" = false ]] && log INFO "BEGIN CHROOT" "$output" && chroot-install "$(url-installer)"
 
     clean
