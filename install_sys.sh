@@ -19,7 +19,6 @@ log() {
     echo -e "${timestamp} [${level}] ${message}" >>"$output"
 }
 
-
 install-dialog() {
     pacman -Sy
     pacman --noconfirm -S dialog
@@ -164,7 +163,7 @@ install-arch-linux() {
     genfstab -U /mnt >> /mnt/etc/fstab
 }
 
-chroot-install() {
+install-chroot() {
     local -r installer_url=${1:?}
 
     curl "$installer_url/install_chroot.sh" > /mnt/install_chroot.sh
@@ -173,9 +172,10 @@ chroot-install() {
 
 clean() {
     rm /mnt/var_uefi
-    rm /mnt/var_hd
-    rm /mnt/hostname
-    rm /mnt/install_chroot.sh
+    rm /mnt/var_disk
+    rm /mnt/var_hostname
+    rm /mnt/var_output
+    rm /mnt/var_install_chroot.sh
     rm /mnt/github_defaults
 }
 
@@ -237,18 +237,32 @@ run() {
     wiper=$(cat dfile) && rm dfile
     log INFO "WIPER CHOICE: $wiper" "$output"
 
-    [[ "$dry_run" = false ]] && log INFO "ERASE DISK" "$output" && erase-disk "$wiper" "$disk"
-    [[ "$dry_run" = false ]] && log INFO "CREATE PARTITIONS" "$output" && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)")" "$swap_size"
-    [[ "$dry_run" = false ]] && log INFO "FORMAT PARTITIONS" "$output" && format-partitions "$disk" "$(is-uefi)"
+    [[ "$dry_run" = false ]] \
+        && log INFO "ERASE DISK" "$output" \
+        && erase-disk "$wiper" "$disk"
+
+    [[ "$dry_run" = false ]] \
+        && log INFO "CREATE PARTITIONS" "$output" \
+        && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)")" "$swap_size"
+
+    [[ "$dry_run" = false ]] \
+        && log INFO "FORMAT PARTITIONS" "$output" \
+        && format-partitions "$disk" "$(is-uefi)"
 
     log INFO "CREATE VAR FILES" "$output"
     echo "$uefi" > /mnt/var_uefi
-    echo "$disk" > /mnt/var_hd
-    echo "$hostname" > /mnt/hostname
-    url-installer > /mnt/installer-url
+    echo "$disk" > /mnt/var_disk
+    echo "$hostname" > /mnt/var_hostname
+    echo "$output" > /mnt/var_output
+    url-installer > /mnt/var_url_installer
 
-    [[ "$dry_run" = false ]] && log INFO "BEGIN INSTALL ARCH LINUX" "$output" && install-arch-linux
-    [[ "$dry_run" = false ]] && log INFO "BEGIN CHROOT" "$output" && chroot-install "$(url-installer)"
+    [[ "$dry_run" = false ]] \
+        && log INFO "BEGIN INSTALL ARCH LINUX" "$output" \
+        && install-arch-linux
+
+    [[ "$dry_run" = false ]] \
+        && log INFO "BEGIN CHROOT SCRIPT" "$output" \
+        && install-chroot "$(url-installer)"
 
     clean
     end-of-install

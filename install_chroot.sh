@@ -1,35 +1,63 @@
 #!/bin/bash
 
-source /github_defaults
+# e - script stops on error
+# u - error if undefined variable
+# o pipefail - script fails if command piped fails
+set -euo pipefail
 
-uefi=$(cat /var_uefi) && hd=$(cat /var_hd)
+log() {
+    local -r level=${1:?}
+    local -r message=${2:?}
+    local -r output=${3:?}
+    local -r timestamp=$(date +"%Y-%m-%d %H:%M:%S")
 
-cat /hostname > /etc/hostname
+    echo -e "${timestamp} [${level}] ${message}" >>"$output"
+}
 
-pacman --noconfirm --needed -S dialog
-pacman -S --noconfirm grub
+write-hostname() {
+    local -r hostname=${1:?}
+    "$hostname" > /etc/hostname
+}
 
-if [ "$uefi" = 1 ]; then
-    pacman -S --noconfirm efibootmgr
-    grub-install --target=x86_64-efi --bootloader-id=GRUB --efi-directory=/boot/efi
-else
-    grub-install "$hd"
-fi
+install-dialog() {
+    pacman --noconfirm --needed -S dialog
+}
 
-grub-mkconfig -o /boot/grub/grub.cfg
+install-grub() {
+    local -r hd=${1:?}
+    local -r uefi=${2:?}
 
-# Set the timezone
-timedatectl set-timezone "Europe/Berlin"
+    pacman -S --noconfirm grub
 
-# Set hardware clock from system clock
-hwclock --systohc
+    if [ "$uefi" = 1 ]; then
+        pacman -S --noconfirm efibootmgr
+        grub-install --target=x86_64-efi --bootloader-id=GRUB --efi-directory=/boot/efi
+    else
+        grub-install "$hd"
+    fi
 
-# Configure locale
-echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-locale-gen
-echo "LANG=en_US.UTF-8" > /etc/locale.conf
+    grub-mkconfig -o /boot/grub/grub.cfg
+}
 
-function config_user() {
+set-timezone() {
+    local -r tz=${1:?}
+    timedatectl set-timezone "$tz"
+}
+
+set-hardware-clock() {
+    hwclock --systohc
+}
+
+configure-locale() {
+    local -r locale=${1:?}
+    local -r encoding=${2:?}
+
+    echo "$locale $encoding" >> /etc/locale.gen
+    locale-gen
+    echo "LANG=$locale" > /etc/locale.conf
+}
+
+config_user() {
     if [[ -z $1 ]]; then
         dialog --no-cancel --inputbox "Please enter your username" 10 60 2> name
     else
@@ -59,14 +87,49 @@ function config_user() {
     echo "$name:$pass1" | chpasswd
 }
 
-dialog --title "root password" --msgbox "It's time to add a password for the root user" 10 60
-config_user root
+run() {
+    output=$(cat /var_output)
+    log INFO "FETCH VARS FROM FILES" "$output"
+    uefi=$(cat /var_uefi)
+    hd=$(cat /var_hd)
+    hostname=$(cat /var_hostname)
+    url_installer=$(cat /var_url_installer)
 
-dialog --title "Add User" --msgbox "We can't always be root. Too many responsibilities. Let's create another user." 10 60
-config_user
+    log INFO "WRITE HOSTNAME: $hostname" "$output"
+    write-hostname "$hostname"
 
-echo "$name" > /tmp/user_name
+    log INFO "INSTALL DIALOG" "$output"
+    install-dialog
 
-dialog --title "Continue installation" --yesno "Do you want to install all the softwares and the dotfiles?" 10 60 \
-    && curl -LO https://raw.githubusercontent.com/$GITHUB_INSTALLER_USER/$GITHUB_INSTALLER_NAME/master/install_apps.sh \
-    && bash ./install_apps.sh
+    log INFO "INSTALL GRUB ON $hd WITH UEFI $uefi" "$output"
+    install-grub "$hd" "$uefi"
+
+    log INFO "SET TIMEZONE" "$output"
+    set-timezone "Europe/Berlin"
+
+    log INFO "SET HARDWARE CLOCK" "$output"
+    set-hardware-clock
+
+    log INFO "CONFIGURE LOCALE" "$output"
+    configure-locale "en_US.UTF-8" "UTF-8"
+
+    log INFO "ADD ROOT" "$output"
+    dialog --title "root password" --msgbox "It's time to add a password for the root user" 10 60
+    config_user root
+
+    log INFO "ADD USER" "$output"
+    dialog --title "Add User" --msgbox "We can't always be root. Too many responsibilities. Let's create another user." 10 60
+    config_user
+
+    echo "$name" > /tmp/user_name
+
+    continue-install "$(cat /var_url_installer)"
+}
+
+continue-install() {
+    local -r url_installer=${1:?}
+
+    dialog --title "Continue installation" --yesno "Do you want to install all the softwares and the dotfiles?" 10 60 \
+        && curl -LO "$url_installer/install_apps.sh" /tmp \
+        && bash /tmp/install_apps.sh
+}
