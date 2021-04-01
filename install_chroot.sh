@@ -16,7 +16,7 @@ log() {
 
 write-hostname() {
     local -r hostname=${1:?}
-    "$hostname" > /etc/hostname
+    echo "$hostname" > /etc/hostname
 }
 
 install-dialog() {
@@ -58,10 +58,11 @@ configure-locale() {
 }
 
 config_user() {
-    if [[ -z $1 ]]; then
+    local -r name=${1:-none}
+
+    if [ "$name" == none ]; then
         dialog --no-cancel --inputbox "Please enter your username" 10 60 2> name
-    else
-        echo "$1" > name
+        name=$(cat name) && rm name
     fi
 
     dialog --no-cancel --passwordbox "Enter your password" 10 60 2> pass1
@@ -72,10 +73,9 @@ config_user() {
         dialog --no-cancel --passwordbox "Passwords do not match.\n\nEnter password again." 10 60 2> pass1
         dialog --no-cancel --passwordbox "Retype password." 10 60 2> pass2
     done
-    name=$(cat name)
     pass1=$(cat pass1)
 
-    rm name pass1 pass2
+    rm pass1 pass2
 
     # Create user if doesn't exist
     if [[ ! "$(id -u "$name" 2> /dev/null)" ]]; then
@@ -99,7 +99,7 @@ run() {
     output=$(cat /var_output)
     log INFO "FETCH VARS FROM FILES" "$output"
     uefi=$(cat /var_uefi)
-    hd=$(cat /var_hd)
+    hd=$(cat /var_disk)
     hostname=$(cat /var_hostname)
     url_installer=$(cat /var_url_installer)
 
