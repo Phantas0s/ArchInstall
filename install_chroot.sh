@@ -58,7 +58,7 @@ configure-locale() {
 }
 
 config_user() {
-    local -r name=${1:-none}
+    local name=${1:-none}
 
     if [ "$name" == none ]; then
         dialog --no-cancel --inputbox "Please enter your username" 10 60 2> name
@@ -85,6 +85,9 @@ config_user() {
 
     # Add password to user
     echo "$name:$pass1" | chpasswd
+
+    # Save name for later
+    echo "$name" > /tmp/user_name
 }
 
 continue-install() {
@@ -127,9 +130,8 @@ run() {
 
     log INFO "ADD USER" "$output"
     dialog --title "Add User" --msgbox "We can't always be root. Too many responsibilities. Let's create another user." 10 60
-    config_user
 
-    echo "$name" > /tmp/user_name
+    config_user
 
     continue-install "$(cat /var_url_installer)"
 }
