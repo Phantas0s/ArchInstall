@@ -7,7 +7,7 @@ set -euo pipefail
 
 # YOU NEED TO MODIFY YOUR INSTALL URL
 url-installer() {
-    echo "https://raw.githubusercontent.com/Phantas0s/ArchInstall/master"
+    echo "https://raw.githubusercontent.com/Phantas0s/ArchInstall/refactoring"
 }
 
 log() {

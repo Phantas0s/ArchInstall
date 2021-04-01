@@ -87,6 +87,14 @@ config_user() {
     echo "$name:$pass1" | chpasswd
 }
 
+continue-install() {
+    local -r url_installer=${1:?}
+
+    dialog --title "Continue installation" --yesno "Do you want to install all the softwares and the dotfiles?" 10 60 \
+        && curl -LO "$url_installer/install_apps.sh" /tmp \
+        && bash /tmp/install_apps.sh
+}
+
 run() {
     output=$(cat /var_output)
     log INFO "FETCH VARS FROM FILES" "$output"
@@ -126,10 +134,4 @@ run() {
     continue-install "$(cat /var_url_installer)"
 }
 
-continue-install() {
-    local -r url_installer=${1:?}
-
-    dialog --title "Continue installation" --yesno "Do you want to install all the softwares and the dotfiles?" 10 60 \
-        && curl -LO "$url_installer/install_apps.sh" /tmp \
-        && bash /tmp/install_apps.sh
-}
+run "$@"
