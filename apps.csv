@@ -56,6 +56,8 @@ graphism,pinta,Easy to use image editor
 graphism,libwebp,Image converter from jpg to webp
 graphism,drawio-desktop,Desktop diagramming application (AUR)
 graphism,sxiv,Simple X image viewer
+graphism,gimp,Image processor
+graphism,gimp-plugin-gmic,Filters for gimp
 tmux,tmux,Terminal multiplexer
 tmux,tmuxp,Configure tmux session + windows + panes via config files
 git,git,Version control system
@@ -133,6 +135,7 @@ multimedia,deadbeef,Clone of Foobar2000 music player
 office,libreoffice,Office suite
 office,okular,PDF reader
 office,zathura-pdf-mupdf,Highly customizable PDF reader
+office,pdfarranger,Merge PDFs
 office,scribus,Document editing software
 newsboat,newsboat,RSS feed reader
 pandoc,pandoc,Document converter
