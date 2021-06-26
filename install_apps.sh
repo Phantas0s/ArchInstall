@@ -14,7 +14,8 @@ run() {
     add-multilib-repo
     log INFO "MULTILIB ADDED" "$output"
     dialog-welcome
-    choices=$(choose-apps)
+    dialog-choose-apps ch
+    choices=$(cat ch) && rm ch
     log INFO "APP CHOOSEN: $choices" "$output"
     lines="$(extract-choosed-apps "$choices" "$apps_path")"
     log INFO "GENERATED LINES: $lines" "$output"
@@ -24,7 +25,7 @@ run() {
     log INFO "UPDATED SYSTEM" "$output"
     delete-previous-aur-queue
     log INFO "DELETED PREVIOUS AUR QUEUE" "$output"
-    install-apps "$apps" "$dry_run"
+    dialog-install-apps "$apps" "$dry_run"
     log INFO "APPS INSTALLED" "$output"
     disable-horrible-beep
     log INFO "HORRIBLE BEEP DISABLED" "$output"
@@ -61,7 +62,9 @@ dialog-welcome() {
     dialog --title "Welcome!" --msgbox "Welcome to Phantas0s dotfiles and software installation script for Arch linux.\n" 10 60
 }
 
-choose-apps() {
+dialog-choose-apps() {
+    local file=${1:?}
+
     apps=("essential" "Essentials" on
         "compression" "Compression Tools" on
         "tools" "Very nice tools to have (highly recommended)" on
@@ -101,10 +104,7 @@ choose-apps() {
         "photography" "Photography tools" off
         "gaming" "Almost everything for gaming on Linux" off)
 
-    dialog --checklist "You can now choose the groups of applications you want to install, according to your own CSV file.\n\n Press SPACE to select and ENTER to validate your choices." 0 0 0 "${apps[@]}" 2> app_choices
-    choices=$(cat app_choices) && rm app_choices
-
-    echo "$choices"
+    dialog --checklist "You can now choose the groups of applications you want to install, according to your own CSV file.\n\n Press SPACE to select and ENTER to validate your choices." 0 0 0 "${apps[@]}" 2> "$file"
 }
 
 extract-choosed-apps() {
@@ -137,7 +137,7 @@ dialog-install-apps() {
     It will take some time.\n\n " 13 60
 }
 
-install-apps() {
+dialog-install-apps() {
     local -r final_apps=${1:?}
     local -r dry_run=${2:?}
 
