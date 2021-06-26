@@ -82,6 +82,7 @@ aur-install() {
 # or installs it manually.
 aur-check() {
     local -r output=${1:?}
+    shift 1
 
     qm=$(pacman -Qm | awk '{print $1}')
     for arg in "$@"
