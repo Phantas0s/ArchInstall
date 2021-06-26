@@ -2,16 +2,34 @@
 
 run() {
     output=$(cat /var_output)
+    echo "IS THIS DRYRUN? $dry_run" >> "$output"
+
     log INFO "FETCH VARS FROM FILES" "$output"
     name=$(cat /tmp/var_user_name)
     url_installer=$(cat /var_url_installer)
+    dry_run=$(cat /var_dry_run)
 
     log INFO "DOWNLOAD APPS CSV" "$output"
-    apps_path=download_app_csv url_installer
+    apps_path=download-app-csv url_installer
     log INFO "APPS CSV DOWNLOADED AT: $apps_path" "$output"
+    add-multilib-repo
+    log INFO "MULTILIB ADDED" "$output"
+    dialog-welcome
+    choices=choose-apps
+    log INFO "APP CHOOSEN: $choices" "$output"
+    lines=extract-choosed-apps "$choices" "$apps_path"
+    log INFO "GENERATED LINES: $lines" "$output"
+    apps=extract-app-names "$lines"
+    log INFO "APPS: $apps" "$output"
+    upate-system
+    delete-previous-aur-queue
+    install-apps "$apps" "$dry_run"
+    disable-horrible-beep
+    set-user-permissions
+    continue-install "$url_installer" "$name"
 }
 
-download_app_csv() {
+download-app-csv() {
     local -r url_installer=${1:?}
 
     apps_path="/tmp/apps.csv"
@@ -20,20 +38,16 @@ download_app_csv() {
     echo $apps_path
 }
 
-fake_install() {
-    echo "$1 fakely installed!" >> "$output"
-}
-
 # Add multilib repo for steam
-add_multilib_repo() {
+add-multilib-repo() {
     echo "[multilib]" >> /etc/pacman.conf && echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 }
 
-dialog_welcome() {
+dialog-welcome() {
     dialog --title "Welcome!" --msgbox "Welcome to Phantas0s dotfiles and software installation script for Arch linux.\n" 10 60
 }
 
-choose_apps() {
+choose-apps() {
     apps=("essential" "Essentials" on
         "compression" "Compression Tools" on
         "tools" "Very nice tools to have (highly recommended)" on
@@ -79,8 +93,9 @@ choose_apps() {
     echo "$choices"
 }
 
-extract_choosed_apps() {
+extract-choosed-apps() {
     local -r choices=${1:?}
+    local -r apps_path=${2:?}
 
     selection="^$(echo $choices | sed -e 's/ /,|^/g'),"
     lines=$(grep -E "$selection" "$apps_path")
@@ -88,33 +103,31 @@ extract_choosed_apps() {
     echo "$lines"
 }
 
-extract_app_names() {
+extract-app-names() {
+    local -r lines=${1:?}
+
     final_apps=$(echo "$lines" | awk -F, '{print $2}')
 }
 
-update_system() {
+update-system() {
     pacman -Syu --noconfirm
 }
 
-delete_previous_aur_queue() {
+delete-previous-aur-queue() {
     rm -f /tmp/aur_queue
 }
 
-dialog_install_apps() {
+dialog-install-apps() {
     dialog --title "Let's go!" --msgbox \
     "The system will now install everything you need.\n\n\
     It will take some time.\n\n " 13 60
 }
 
-pacman_install() {
-    ((pacman --noconfirm --needed -S "$1" &>> "$output") || echo "$1" &>> /tmp/aur_queue);
-}
+install-apps() {
+    local -r final_apps=${1:?}
+    local -r dry_run=${2:?}
 
-install_apps() {
-    local -r lines=${2:?}
-    local -r dry_run=${3:?}
-
-    count=$(echo "$lines" | wc -l)
+    count=$(echo "$final_apps" | wc -l)
 
     c=0
     echo "$final_apps" | while read -r line; do
@@ -161,25 +174,32 @@ install_apps() {
     done
 }
 
-continue_install() {
-    curl https://raw.githubusercontent.com/$GITHUB_INSTALLER_USER/$GITHUB_INSTALLER_NAME/master/install_user.sh > /tmp/install_user.sh;
-    curl https://raw.githubusercontent.com/$GITHUB_INSTALLER_USER/$GITHUB_INSTALLER_NAME/master/sudoers > /etc/sudoers
+fake-install() {
+    echo "$1 fakely installed!" >> "$output"
 }
 
+pacman-install() {
+    ((pacman --noconfirm --needed -S "$1" &>> "$output") || echo "$1" &>> /tmp/aur_queue)
+}
 
-set_user_permissions() {
-    local -r $name=${1:?}
+continue-install() {
+    local -r url_installer=${1:?}
+    local -r name=${2:?}
 
-    dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
+    curl "$url_installer/install_user.sh" > /tmp/install_user.sh;
 
     if [ "$dry_run" = false ]; then
         # Change user and begin the install use script
         sudo -u "$name" sh /tmp/install_user.sh
-        rm -f /tmp/install_user.sh
     fi
 }
 
-disable_horrible_beep() {
+set-user-permissions() {
+    dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
+    curl "$url_installer/sudoers" > /etc/sudoers
+}
+
+disable-horrible-beep() {
     rmmod pcspkr
     echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
 }
