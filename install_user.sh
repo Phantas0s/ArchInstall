@@ -4,7 +4,6 @@ run() {
     output=$(cat /var_output)
 
     log INFO "FETCH VARS FROM FILES" "$output"
-    url_installer=$(cat /var_url_installer)
     dry_run=$(cat /var_dry_run)
 
     log INFO "CREATE DIRECTORIES" "$output"
@@ -16,7 +15,7 @@ run() {
     log INFO "INSTALL AUR APPS" "$output"
     install-aur-apps "$output"
     log INFO "INSTALL DOTFILES" "$output"
-    install-dotfiles "$url_installer"
+    install-dotfiles
 }
 
 log() {
@@ -95,13 +94,11 @@ aur-check() {
 
 
 install-dotfiles() {
-    local -r url_installer=${1:?}
-
     DOTFILES="/home/$(whoami)/.dotfiles"
     if [ ! -d "$DOTFILES" ];
         then
             dialog --infobox "[$(whoami)] Downloading .dotfiles..." 10 60
-            git clone --recurse-submodules "https://raw.githubusercontent.com/Phantas0s/.dotfiles.git" "$DOTFILES" >/dev/null
+            git clone --recurse-submodules "https://github.com/Phantas0s/.dotfiles.git" "$DOTFILES" >/dev/null
     fi
 
     source "/home/$(whoami)/.dotfiles/zsh/zshenv"
