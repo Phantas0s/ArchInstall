@@ -41,7 +41,7 @@ run() {
 
     config_user
 
-    continue-install "$(cat /var_url_installer)"
+    continue-install "$url_installer"
 }
 
 log() {

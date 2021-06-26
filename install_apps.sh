@@ -2,7 +2,6 @@
 
 run() {
     output=$(cat /var_output)
-    echo "IS THIS DRYRUN? $dry_run" >> "$output"
 
     log INFO "FETCH VARS FROM FILES" "$output"
     name=$(cat /tmp/var_user_name)
@@ -22,11 +21,26 @@ run() {
     apps=extract-app-names "$lines"
     log INFO "APPS: $apps" "$output"
     upate-system
+    log INFO "UPDATED SYSTEM" "$output"
     delete-previous-aur-queue
+    log INFO "DELETED PREVIOUS AUR QUEUE" "$output"
     install-apps "$apps" "$dry_run"
+    log INFO "APPS INSTALLED" "$output"
     disable-horrible-beep
+    log INFO "HORRIBLE BEEP DISABLED" "$output"
     set-user-permissions
+    log INFO "USER PERMISSIONS SET" "$output"
+
     continue-install "$url_installer" "$name"
+}
+
+log() {
+    local -r level=${1:?}
+    local -r message=${2:?}
+    local -r output=${3:?}
+    local -r timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+
+    echo -e "${timestamp} [${level}] ${message}" >>"$output"
 }
 
 download-app-csv() {
