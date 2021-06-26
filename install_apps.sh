@@ -9,16 +9,16 @@ run() {
     dry_run=$(cat /var_dry_run)
 
     log INFO "DOWNLOAD APPS CSV" "$output"
-    apps_path=download-app-csv url_installer
+    apps_path="$(download-app-csv "$url_installer")"
     log INFO "APPS CSV DOWNLOADED AT: $apps_path" "$output"
     add-multilib-repo
     log INFO "MULTILIB ADDED" "$output"
     dialog-welcome
-    choices=choose-apps
+    choices=$(choose-apps)
     log INFO "APP CHOOSEN: $choices" "$output"
-    lines=extract-choosed-apps "$choices" "$apps_path"
+    lines="$(extract-choosed-apps "$choices" "$apps_path")"
     log INFO "GENERATED LINES: $lines" "$output"
-    apps=extract-app-names "$lines"
+    apps="$(extract-app-names "$lines")"
     log INFO "APPS: $apps" "$output"
     upate-system
     log INFO "UPDATED SYSTEM" "$output"
