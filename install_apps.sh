@@ -150,7 +150,7 @@ dialog-install-apps() {
         "Downloading and installing program $c out of $count: $line..." 8 70
 
         if [ "$dry_run" = false ]; then
-            pacman_install "$line"
+            pacman-install "$line"
 
             # Needed if system installed in VMWare
             if [ "$line" = "open-vm-tools" ]; then
