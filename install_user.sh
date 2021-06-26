@@ -50,7 +50,7 @@ install-yay() {
     local -r output=${1:?}
 
     dialog --infobox "[$(whoami)] Installing \"yay\", an AUR helper..." 10 60
-    aur-check "$prog" "$output"
+    aur-check "$output" "$prog"
 }
 
 install-aur-apps() {
@@ -62,7 +62,7 @@ install-aur-apps() {
     do
         c=$(( "$c" + 1 ))
         dialog --infobox "[$(whoami)] AUR install - Downloading and installing program $c out of $count: $prog..." 10 60
-        aur-check "$prog" "$output"
+        aur-check "$output" "$prog"
     done
 }
 
