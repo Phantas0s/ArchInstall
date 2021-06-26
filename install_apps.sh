@@ -25,7 +25,7 @@ run() {
     log INFO "UPDATED SYSTEM" "$output"
     delete-previous-aur-queue
     log INFO "DELETED PREVIOUS AUR QUEUE" "$output"
-    dialog-install-apps "$apps" "$dry_run"
+    dialog-install-apps "$apps" "$dry_run" "$output"
     log INFO "APPS INSTALLED" "$output"
     disable-horrible-beep
     log INFO "HORRIBLE BEEP DISABLED" "$output"
@@ -139,6 +139,7 @@ dialog-install-apps() {
 dialog-install-apps() {
     local -r final_apps=${1:?}
     local -r dry_run=${2:?}
+    local -r output=${3:?}
 
     count=$(echo "$final_apps" | wc -l)
 
@@ -150,7 +151,7 @@ dialog-install-apps() {
         "Downloading and installing program $c out of $count: $line..." 8 70
 
         if [ "$dry_run" = false ]; then
-            pacman-install "$line"
+            pacman-install "$line" "$output"
 
             # Needed if system installed in VMWare
             if [ "$line" = "open-vm-tools" ]; then
@@ -192,7 +193,10 @@ fake-install() {
 }
 
 pacman-install() {
-    ((pacman --noconfirm --needed -S "$1" &>> "$output") || echo "$1" &>> /tmp/aur_queue)
+    local -r app=${1:?}
+    local -r output=${2:?}
+
+    ((pacman --noconfirm --needed -S "$app" &>> "$output") || echo "$app" &>> /tmp/aur_queue)
 }
 
 continue-install() {
