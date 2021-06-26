@@ -67,12 +67,14 @@ install-aur-apps() {
 
 #Install an AUR package manually.
 aur-install() {
-    curl -O "https://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz" \
-    && tar -xvf "$1.tar.gz" \
-    && cd "$1" \
+    local -r app=${1:?}
+
+    curl -O "https://aur.archlinux.org/cgit/aur.git/snapshot/$app.tar.gz" \
+    && tar -xvf "$app.tar.gz" \
+    && cd "$app" \
     && makepkg --noconfirm -si \
     && cd - \
-    && rm -rf "$1" "$1.tar.gz" ;
+    && rm -rf "$app" "$app.tar.gz" ;
 }
 
 #a ur_check runs on each of its arguments
@@ -98,7 +100,7 @@ install-dotfiles() {
     if [ ! -d "$DOTFILES" ];
         then
             dialog --infobox "[$(whoami)] Downloading .dotfiles..." 10 60
-            git clone --recurse-submodules "https://github.com/Phantas0s/.dotfiles.git" "$DOTFILES" >/dev/null
+            git clone --recurse-submodules "https://github.com/Phantas0s/.dotfilestgit" "$DOTFILES" >/dev/null
     fi
 
     source "/home/$(whoami)/.dotfiles/zsh/zshenv"
