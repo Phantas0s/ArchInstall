@@ -92,7 +92,7 @@ log() {
     local -r output=${3:?}
     local -r timestamp=$(date +"%Y-%m-%d %H:%M:%S")
 
-    colored_text "${timestamp} [${level}] ${message}" >>"$output"
+    echo -e "${timestamp} [${level}] ${message}" >>"$output"
 }
 
 install-dialog() {
