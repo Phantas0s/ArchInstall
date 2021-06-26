@@ -10,13 +10,89 @@ url-installer() {
     echo "https://raw.githubusercontent.com/Phantas0s/ArchInstall/refactoring"
 }
 
+run() {
+    local dry_run=${dry_run:-true}
+    local output=${output:-/dev/tty2}
+
+    local uefi=is-uefi
+
+    while getopts d:o: option
+    do
+        case "${option}"
+            in
+            d) dry_run=${OPTARG};;
+            o) output=${OPTARG};;
+            *);;
+        esac
+    done
+
+    log INFO "DRY RUN? $dry_run" "$output"
+
+    install-dialog
+    dialog-are-you-sure
+
+    local hostname
+    dialog-name-of-computer hn
+    hostname=$(cat hn) && rm hn
+    log INFO "HOSTNAME: $hostname" "$output"
+
+    local disk
+    dialog-what-disk-to-use hd
+    disk=$(cat hd) && rm hd
+    log INFO "DISK CHOSEN: $disk" "$output"
+
+    local swap_size
+    dialog-what-swap-size swaps
+    swap_size=$(cat swaps) && rm swaps
+    log INFO "SWAP SIZE: $swap_size" "$output"
+
+    log INFO "SET TIME" "$output"
+    set-timedate
+
+    local wiper
+    dialog-how-wipe-disk "$disk" dfile
+    wiper=$(cat dfile) && rm dfile
+    log INFO "WIPER CHOICE: $wiper" "$output"
+
+    [[ "$dry_run" = false ]] \
+        && log INFO "ERASE DISK" "$output" \
+        && erase-disk "$wiper" "$disk"
+
+    [[ "$dry_run" = false ]] \
+        && log INFO "CREATE PARTITIONS" "$output" \
+        && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)")" "$swap_size"
+
+    [[ "$dry_run" = false ]] \
+        && log INFO "FORMAT PARTITIONS" "$output" \
+        && format-partitions "$disk" "$(is-uefi)"
+
+    log INFO "CREATE VAR FILES" "$output"
+    echo "$uefi" > /mnt/var_uefi
+    echo "$disk" > /mnt/var_disk
+    echo "$hostname" > /mnt/var_hostname
+    echo "$output" > /mnt/var_output
+    echo "$dry_run" > /mnt/var_dry_run
+    url-installer > /mnt/var_url_installer
+
+    [[ "$dry_run" = false ]] \
+        && log INFO "BEGIN INSTALL ARCH LINUX" "$output" \
+        && install-arch-linux
+
+    [[ "$dry_run" = false ]] \
+        && log INFO "BEGIN CHROOT SCRIPT" "$output" \
+        && install-chroot "$(url-installer)"
+
+    clean
+    end-of-install
+}
+
 log() {
     local -r level=${1:?}
     local -r message=${2:?}
     local -r output=${3:?}
     local -r timestamp=$(date +"%Y-%m-%d %H:%M:%S")
 
-    echo -e "${timestamp} [${level}] ${message}" >>"$output"
+    colored_text "${timestamp} [${level}] ${message}" >>"$output"
 }
 
 install-dialog() {
@@ -175,8 +251,7 @@ clean() {
     rm /mnt/var_disk
     rm /mnt/var_hostname
     rm /mnt/var_output
-    rm /mnt/var_install_chroot.sh
-    rm /mnt/github_defaults
+    rm /mnt/var_dry_run
 }
 
 end-of-install() {
@@ -190,82 +265,6 @@ end-of-install() {
     esac
 
     clear
-}
-
-run() {
-    local dry_run=${dry_run:-true}
-    local output=${output:-/dev/tty2}
-
-    local uefi
-    uefi=is-uefi
-
-    while getopts d:o: option
-    do
-        case "${option}"
-            in
-            d) dry_run=${OPTARG};;
-            o) output=${OPTARG};;
-            *);;
-        esac
-    done
-
-    log INFO "DRY RUN? $dry_run" "$output"
-
-    install-dialog
-    dialog-are-you-sure
-
-    local hostname
-    dialog-name-of-computer hn
-    hostname=$(cat hn) && rm hn
-    log INFO "HOSTNAME: $hostname" "$output"
-
-    local disk
-    dialog-what-disk-to-use hd
-    disk=$(cat hd) && rm hd
-    log INFO "DISK CHOSEN: $disk" "$output"
-
-    local swap_size
-    dialog-what-swap-size swaps
-    swap_size=$(cat swaps) && rm swaps
-    log INFO "SWAP SIZE: $swap_size" "$output"
-
-    log INFO "SET TIME" "$output"
-    set-timedate
-
-    local wiper
-    dialog-how-wipe-disk "$disk" dfile
-    wiper=$(cat dfile) && rm dfile
-    log INFO "WIPER CHOICE: $wiper" "$output"
-
-    [[ "$dry_run" = false ]] \
-        && log INFO "ERASE DISK" "$output" \
-        && erase-disk "$wiper" "$disk"
-
-    [[ "$dry_run" = false ]] \
-        && log INFO "CREATE PARTITIONS" "$output" \
-        && fdisk-partition "$disk" "$(boot-partition "$(is-uefi)")" "$swap_size"
-
-    [[ "$dry_run" = false ]] \
-        && log INFO "FORMAT PARTITIONS" "$output" \
-        && format-partitions "$disk" "$(is-uefi)"
-
-    log INFO "CREATE VAR FILES" "$output"
-    echo "$uefi" > /mnt/var_uefi
-    echo "$disk" > /mnt/var_disk
-    echo "$hostname" > /mnt/var_hostname
-    echo "$output" > /mnt/var_output
-    url-installer > /mnt/var_url_installer
-
-    [[ "$dry_run" = false ]] \
-        && log INFO "BEGIN INSTALL ARCH LINUX" "$output" \
-        && install-arch-linux
-
-    [[ "$dry_run" = false ]] \
-        && log INFO "BEGIN CHROOT SCRIPT" "$output" \
-        && install-chroot "$(url-installer)"
-
-    clean
-    end-of-install
 }
 
 run "$@"

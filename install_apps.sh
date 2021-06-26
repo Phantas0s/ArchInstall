@@ -1,150 +1,187 @@
 #!/bin/bash
 
-source /github_defaults
+run() {
+    output=$(cat /var_output)
+    log INFO "FETCH VARS FROM FILES" "$output"
+    name=$(cat /tmp/var_user_name)
+    url_installer=$(cat /var_url_installer)
 
-name=$(cat /tmp/user_name)
-
-dry_run=${dry_run:-false}
-output=${output:-/tmp/arch_install}
-apps_path=${apps_path:-/tmp/apps.csv}
-while getopts d:o:p: option
-do
-    case "${option}"
-        in
-        d) dry_run=${OPTARG};;
-        o) output=${OPTARG};;
-        p) apps_path=${OPTARG};;
-    esac
-done
-
-apps_path="/tmp/apps.csv"
-curl https://raw.githubusercontent.com/$GITHUB_INSTALLER_USER/$GITHUB_INSTALLER_NAME/master/apps.csv > $apps_path
-
-function pacman_install() {
-    ((pacman --noconfirm --needed -S "$1" &>> "$output") || echo "$1" &>> /tmp/aur_queue);
+    log INFO "DOWNLOAD APPS CSV" "$output"
+    apps_path=download_app_csv url_installer
+    log INFO "APPS CSV DOWNLOADED AT: $apps_path" "$output"
 }
 
-function fake_install() {
+download_app_csv() {
+    local -r url_installer=${1:?}
+
+    apps_path="/tmp/apps.csv"
+    curl "$url_installer/apps.csv" > "$apps_path"
+
+    echo $apps_path
+}
+
+fake_install() {
     echo "$1 fakely installed!" >> "$output"
 }
 
 # Add multilib repo for steam
-echo "[multilib]" >> /etc/pacman.conf && echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+add_multilib_repo() {
+    echo "[multilib]" >> /etc/pacman.conf && echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+}
 
-dialog --title "Welcome!" --msgbox "Welcome to Phantas0s dotfiles and software installation script for Arch linux.\n" 10 60
+dialog_welcome() {
+    dialog --title "Welcome!" --msgbox "Welcome to Phantas0s dotfiles and software installation script for Arch linux.\n" 10 60
+}
 
-apps=("essential" "Essentials" on
-      "compression" "Compression Tools" on
-      "tools" "Very nice tools to have (highly recommended)" on
-      "audio" "Audio tools" on
-      "git" "Git & git tools" on
-      "i3" "i3 Tile manager & Desktop" on
-      "tmux" "Tmux" on
-      "neovim" "Neovim" on
-      "keyring" "Keyring applications" on
-      "urxvt" "Urxvt unicode" on
-      "zsh" "Unix Z-Shell (zsh)" on
-      "ripgrep" "Ripgrep" on \
-      "brave" "Brave (browser)" on
-      "qutebrowser" "Qutebrowser" on
-      "vifm" "vifm (terminal file manager)" on
-      "gtk" "GTK 3 themes and icons" on
-      "programming" "Programming environments (PHP, Ruby, Go, Docker, Clojure)" on
-      "keepass" "Keepass" on
-      "sql" "Mysql (mariadb) & mysql tools" on
-      "newsboat" "RSS Feed Reader" on
-      "firefox" "Firefox (browser)" off
-      "joplin" "Note taking system" off
-      "thunar" "Graphical file manager" off
-      "thunderbird" "Thunderbird" off
-      "graphism" "Design" off
-      "pandoc" "Pandoc and usefull dependencies" off
-      "office" "Office tools (Libreoffice...)" off
-      "vmware" "Vmware tools" off
-      "language" "Language tools" off
-      "multimedia" "Multimedia" off
-      "videography" "Video creation" off
-      "nextcloud" "Nextcloud client" off
-      "network" "Network Configuration" off
-      "hugo" "Hugo static site generator" off
-      "freemind" "Freemind - mind mapping software" off
-      "doublecmd" "Double Commander - File explorer a la FreeCommander" off
-      "photography" "Photography tools" off
-      "gaming" "Almost everything for gaming on Linux" off)
+choose_apps() {
+    apps=("essential" "Essentials" on
+        "compression" "Compression Tools" on
+        "tools" "Very nice tools to have (highly recommended)" on
+        "audio" "Audio tools" on
+        "git" "Git & git tools" on
+        "i3" "i3 Tile manager & Desktop" on
+        "tmux" "Tmux" on
+        "neovim" "Neovim" on
+        "keyring" "Keyring applications" on
+        "urxvt" "Urxvt unicode" on
+        "zsh" "Unix Z-Shell (zsh)" on
+        "ripgrep" "Ripgrep" on \
+        "brave" "Brave (browser)" on
+        "qutebrowser" "Qutebrowser" on
+        "vifm" "vifm (terminal file manager)" on
+        "gtk" "GTK 3 themes and icons" on
+        "programming" "Programming environments (PHP, Ruby, Go, Docker, Clojure)" on
+        "keepass" "Keepass" on
+        "sql" "Mysql (mariadb) & mysql tools" on
+        "newsboat" "RSS Feed Reader" on
+        "firefox" "Firefox (browser)" off
+        "joplin" "Note taking system" off
+        "thunar" "Graphical file manager" off
+        "thunderbird" "Thunderbird" off
+        "graphism" "Design" off
+        "pandoc" "Pandoc and usefull dependencies" off
+        "office" "Office tools (Libreoffice...)" off
+        "vmware" "Vmware tools" off
+        "language" "Language tools" off
+        "multimedia" "Multimedia" off
+        "videography" "Video creation" off
+        "nextcloud" "Nextcloud client" off
+        "network" "Network Configuration" off
+        "hugo" "Hugo static site generator" off
+        "freemind" "Freemind - mind mapping software" off
+        "doublecmd" "Double Commander - File explorer a la FreeCommander" off
+        "photography" "Photography tools" off
+        "gaming" "Almost everything for gaming on Linux" off)
 
-dialog --checklist "You can now choose the groups of applications you want to install, according to your own CSV file.\n\n Press SPACE to select and ENTER to validate your choices." 0 0 0 "${apps[@]}" 2> app_choices
-choices=$(cat app_choices) && rm app_choices
+    dialog --checklist "You can now choose the groups of applications you want to install, according to your own CSV file.\n\n Press SPACE to select and ENTER to validate your choices." 0 0 0 "${apps[@]}" 2> app_choices
+    choices=$(cat app_choices) && rm app_choices
 
-selection="^$(echo $choices | sed -e 's/ /,|^/g'),"
-lines=$(grep -E "$selection" "$apps_path")
-count=$(echo "$lines" | wc -l)
-final_apps=$(echo "$lines" | awk -F, '{print $2}')
+    echo "$choices"
+}
 
-echo "$selection" "$lines" "$count" >> "$output"
+extract_choosed_apps() {
+    local -r choices=${1:?}
 
-if [ "$dry_run" = false ]; then
-    pacman -Syu --noconfirm >> "$output"
-fi
+    selection="^$(echo $choices | sed -e 's/ /,|^/g'),"
+    lines=$(grep -E "$selection" "$apps_path")
 
-rm -f /tmp/aur_queue
+    echo "$lines"
+}
 
-dialog --title "Let's go!" --msgbox \
-"The system will now install everything you need.\n\n\
-It will take some time.\n\n " 13 60
+extract_app_names() {
+    final_apps=$(echo "$lines" | awk -F, '{print $2}')
+}
 
-c=0
-echo "$final_apps" | while read -r line; do
-    c=$(( "$c" + 1 ))
+update_system() {
+    pacman -Syu --noconfirm
+}
 
-    dialog --title "Arch Linux Installation" --infobox \
-    "Downloading and installing program $c out of $count: $line..." 8 70
+delete_previous_aur_queue() {
+    rm -f /tmp/aur_queue
+}
+
+dialog_install_apps() {
+    dialog --title "Let's go!" --msgbox \
+    "The system will now install everything you need.\n\n\
+    It will take some time.\n\n " 13 60
+}
+
+pacman_install() {
+    ((pacman --noconfirm --needed -S "$1" &>> "$output") || echo "$1" &>> /tmp/aur_queue);
+}
+
+install_apps() {
+    local -r lines=${2:?}
+    local -r dry_run=${3:?}
+
+    count=$(echo "$lines" | wc -l)
+
+    c=0
+    echo "$final_apps" | while read -r line; do
+        c=$(( "$c" + 1 ))
+
+        dialog --title "Arch Linux Installation" --infobox \
+        "Downloading and installing program $c out of $count: $line..." 8 70
+
+        if [ "$dry_run" = false ]; then
+            pacman_install "$line"
+
+            # Needed if system installed in VMWare
+            if [ "$line" = "open-vm-tools" ]; then
+                systemctl enable vmtoolsd.service
+                systemctl enable vmware-vmblock-fuse.service
+            fi
+
+            if [ "$line" = "networkmanager" ]; then
+                # Enable the systemd service NetworkManager.
+                systemctl enable NetworkManager.service
+            fi
+
+            if [ "$line" = "zsh" ]; then
+                # zsh as default terminal for user
+                chsh -s "$(which zsh)" "$name"
+            fi
+
+            if [ "$line" = "docker" ]; then
+                groupadd docker
+                gpasswd -a "$name" docker
+                systemctl enable docker.service
+            fi
+
+            if [ "$line" = "at" ]; then
+                systemctl enable atd.service
+            fi
+
+            if [ "$line" = "mariadb" ]; then
+                mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+            fi
+        else
+            fake_install "$line"
+        fi
+    done
+}
+
+continue_install() {
+    curl https://raw.githubusercontent.com/$GITHUB_INSTALLER_USER/$GITHUB_INSTALLER_NAME/master/install_user.sh > /tmp/install_user.sh;
+    curl https://raw.githubusercontent.com/$GITHUB_INSTALLER_USER/$GITHUB_INSTALLER_NAME/master/sudoers > /etc/sudoers
+}
+
+
+set_user_permissions() {
+    local -r $name=${1:?}
+
+    dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
 
     if [ "$dry_run" = false ]; then
-        pacman_install "$line"
-
-        # Needed if system installed in VMWare
-        if [ "$line" = "open-vm-tools" ]; then
-            systemctl enable vmtoolsd.service
-            systemctl enable vmware-vmblock-fuse.service
-        fi
-
-        if [ "$line" = "networkmanager" ]; then
-            # Enable the systemd service NetworkManager.
-            systemctl enable NetworkManager.service
-        fi
-
-        if [ "$line" = "zsh" ]; then
-            # zsh as default terminal for user
-            chsh -s "$(which zsh)" "$name"
-        fi
-
-        if [ "$line" = "docker" ]; then
-            groupadd docker
-            gpasswd -a "$name" docker
-            systemctl enable docker.service
-        fi
-
-        if [ "$line" = "at" ]; then
-            systemctl enable atd.service
-        fi
-
-        if [ "$line" = "mariadb" ]; then
-            mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
-        fi
-    else
-        fake_install "$line"
+        # Change user and begin the install use script
+        sudo -u "$name" sh /tmp/install_user.sh
+        rm -f /tmp/install_user.sh
     fi
-done
+}
 
-curl https://raw.githubusercontent.com/$GITHUB_INSTALLER_USER/$GITHUB_INSTALLER_NAME/master/install_user.sh > /tmp/install_user.sh;
-curl https://raw.githubusercontent.com/$GITHUB_INSTALLER_USER/$GITHUB_INSTALLER_NAME/master/sudoers > /etc/sudoers
+disable_horrible_beep() {
+    rmmod pcspkr
+    echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
+}
 
-dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
-if [ "$dry_run" = false ]; then
-    # Change user and begin the install use script
-    sudo -u "$name" sh /tmp/install_user.sh
-    rm -f /tmp/install_user.sh
-fi
-
-rmmod pcspkr
-echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
+run "$@"

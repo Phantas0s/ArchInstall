@@ -5,6 +5,45 @@
 # o pipefail - script fails if command piped fails
 set -euo pipefail
 
+run() {
+    output=$(cat /var_output)
+    log INFO "FETCH VARS FROM FILES" "$output"
+    uefi=$(cat /var_uefi)
+    hd=$(cat /var_disk)
+    hostname=$(cat /var_hostname)
+    url_installer=$(cat /var_url_installer)
+    dry_run=$(cat /var_dry_run)
+
+    log INFO "WRITE HOSTNAME: $hostname" "$output" \
+    write-hostname "$hostname"
+
+    log INFO "INSTALL DIALOG" "$output"
+    install-dialog
+
+    log INFO "INSTALL GRUB ON $hd WITH UEFI $uefi" "$output"
+    install-grub "$hd" "$uefi"
+
+    log INFO "SET TIMEZONE" "$output"
+    set-timezone "Europe/Berlin"
+
+    log INFO "SET HARDWARE CLOCK" "$output"
+    set-hardware-clock
+
+    log INFO "CONFIGURE LOCALE" "$output"
+    configure-locale "en_US.UTF-8" "UTF-8"
+
+    log INFO "ADD ROOT" "$output"
+    dialog --title "root password" --msgbox "It's time to add a password for the root user" 10 60
+    config_user root
+
+    log INFO "ADD USER" "$output"
+    dialog --title "Add User" --msgbox "We can't always be root. Too many responsibilities. Let's create another user." 10 60
+
+    config_user
+
+    continue-install "$(cat /var_url_installer)"
+}
+
 log() {
     local -r level=${1:?}
     local -r message=${2:?}
@@ -87,7 +126,7 @@ config_user() {
     echo "$name:$pass1" | chpasswd
 
     # Save name for later
-    echo "$name" > /tmp/user_name
+    echo "$name" > /tmp/var_user_name
 }
 
 continue-install() {
@@ -96,44 +135,6 @@ continue-install() {
     dialog --title "Continue installation" --yesno "Do you want to install all the softwares and the dotfiles?" 10 60 \
         && curl "$url_installer/install_apps.sh" > /tmp/install_apps.sh \
         && bash /tmp/install_apps.sh
-}
-
-run() {
-    output=$(cat /var_output)
-    log INFO "FETCH VARS FROM FILES" "$output"
-    uefi=$(cat /var_uefi)
-    hd=$(cat /var_disk)
-    hostname=$(cat /var_hostname)
-    url_installer=$(cat /var_url_installer)
-
-    log INFO "WRITE HOSTNAME: $hostname" "$output"
-    write-hostname "$hostname"
-
-    log INFO "INSTALL DIALOG" "$output"
-    install-dialog
-
-    log INFO "INSTALL GRUB ON $hd WITH UEFI $uefi" "$output"
-    install-grub "$hd" "$uefi"
-
-    log INFO "SET TIMEZONE" "$output"
-    set-timezone "Europe/Berlin"
-
-    log INFO "SET HARDWARE CLOCK" "$output"
-    set-hardware-clock
-
-    log INFO "CONFIGURE LOCALE" "$output"
-    configure-locale "en_US.UTF-8" "UTF-8"
-
-    log INFO "ADD ROOT" "$output"
-    dialog --title "root password" --msgbox "It's time to add a password for the root user" 10 60
-    config_user root
-
-    log INFO "ADD USER" "$output"
-    dialog --title "Add User" --msgbox "We can't always be root. Too many responsibilities. Let's create another user." 10 60
-
-    config_user
-
-    continue-install "$(cat /var_url_installer)"
 }
 
 run "$@"
