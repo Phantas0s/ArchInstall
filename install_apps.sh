@@ -21,7 +21,7 @@ run() {
     log INFO "GENERATED LINES: $lines" "$output"
     apps="$(extract-app-names "$lines")"
     log INFO "APPS: $apps" "$output"
-    upate-system
+    update-system
     log INFO "UPDATED SYSTEM" "$output"
     delete-previous-aur-queue
     log INFO "DELETED PREVIOUS AUR QUEUE" "$output"
