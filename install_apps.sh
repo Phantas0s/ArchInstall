@@ -119,8 +119,7 @@ extract-choosed-apps() {
 
 extract-app-names() {
     local -r lines=${1:?}
-
-    final_apps=$(echo "$lines" | awk -F, '{print $2}')
+    echo "$lines" | awk -F, '{print $2}'
 }
 
 update-system() {
