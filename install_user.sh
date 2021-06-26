@@ -101,7 +101,7 @@ install-dotfiles() {
     if [ ! -d "$DOTFILES" ];
         then
             dialog --infobox "[$(whoami)] Downloading .dotfiles..." 10 60
-            git clone --recurse-submodules "$url_installer/.dotfiles.git" "$DOTFILES" >/dev/null
+            git clone --recurse-submodules "https://raw.githubusercontent.com/Phantas0s/.dotfiles.git" "$DOTFILES" >/dev/null
     fi
 
     source "/home/$(whoami)/.dotfiles/zsh/zshenv"
