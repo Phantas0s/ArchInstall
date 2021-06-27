@@ -1,7 +1,8 @@
 #!/bin/bash
 
 run() {
-    output=$(cat /var_output)
+    output="/home/$(whoami)/install_log"
+    cd /tmp
 
     log INFO "FETCH VARS FROM FILES" "$output"
     # dry_run=$(cat /var_dry_run)
@@ -71,7 +72,7 @@ aur-install() {
     && rm -rf "$app" "$app.tar.gz" ;
 }
 
-#a ur_check runs on each of its arguments
+# aur_check runs on each of its arguments
 # if the argument is not already installed
 # it either uses yay to install it
 # or installs it manually.
@@ -87,7 +88,6 @@ aur-check() {
         fi
     done
 }
-
 
 install-dotfiles() {
     DOTFILES="/home/$(whoami)/.dotfiles"
