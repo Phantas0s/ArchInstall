@@ -207,7 +207,7 @@ continue-install() {
 
     if [ "$dry_run" = false ]; then
         # Change user and begin the install use script
-        sudo -u "$name" sh /tmp/install_user.sh
+        sudo -u "$name" bash /tmp/install_user.sh
     fi
 }
 
