@@ -4,12 +4,10 @@ run() {
     output=$(cat /var_output)
 
     log INFO "FETCH VARS FROM FILES" "$output"
-    dry_run=$(cat /var_dry_run)
+    # dry_run=$(cat /var_dry_run)
 
     log INFO "CREATE DIRECTORIES" "$output"
-    create-default-directories
-    create-go-directories
-    create-nextcloud-directory
+    create-directories
     log INFO "INSTALL YAY" "$output"
     install-yay "$output"
     log INFO "INSTALL AUR APPS" "$output"
@@ -27,21 +25,17 @@ log() {
     echo -e "${timestamp} [${level}] ${message}" >>"$output"
 }
 
-create-default-directories() {
+create-directories() {
     mkdir -p "/home/$(whoami)/Documents"
     mkdir -p "/home/$(whoami)/Downloads"
 
     mkdir -p "/home/$(whoami)/workspace"
     mkdir -p "/home/$(whoami)/composer"
-}
 
-create-go-directories() {
     command -v "go" >/dev/null && mkdir -p "/home/$(whoami)/workspace/go/bin"
     command -v "go" >/dev/null && mkdir -p "/home/$(whoami)/workspace/go/pkg"
     command -v "go" >/dev/null &&  mkdir -p "/home/$(whoami)/workspace/go/src"
-}
 
-create-nextcloud-directory() {
     command -v "nextcloud" >/dev/null && mkdir -p "/home/$(whoami)/Nextcloud"
 }
 
