@@ -2,15 +2,43 @@
 
 [![Mousless Development Environment](screen_780.png)](screen.png)
 
+This is my scripts to install easily Arch Linux.
 
-This is my **personal install scripts** to install my whole Mouseless Development Environment. 
+**WARNING**: This set of script should be used for inspiration, don't run them on your system. If you want to try to install everything (I would advise you to use a VM) you have to 
 
-If you're searching the scripts related to my book Building Your Mouseelss Development Environment, it's there: https://github.com/Phantas0s/mouseless-book-companion/tree/master/part_III/05_user_installer/arch_installer
+1. `curl` the first script `install_sys.sh` (`curl -LO https://raw.githubusercontent.com/Phantas0s/ArchInstall/master/install_sys.sh && sh install_sys.sh`)
+2. Change the function `url_installer` in the file if you want to.
+3. Launch it.
 
-I would recommend to install Arch by yourself first. You'll learn quite a lot from it; then you can try to create your own scripts or use these. 
+Then, follow the instructions. Don't expect a lot of choices though.
 
-1. The entry point is the file `install_sys.sh`.
-2. Every software in `apps.csv` will be installed. The first column is the group you can choose during installation, the second column is the package names, and the third own is the description FYI. Every packagees from the group selected during installation will be installed.
+## What's in there? 
+
+Every scripts are called from `install_sys.sh`.
+
+The first script `install_sys`.sh will:
+1. Erase everything on the disk of your choice
+2. Create partitions
+    - Boot partition of 200M
+    - Swap partition
+    - Root partition
+
+The second script `install_chroot` will:
+1. Set up locale / time
+2. Set up Grub for the boot
+
+The third script `install_apps` will:
+1. Create a new user with password
+2. Install every software specified in `progs.csv`
+3. Install `composer` (PHP package manager)
+
+The fourth script `install_user` will:
+1. Try to install every software not found by pacman with yay (AUR repos)
+2. Install my [dotfiles](https://github.com/Phantas0s/.dotfiles)
+
+## What software are installed?
+
+Opening `apps.csv` will answer your question.
 
 ## Building Your Mouseless Development Environment
 
