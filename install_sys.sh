@@ -7,11 +7,11 @@ set -euo pipefail
 
 # YOU NEED TO MODIFY YOUR INSTALL URL
 url-installer() {
-    echo "https://raw.githubusercontent.com/Phantas0s/ArchInstall/refactoring"
+    echo "https://raw.githubusercontent.com/Phantas0s/ArchInstall/master"
 }
 
 run() {
-    local dry_run=${dry_run:-true}
+    local dry_run=${dry_run:-false}
     local output=${output:-/dev/tty2}
 
     local uefi=is-uefi
@@ -115,7 +115,7 @@ dialog-name-of-computer() {
 }
 
 is-uefi() {
-    local -r uefi=0
+    local uefi=0
     ls /sys/firmware/efi/efivars 2> /dev/null && uefi=1
 
     echo "$uefi"
@@ -226,11 +226,10 @@ format-partitions() {
     mkfs.ext4 "${hd}3"
     mount "${hd}3" /mnt
 
-    if [ "$uefi" = 1 ]; then
-        mkfs.fat -F32 "${hd}1"
-        mkdir -p /mnt/boot/efi
+    [[ "$uefi" == 1 ]] && \
+        mkfs.fat -F32 "${hd}1" && \
+        mkdir -p /mnt/boot/efi && \
         mount "${hd}"1 /mnt/boot/efi
-    fi
 }
 
 
