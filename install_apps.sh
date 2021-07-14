@@ -86,6 +86,7 @@ dialog-choose-apps() {
         "sql" "Mysql (mariadb) & mysql tools" on
         "newsboat" "RSS Feed Reader" on
         "firefox" "Firefox (browser)" off
+        "Brave" "brave (browser)" off
         "joplin" "Note taking system" off
         "thunar" "Graphical file manager" off
         "thunderbird" "Thunderbird" off
