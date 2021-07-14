@@ -65,7 +65,7 @@ run() {
         && format-partitions "$disk" "$(is-uefi)"
 
     log INFO "CREATE VAR FILES" "$output"
-    "$(is-uefi)" > /mnt/var_uefi
+    echo "$(is-uefi)" > /mnt/var_uefi
     echo "$disk" > /mnt/var_disk
     echo "$hostname" > /mnt/var_hostname
     echo "$output" > /mnt/var_output
