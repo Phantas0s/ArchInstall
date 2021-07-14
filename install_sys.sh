@@ -14,8 +14,6 @@ run() {
     local dry_run=${dry_run:-false}
     local output=${output:-/dev/tty2}
 
-    local uefi=is-uefi
-
     while getopts d:o: option
     do
         case "${option}"
@@ -67,7 +65,7 @@ run() {
         && format-partitions "$disk" "$(is-uefi)"
 
     log INFO "CREATE VAR FILES" "$output"
-    echo "$uefi" > /mnt/var_uefi
+    "$(is-uefi)" > /mnt/var_uefi
     echo "$disk" > /mnt/var_disk
     echo "$hostname" > /mnt/var_hostname
     echo "$output" > /mnt/var_output
@@ -116,7 +114,7 @@ dialog-name-of-computer() {
 
 is-uefi() {
     local uefi=0
-    ls /sys/firmware/efi/efivars 2> /dev/null && uefi=1
+    ls /sys/firmware/efi/efivars &> /dev/null && uefi=1
 
     echo "$uefi"
 }
