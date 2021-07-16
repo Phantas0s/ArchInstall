@@ -24,7 +24,7 @@ run() {
     install-grub "$hd" "$uefi"
 
     log INFO "SET TIMEZONE" "$output"
-    set-timezone "Europe/Berlin"
+    timedatectl set-timezone "Europe/Berlin"
 
     log INFO "SET HARDWARE CLOCK" "$output"
     set-hardware-clock
