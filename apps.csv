@@ -5,6 +5,7 @@ essential,man,Manual
 essential,man-pages,Manual pages
 essential,tldr,Examples for CLIs
 essential,openssh,Remote login tool for SSH protocol
+essential,cowsay,We all need a cow in our life
 network,networkmanager,Network manager
 network,netcat,Read and write to network
 network,nmap,Network mapper
