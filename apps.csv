@@ -71,19 +71,22 @@ i3,dmenu,Dynamic menu for X
 i3,feh,X11 image viewer
 i3,xdg-utils,Allow application to interact with the desktop
 i3,arc-gtk-theme,GTK themes
-gtk,gtk-theme-shades-of-gray,GTK themes (AUR),
+gtk,gtk-theme-shades-of-gray,GTK themes (AUR)
 gtk,gtk-theme-arc-red,Desktop theme... but in red! (AUR)
 gtk,flatery-icon-theme-git,GTK icons (AUR)
 notify,dunst,Notification system
 notify,libnotify,Notifier
 programming,php,PHP programming language
+programming,phpstan,PHP static analysis tool (AUR)
+programming,phpmd,PHP mess detector (AUR)
 programming,regexxer,Search/replace tool featuring Perl-style regular expressions
 programming,composer,Dependency management for PHP
 programming,ruby,Ruby programming language
 programming,go,Golang programming language
 programming,goreleaser,Release tool for Golang (AUR)
-programming,go-tools,Tools for Goland
-programming,gopls,Golang langauge server
+programming,golangci-lint,Fast linter for Golang (AUR)
+programming,go-tools,Tools for Golang
+programming,gopls,Golang language server
 programming,npm,Infamous javascript package manager
 programming,yarn,Wrapper for npm
 programming,docker,Build ship and run distributed applications
