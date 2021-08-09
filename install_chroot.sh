@@ -14,20 +14,20 @@ run() {
     url_installer=$(cat /var_url_installer)
     dry_run=$(cat /var_dry_run)
 
-    log INFO "WRITE HOSTNAME: $hostname" "$output" \
-    write-hostname "$hostname"
-
     log INFO "INSTALL DIALOG" "$output"
     install-dialog
 
     log INFO "INSTALL GRUB ON $hd WITH UEFI $uefi" "$output"
     install-grub "$hd" "$uefi"
 
+    log INFO "SET HARDWARE CLOCK" "$output"
+    set-hardware-clock
+
     log INFO "SET TIMEZONE" "$output"
     timedatectl set-timezone "Europe/Berlin"
 
-    log INFO "SET HARDWARE CLOCK" "$output"
-    set-hardware-clock
+    log INFO "WRITE HOSTNAME: $hostname" "$output" \
+    write-hostname "$hostname"
 
     log INFO "CONFIGURE LOCALE" "$output"
     configure-locale "en_US.UTF-8" "UTF-8"
