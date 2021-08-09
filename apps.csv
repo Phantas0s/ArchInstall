@@ -7,8 +7,7 @@ essential,tldr,Examples for CLIs
 essential,openssh,Remote login tool for SSH protocol
 essential,cowsay,We all need a cow in our life
 network,networkmanager,Network manager
-network,netcat,Read and write to network
-network,nmap,Network mapper
+network,nmap,Network mapper (comes with ncat too)
 network,wget,Tool for retrieving files using HTTP HTTPS FTP and FTPS
 network,net-tools,Include netstats and others
 network,openvpn,VPN
