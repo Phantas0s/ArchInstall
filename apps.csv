@@ -87,6 +87,7 @@ programming,golangci-lint,Fast linter for Golang (AUR)
 programming,go-tools,Tools for Golang
 programming,gopls,Golang language server
 programming,npm,Infamous javascript package manager
+programming,nvm,Change node version (AUR)
 programming,yarn,Wrapper for npm
 programming,docker,Build ship and run distributed applications
 programming,docker-compose,Configuration to run docker multi containers applications
