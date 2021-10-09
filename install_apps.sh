@@ -9,30 +9,30 @@ run() {
     dry_run=$(cat /var_dry_run)
 
     log INFO "DOWNLOAD APPS CSV" "$output"
-    apps_path="$(download-app-csv "$url_installer")"
+    apps_path="$(download_app_csv "$url_installer")"
     log INFO "APPS CSV DOWNLOADED AT: $apps_path" "$output"
-    add-multilib-repo
+    add_multilib_repo
     log INFO "MULTILIB ADDED" "$output"
-    dialog-welcome
-    dialog-choose-apps ch
+    dialog_welcome
+    dialog_choose_apps ch
     choices=$(cat ch) && rm ch
     log INFO "APP CHOOSEN: $choices" "$output"
-    lines="$(extract-choosed-apps "$choices" "$apps_path")"
+    lines="$(extract_choosed_apps "$choices" "$apps_path")"
     log INFO "GENERATED LINES: $lines" "$output"
-    apps="$(extract-app-names "$lines")"
+    apps="$(extract_app_names "$lines")"
     log INFO "APPS: $apps" "$output"
-    update-system
+    update_system
     log INFO "UPDATED SYSTEM" "$output"
-    delete-previous-aur-queue
+    delete_previous_aur_queue
     log INFO "DELETED PREVIOUS AUR QUEUE" "$output"
-    dialog-install-apps "$apps" "$dry_run" "$output"
+    dialog_install_apps "$apps" "$dry_run" "$output"
     log INFO "APPS INSTALLED" "$output"
-    disable-horrible-beep
+    disable_horrible_beep
     log INFO "HORRIBLE BEEP DISABLED" "$output"
-    set-user-permissions
+    set_user_permissions
     log INFO "USER PERMISSIONS SET" "$output"
 
-    continue-install "$url_installer" "$name"
+    continue_install "$url_installer" "$name"
 }
 
 log() {
@@ -44,7 +44,7 @@ log() {
     echo -e "${timestamp} [${level}] ${message}" >>"$output"
 }
 
-download-app-csv() {
+download_app_csv() {
     local -r url_installer=${1:?}
 
     apps_path="/tmp/apps.csv"
@@ -54,15 +54,15 @@ download-app-csv() {
 }
 
 # Add multilib repo for steam
-add-multilib-repo() {
+add_multilib_repo() {
     echo "[multilib]" >> /etc/pacman.conf && echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 }
 
-dialog-welcome() {
+dialog_welcome() {
     dialog --title "Welcome!" --msgbox "Welcome to Phantas0s dotfiles and software installation script for Arch linux.\n" 10 60
 }
 
-dialog-choose-apps() {
+dialog_choose_apps() {
     local file=${1:?}
 
     apps=("essential" "Essentials" on
@@ -109,7 +109,7 @@ dialog-choose-apps() {
     dialog --checklist "You can now choose the groups of applications you want to install, according to your own CSV file.\n\n Press SPACE to select and ENTER to validate your choices." 0 0 0 "${apps[@]}" 2> "$file"
 }
 
-extract-choosed-apps() {
+extract_choosed_apps() {
     local -r choices=${1:?}
     local -r apps_path=${2:?}
 
@@ -119,26 +119,26 @@ extract-choosed-apps() {
     echo "$lines"
 }
 
-extract-app-names() {
+extract_app_names() {
     local -r lines=${1:?}
     echo "$lines" | awk -F, '{print $2}'
 }
 
-update-system() {
+update_system() {
     pacman -Syu --noconfirm
 }
 
-delete-previous-aur-queue() {
+delete_previous_aur_queue() {
     rm -f /tmp/aur_queue
 }
 
-dialog-install-apps() {
+dialog_install_apps() {
     dialog --title "Let's go!" --msgbox \
     "The system will now install everything you need.\n\n\
     It will take some time.\n\n " 13 60
 }
 
-dialog-install-apps() {
+dialog_install_apps() {
     local -r final_apps=${1:?}
     local -r dry_run=${2:?}
     local -r output=${3:?}
@@ -153,7 +153,7 @@ dialog-install-apps() {
         "Downloading and installing program $c out of $count: $line..." 8 70
 
         if [ "$dry_run" = false ]; then
-            pacman-install "$line" "$output"
+            pacman_install "$line" "$output"
 
             # Needed if system installed in VMWare
             if [ "$line" = "open-vm-tools" ]; then
@@ -190,18 +190,18 @@ dialog-install-apps() {
     done
 }
 
-fake-install() {
+fake_install() {
     echo "$1 fakely installed!" >> "$output"
 }
 
-pacman-install() {
+pacman_install() {
     local -r app=${1:?}
     local -r output=${2:?}
 
     ((pacman --noconfirm --needed -S "$app" &>> "$output") || echo "$app" &>> /tmp/aur_queue)
 }
 
-continue-install() {
+continue_install() {
     local -r url_installer=${1:?}
     local -r name=${2:?}
 
@@ -213,12 +213,12 @@ continue-install() {
     fi
 }
 
-set-user-permissions() {
+set_user_permissions() {
     dialog --infobox "Copy user permissions configuration (sudoers)..." 4 40
     curl "$url_installer/sudoers" > /etc/sudoers
 }
 
-disable-horrible-beep() {
+disable_horrible_beep() {
     rmmod pcspkr
     echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
 }
