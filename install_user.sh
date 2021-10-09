@@ -8,13 +8,13 @@ run() {
     # dry_run=$(cat /var_dry_run)
 
     log INFO "CREATE DIRECTORIES" "$output"
-    create-directories
+    create_directories
     log INFO "INSTALL YAY" "$output"
-    install-yay "$output"
+    install_yay "$output"
     log INFO "INSTALL AUR APPS" "$output"
-    install-aur-apps "$output"
+    install_aur_apps "$output"
     log INFO "INSTALL DOTFILES" "$output"
-    install-dotfiles
+    install_dotfiles
 }
 
 log() {
@@ -26,7 +26,7 @@ log() {
     echo -e "${timestamp} [${level}] ${message}" >>"$output"
 }
 
-create-directories() {
+create_directories() {
     mkdir -p "/home/$(whoami)/Documents"
     mkdir -p "/home/$(whoami)/Downloads"
 
@@ -40,14 +40,14 @@ create-directories() {
     command -v "nextcloud" >/dev/null && mkdir -p "/home/$(whoami)/Nextcloud"
 }
 
-install-yay() {
+install_yay() {
     local -r output=${1:?}
 
     dialog --infobox "[$(whoami)] Installing \"yay\", an AUR helper..." 10 60
-    aur-check "$output" yay
+    aur_check "$output" yay
 }
 
-install-aur-apps() {
+install_aur_apps() {
     local -r output=${1:?}
 
     count=$(wc -l < /tmp/aur_queue)
@@ -56,12 +56,12 @@ install-aur-apps() {
     do
         c=$(( "$c" + 1 ))
         dialog --infobox "[$(whoami)] AUR install - Downloading and installing program $c out of $count: $prog..." 10 60
-        aur-check "$output" "$prog"
+        aur_check "$output" "$prog"
     done
 }
 
 #Install an AUR package manually.
-aur-install() {
+aur_install() {
     local -r app=${1:?}
 
     curl -O "https://aur.archlinux.org/cgit/aur.git/snapshot/$app.tar.gz" \
@@ -76,7 +76,7 @@ aur-install() {
 # if the argument is not already installed
 # it either uses yay to install it
 # or installs it manually.
-aur-check() {
+aur_check() {
     local -r output=${1:?}
     shift 1
 
@@ -84,12 +84,12 @@ aur-check() {
     for arg in "$@"
     do
         if [[ "$qm" != *"$arg"* ]]; then
-            yay --noconfirm -S "$arg" &>> "$output" || aur-install "$arg" &>> "$output"
+            yay --noconfirm -S "$arg" &>> "$output" || aur_install "$arg" &>> "$output"
         fi
     done
 }
 
-install-dotfiles() {
+install_dotfiles() {
     DOTFILES="/home/$(whoami)/.dotfiles"
     if [ ! -d "$DOTFILES" ];
         then
