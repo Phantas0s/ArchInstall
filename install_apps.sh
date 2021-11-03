@@ -79,6 +79,7 @@ dialog-choose-apps() {
         "ripgrep" "Ripgrep" on \
         "brave" "Brave (browser)" on
         "qutebrowser" "Qutebrowser" on
+        "notify" "Notifications with dunst & libnotify" on
         "vifm" "vifm (terminal file manager)" on
         "gtk" "GTK 3 themes and icons" on
         "programming" "Programming environments (PHP, Ruby, Go, Docker, Clojure)" on
