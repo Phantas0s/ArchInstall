@@ -145,6 +145,7 @@ office,scribus,Document editing software
 newsboat,newsboat,RSS feed reader
 pandoc,pandoc,Document converter
 pandoc,textlive-most,Tex Document Production System
+pandoc,texlive-most-doc,Most doc for LaTex (AUR)
 pandoc,python-panflute,Useful for some Pandoc python scripts
 firefox,firefox,Browser Firefox
 brave,brave-bin,Browser Brave (AUR)
