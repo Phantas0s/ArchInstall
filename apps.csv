@@ -24,6 +24,7 @@ tools,compton,Compositor for X - manage transparency
 tools,htop,Interactive process viewer
 tools,qtkeychain,Qt API to store passwords
 tools,ncdu,Disk analyser
+tools,duf,Also disk analyser
 tools,arandr,xrandr GUI
 tools,boxes,Draw ASCII boxes in terminal - ESSENTIAL! (AUR)
 tools,xsel,Manipulate the X selection
