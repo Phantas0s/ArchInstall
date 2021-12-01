@@ -131,7 +131,7 @@ videography,obs-studio,GUI for ffmpeg
 videography,losslesscut-bin,Simple video edition (AUR)
 multimedia,mpv,Free video player
 multimedia,nomacs,Image visualizer
-multimedia,easytag,Tag Manager
+multimedia,lltag,Tag Manager (AUR)
 multimedia,mpd,Music Player Daemon
 multimedia,ncmpcpp,Client for mpd
 multimedia,ffmpeg,Complete solution to record stream audio / video
