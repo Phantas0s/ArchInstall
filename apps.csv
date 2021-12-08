@@ -16,6 +16,7 @@ compression,unzip,Compress / uncompress zip files
 compression,p7zip,Compress / uncompress 7z files
 audio,pulseaudio,Sound system
 audio,pavucontrol,Control panel for input hardware
+audio,pipewire-pulse,Imoprovement for linux sound
 audio,alsa-utils,Utils to control sound card
 audio,audacity,Audio recording
 tools,rsync,Tool for transferring and synchronizing files across computer systems
