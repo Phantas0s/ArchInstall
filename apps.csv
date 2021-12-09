@@ -53,6 +53,7 @@ tools,redshift,Adjust color of screen
 tools,udiskie,Automount devices
 tools,gparted,Partitioning tool
 tools,taskell,CLI kanban
+tools,zsa-wally-cli,Ergodox keyboard firmware flasher (AUR)
 graphism,gcolor2,Simple color selector
 graphism,pinta,Easy to use image editor
 graphism,libwebp,Image converter from jpg to webp
