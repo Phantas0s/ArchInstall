@@ -54,6 +54,8 @@ tools,udiskie,Automount devices
 tools,gparted,Partitioning tool
 tools,taskell,CLI kanban
 tools,zsa-wally-cli,Ergodox keyboard firmware flasher (AUR)
+tools,tree,List FS in tree-like format
+tools,neofetch,Get system specs
 graphism,gcolor2,Simple color selector
 graphism,pinta,Easy to use image editor
 graphism,libwebp,Image converter from jpg to webp
