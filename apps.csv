@@ -57,6 +57,7 @@ tools,taskell,CLI kanban
 tools,zsa-wally-cli,Ergodox keyboard firmware flasher (AUR)
 tools,tree,List FS in tree-like format
 tools,neofetch,Get system specs
+tools,numlockx,Keylock manager
 graphism,gcolor2,Simple color selector
 graphism,pinta,Easy to use image editor
 graphism,libwebp,Image converter from jpg to webp
@@ -84,19 +85,16 @@ notify,libnotify,Notifier
 programming,php,PHP programming language
 programming,phpstan,PHP static analysis tool (AUR)
 programming,phpmd,PHP mess detector (AUR)
-programming,regexxer,Search/replace tool featuring Perl-style regular expressions
 programming,composer,Dependency management for PHP
 programming,ruby,Ruby programming language
 programming,go,Golang programming language
 programming,goreleaser,Release tool for Golang (AUR)
 programming,golangci-lint,Fast linter for Golang (AUR)
 programming,go-tools,Tools for Golang
-programming,gopls,Golang language server
 programming,npm,Infamous javascript package manager
 programming,nvm,Change node version (AUR)
 programming,yarn,Wrapper for npm
 programming,docker,Build ship and run distributed applications
-programming,docker-compose,Configuration to run docker multi containers applications
 programming,ctags,Generates an index file of language objects found in source files
 programming,yamllint,Linter for yaml
 programming,vint,Linter for VimScript
@@ -104,20 +102,20 @@ programming,rlwrap,Intercepting user input (used for Clojure cli)
 programming,leiningen,REPL for Clojure
 programming,racket,Language Racket
 programming,shellcheck-bin,linter for the shell (AUR)
+programming,gopls,Golang language server
+programming,clojure-lsp-bin,Clojure language server (AUR)
+programming,clj-kondo-bin,Clojure static analysis
+programming,lua-language-server,Lua language server
 sql,postgresql,Implementation of PostgreSQL
 sql,mariadb,Implementation of Mysql
-sql,mycli,command line interface for MySQL (AUR)
-sql,pgcli,command line interface for PostgreSQL (AUR)
-sql,litecli,command line interface for SQLite
+sql,mycli,Command line interface for MySQL (AUR)
+sql,pgcli,Command line interface for PostgreSQL (AUR)
+sql,litecli,Command line interface for SQLite
 zsh,zsh,Unix shell (Z-Shell)
 neovim,neovim,Editor... and much more
 neovim,python-neovim,Python for neovim
 neovim,python2-neovim,Python2 for neovim
 neovim,ruby-neovim,Ruby for neovim (AUR)
-neovim,markdown2ctags,Generates ctags-compatible output for the sections of a Markdown document(AUR)
-neovim,python-sqlparse,sqlparse is a non-validating SQL parser module for Python
-neovim,clojure-lsp-bin,Clojure language client
-neovim,clj-kondo-bin,Clojure static analysis
 keyring,gnome-keyring,Gnome component to store passwords
 keyring,libsecret,Library for application to use gnome keyring
 keyring,seahorse,Gnome keyring GUI
