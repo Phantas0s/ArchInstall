@@ -106,6 +106,8 @@ programming,gopls,Golang language server
 programming,clojure-lsp-bin,Clojure language server (AUR)
 programming,clj-kondo-bin,Clojure static analysis
 programming,lua-language-server,Lua language server
+programming,vscode-eslint-language-server,eslint language server (AUR)
+programming,sql-language-server,sql language server (AUR)
 sql,postgresql,Implementation of PostgreSQL
 sql,mariadb,Implementation of Mysql
 sql,mycli,Command line interface for MySQL (AUR)
