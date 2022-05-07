@@ -88,6 +88,7 @@ programming,phpmd,PHP mess detector (AUR)
 programming,composer,Dependency management for PHP
 programming,ruby,Ruby programming language
 programming,go,Golang programming language
+programming,lua,Lua programming language
 programming,goreleaser,Release tool for Golang (AUR)
 programming,golangci-lint,Fast linter for Golang (AUR)
 programming,go-tools,Tools for Golang
@@ -106,6 +107,7 @@ programming,gopls,Golang language server
 programming,clojure-lsp-bin,Clojure language server (AUR)
 programming,clj-kondo-bin,Clojure static analysis
 programming,lua-language-server,Lua language server
+programming,ltex-ls-bin,Language server for grammar (AUR)
 sql,postgresql,Implementation of PostgreSQL
 sql,mariadb,Implementation of Mysql
 sql,mycli,Command line interface for MySQL (AUR)
