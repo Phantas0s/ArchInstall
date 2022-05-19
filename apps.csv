@@ -19,14 +19,12 @@ audio,pipewire-alsa,Sound Architecture
 audio,pipewire-pulse,Sound Middleware
 audio,pavucontrol,Control panel for input hardware
 audio,alsa-utils,Utils to control sound card
-audio,audacity,Audio recording
 tools,rsync,Tool for transferring and synchronizing files across computer systems
-tools,ntfs-3g,Allow mounting NTFS formatted devices
-tools,compton,Compositor for X - manage transparency
+tools,ntfs-3g,Filesystem
+tools,picom,Compositor for X - manage transparency
 tools,htop,Interactive process viewer
 tools,qtkeychain,Qt API to store passwords
-tools,ncdu,Disk analyser
-tools,duf,Also disk analyser
+tools,duf,Disk analyzer
 tools,arandr,xrandr GUI
 tools,boxes,Draw ASCII boxes in terminal - ESSENTIAL! (AUR)
 tools,xsel,Manipulate the X selection
@@ -68,7 +66,6 @@ graphism,gimp-plugin-gmic,Filters for gimp
 tmux,tmux,Terminal multiplexer
 tmux,tmuxp,Configure tmux session + windows + panes via config files
 git,git,Version control system
-git,tig,Text mode interface for git
 git,diff-so-fancy,Human readable git diff
 i3,i3-wm,i3 window tile manager
 i3,i3status,i3 status bar
@@ -138,7 +135,6 @@ language,dictd,Dictionary database server
 videography,obs-studio,GUI for ffmpeg
 videography,losslesscut-bin,Simple video edition (AUR)
 multimedia,mpv,Free video player
-multimedia,nomacs,Image visualizer
 multimedia,lltag,Tag Manager (AUR)
 multimedia,mpd,Music Player Daemon
 multimedia,ncmpcpp,Client for mpd
