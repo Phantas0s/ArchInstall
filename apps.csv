@@ -12,21 +12,21 @@ network,wget,Tool for retrieving files using HTTP HTTPS FTP and FTPS
 network,net-tools,Include netstats and others
 network,openvpn,VPN
 network,lynx,CLI Browser
+network,speedtest-cli,CLI measuring Internet speed
 compression,unzip,Compress / uncompress zip files
 compression,p7zip,Compress / uncompress 7z files
+audio,alsa-utils,Utils to control sound card
 audio,pipewire,Low level multimedia framework
 audio,pipewire-alsa,Sound Architecture
 audio,pipewire-pulse,Sound Middleware
 audio,pavucontrol,Control panel for input hardware
-audio,alsa-utils,Utils to control sound card
-audio,audacity,Audio recording
+audio,pulsemixer,Alternative to pavucontrol in terminal
 tools,rsync,Tool for transferring and synchronizing files across computer systems
-tools,ntfs-3g,Allow mounting NTFS formatted devices
-tools,compton,Compositor for X - manage transparency
+tools,ntfs-3g,Filesystem
+tools,picom,Compositor for X - manage transparency
 tools,htop,Interactive process viewer
 tools,qtkeychain,Qt API to store passwords
-tools,ncdu,Disk analyser
-tools,duf,Also disk analyser
+tools,duf,Disk analyzer
 tools,arandr,xrandr GUI
 tools,boxes,Draw ASCII boxes in terminal - ESSENTIAL! (AUR)
 tools,xsel,Manipulate the X selection
@@ -68,7 +68,6 @@ graphism,gimp-plugin-gmic,Filters for gimp
 tmux,tmux,Terminal multiplexer
 tmux,tmuxp,Configure tmux session + windows + panes via config files
 git,git,Version control system
-git,tig,Text mode interface for git
 git,diff-so-fancy,Human readable git diff
 i3,i3-wm,i3 window tile manager
 i3,i3status,i3 status bar
@@ -88,6 +87,7 @@ programming,phpmd,PHP mess detector (AUR)
 programming,composer,Dependency management for PHP
 programming,ruby,Ruby programming language
 programming,go,Golang programming language
+programming,lua,Lua programming language
 programming,goreleaser,Release tool for Golang (AUR)
 programming,golangci-lint,Fast linter for Golang (AUR)
 programming,go-tools,Tools for Golang
@@ -106,6 +106,7 @@ programming,gopls,Golang language server
 programming,clojure-lsp-bin,Clojure language server (AUR)
 programming,clj-kondo-bin,Clojure static analysis
 programming,lua-language-server,Lua language server
+programming,ltex-ls-bin,Language server for grammar (AUR)
 programming,vscode-eslint-language-server,eslint language server (AUR)
 programming,sql-language-server,sql language server (AUR)
 programming,python-lsp-server,Python language server (AUR)
@@ -137,7 +138,6 @@ language,dictd,Dictionary database server
 videography,obs-studio,GUI for ffmpeg
 videography,losslesscut-bin,Simple video edition (AUR)
 multimedia,mpv,Free video player
-multimedia,nomacs,Image visualizer
 multimedia,lltag,Tag Manager (AUR)
 multimedia,mpd,Music Player Daemon
 multimedia,ncmpcpp,Client for mpd

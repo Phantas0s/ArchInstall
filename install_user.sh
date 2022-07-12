@@ -27,11 +27,7 @@ log() {
 }
 
 create-directories() {
-    mkdir -p "/home/$(whoami)/Documents"
-    mkdir -p "/home/$(whoami)/Downloads"
-
-    mkdir -p "/home/$(whoami)/workspace"
-    mkdir -p "/home/$(whoami)/composer"
+    mkdir -p "/home/$(whoami)/{Document,Download,Video,workspace,Music,composer}"
 
     command -v "go" >/dev/null && mkdir -p "/home/$(whoami)/workspace/go/bin"
     command -v "go" >/dev/null && mkdir -p "/home/$(whoami)/workspace/go/pkg"
