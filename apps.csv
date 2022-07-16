@@ -109,6 +109,7 @@ programming,lua-language-server,Lua language server
 programming,ltex-ls-bin,Language server for grammar (AUR)
 programming,vscode-eslint-language-server,eslint language server (AUR)
 programming,sql-language-server,sql language server (AUR)
+programming,python-lsp-server,Python language server (AUR)
 sql,postgresql,Implementation of PostgreSQL
 sql,mariadb,Implementation of Mysql
 sql,mycli,Command line interface for MySQL (AUR)
