@@ -215,7 +215,7 @@ EOF
 }
 
 format-partitions() {
-    local -r hd=${1:?}
+    local hd=${1:?}
     local -r uefi=${2:?}
 
     echo "$hd" | grep -E 'nvme' &> /dev/null && hd="${hd}p"
