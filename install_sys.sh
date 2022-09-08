@@ -36,7 +36,7 @@ run() {
 
     local disk
     dialog-what-disk-to-use hd
-    disk="$(cat hd)p" && rm hd
+    disk=$(cat hd) && rm hd
     log INFO "DISK CHOSEN: $disk" "$output"
 
     local swap_size
