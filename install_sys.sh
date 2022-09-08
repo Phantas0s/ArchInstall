@@ -36,7 +36,7 @@ run() {
 
     local disk
     dialog-what-disk-to-use hd
-    disk=$(cat hd) && rm hd
+    disk="$(cat hd)p" && rm hd
     log INFO "DISK CHOSEN: $disk" "$output"
 
     local swap_size
@@ -217,6 +217,8 @@ EOF
 format-partitions() {
     local -r hd=${1:?}
     local -r uefi=${2:?}
+
+    echo "$hd" | grep -E 'nvme' &> /dev/null && hd="${hd}p"
 
     mkswap "${hd}2"
     swapon "${hd}2"
