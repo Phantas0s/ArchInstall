@@ -95,6 +95,7 @@ programming,npm,Infamous javascript package manager
 programming,nvm,Change node version (AUR)
 programming,yarn,Wrapper for npm
 programming,docker,Build ship and run distributed applications
+programming,docker-compose,Orchestration for docker
 programming,ctags,Generates an index file of language objects found in source files
 programming,yamllint,Linter for yaml
 programming,vint,Linter for VimScript
@@ -129,6 +130,7 @@ urxvt,urxvt-resize-font-git,Increase / decrease font size for Urxvt via keystrok
 ripgrep,ripgrep,Line oriented search tool (grep improved)
 vifm,vifm,File manager based on Vi
 nextcloud,nextcloud-client,Client to nextcloud
+syncthing,syncthing,Syncing files between devices
 hugo,hugo,Static site generator written in Go
 freemind,freemind,Free mind mapping software in Java
 joplin,joplin-desktop,Note taking app open source (AUR)
@@ -139,8 +141,6 @@ videography,obs-studio,GUI for ffmpeg
 videography,losslesscut-bin,Simple video edition (AUR)
 multimedia,mpv,Free video player
 multimedia,lltag,Tag Manager (AUR)
-multimedia,mpd,Music Player Daemon
-multimedia,ncmpcpp,Client for mpd
 multimedia,ffmpeg,Complete solution to record stream audio / video
 multimedia,deadbeef,Clone of Foobar2000 music player
 office,libreoffice,Office suite
