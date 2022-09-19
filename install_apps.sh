@@ -77,7 +77,6 @@ dialog-choose-apps() {
         "urxvt" "Urxvt unicode" on
         "zsh" "Unix Z-Shell (zsh)" on
         "ripgrep" "Ripgrep" on \
-        "brave" "Brave (browser)" on
         "qutebrowser" "Qutebrowser" on
         "notify" "Notifications with dunst & libnotify" on
         "vifm" "vifm (terminal file manager)" on
