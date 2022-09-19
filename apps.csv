@@ -41,7 +41,6 @@ tools,imagemagick,Convert edit or compose images
 tools,unclutter,Hide the mouse after short period of time
 tools,pv,Display progress bar through pipeline
 tools,the_silver_searcher,A fast code searching tool
-tools,bat,A cat clone with winds
 tools,noto-fonts-cjk,Fonts for asian display
 tools,noto-fonts-emoji,Fonts for emojis
 tools,whois,Display web domain information
@@ -54,7 +53,6 @@ tools,redshift,Adjust color of screen
 tools,udiskie,Automount devices
 tools,gparted,Partitioning tool
 tools,taskell,CLI kanban
-tools,zsa-wally-cli,Ergodox keyboard firmware flasher (AUR)
 tools,tree,List FS in tree-like format
 tools,neofetch,Get system specs
 tools,numlockx,Keylock manager
@@ -115,7 +113,7 @@ sql,postgresql,Implementation of PostgreSQL
 sql,mariadb,Implementation of Mysql
 sql,mycli,Command line interface for MySQL (AUR)
 sql,pgcli,Command line interface for PostgreSQL (AUR)
-sql,litecli,Command line interface for SQLite
+sql,litecli,Command line interface for SQLite (AUR)
 zsh,zsh,Unix shell (Z-Shell)
 neovim,neovim,Editor... and much more
 neovim,python-neovim,Python for neovim
