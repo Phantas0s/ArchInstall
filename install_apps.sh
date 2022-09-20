@@ -69,6 +69,7 @@ dialog-choose-apps() {
         "compression" "Compression Tools" on
         "tools" "Very nice tools to have (highly recommended)" on
         "audio" "Audio tools" on
+        "network" "Network Configuration" off
         "git" "Git & git tools" on
         "i3" "i3 Tile manager & Desktop" on
         "tmux" "Tmux" on
@@ -79,30 +80,30 @@ dialog-choose-apps() {
         "ripgrep" "Ripgrep" on \
         "qutebrowser" "Qutebrowser" on
         "notify" "Notifications with dunst & libnotify" on
-        "vifm" "vifm (terminal file manager)" on
         "gtk" "GTK 3 themes and icons" on
         "programming" "Programming environments (PHP, Ruby, Go, Docker, Clojure)" on
         "keepass" "Keepass" on
         "sql" "Mysql (mariadb) & mysql tools" on
-        "newsboat" "RSS Feed Reader" on
+        "office" "Office tools (Libreoffice...)" off
+        "multimedia" "Multimedia" off
+        "videography" "Video creation" off
+        "graphism" "Design" off
+        "photography" "Photography tools" off
         "firefox" "Firefox (browser)" off
-        "Brave" "brave (browser)" off
+        "brave" "brave (browser)" off
+        "newsboat" "RSS Feed Reader" on
         "joplin" "Note taking system" off
         "thunar" "Graphical file manager" off
         "thunderbird" "Thunderbird" off
-        "graphism" "Design" off
         "pandoc" "Pandoc and usefull dependencies" off
-        "office" "Office tools (Libreoffice...)" off
-        "vmware" "Vmware tools" off
+        "syncthing" "Sync files via P2P" off
+        "rover" "Simple file browser for the terminal" off
         "language" "Language tools" off
-        "multimedia" "Multimedia" off
-        "videography" "Video creation" off
         "nextcloud" "Nextcloud client" off
-        "network" "Network Configuration" off
         "hugo" "Hugo static site generator" off
         "freemind" "Freemind - mind mapping software" off
         "doublecmd" "Double Commander - File explorer a la FreeCommander" off
-        "photography" "Photography tools" off
+        "vmware" "Vmware tools" off
         "gaming" "Almost everything for gaming on Linux" off)
 
     dialog --checklist "You can now choose the groups of applications you want to install, according to your own CSV file.\n\n Press SPACE to select and ENTER to validate your choices." 0 0 0 "${apps[@]}" 2> "$file"
