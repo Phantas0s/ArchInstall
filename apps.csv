@@ -13,6 +13,7 @@ network,net-tools,Include netstats and others
 network,openvpn,VPN
 network,lynx,CLI Browser
 network,speedtest-cli,CLI measuring Internet speed
+network,siege,Http load testing and benchmarking utility
 compression,unzip,Compress / uncompress zip files
 compression,p7zip,Compress / uncompress 7z files
 audio,alsa-utils,Utils to control sound card
@@ -36,7 +37,6 @@ tools,xcape,Configure modifier key
 tools,bc,Calculator
 tools,httpie,a CLI cURL-like tool for humans
 tools,fzf,Command line fuzzy finder
-tools,siege,Http load testing and benchmarking utility
 tools,imagemagick,Convert edit or compose images
 tools,unclutter,Hide the mouse after short period of time
 tools,pv,Display progress bar through pipeline
@@ -127,7 +127,7 @@ urxvt,rxvt-unicode,Terminal Urxvt
 urxvt,urxvt-tabbedex-mina86-git,Improved tab for Urxvt (AUR)
 urxvt,urxvt-resize-font-git,Increase / decrease font size for Urxvt via keystrokes(AUR)
 ripgrep,ripgrep,Line oriented search tool (grep improved)
-vifm,vifm,File manager based on Vi
+rover,rover,Simple file browser for the terminal (AUR)
 nextcloud,nextcloud-client,Client to nextcloud
 syncthing,syncthing,Syncing files between devices
 hugo,hugo,Static site generator written in Go
