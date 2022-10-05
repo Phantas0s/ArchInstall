@@ -133,7 +133,7 @@ syncthing,syncthing,Syncing files between devices
 hugo,hugo,Static site generator written in Go
 freemind,freemind,Free mind mapping software in Java
 joplin,joplin-desktop,Note taking app open source (AUR)
-language,anki,Powerful intelligent flash cards
+language,anki,Powerful intelligent flash cards (AUR)
 language,translate-shell,Command line translator
 language,dictd,Dictionary database server
 videography,obs-studio,GUI for ffmpeg
@@ -146,6 +146,7 @@ office,libreoffice,Office suite
 office,okular,PDF reader
 office,zathura-pdf-mupdf,Highly customizable PDF reader
 office,pdfarranger,Merge PDFs
+office,calibre,Managing ebooks
 office,scribus,Document editing software
 newsboat,newsboat,RSS feed reader
 pandoc,pandoc,Document converter
