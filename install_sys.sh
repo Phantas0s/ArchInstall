@@ -12,7 +12,7 @@ url-installer() {
 
 run() {
     local dry_run=${dry_run:-false}
-    local output=${output:-/dev/tty2}
+    local output=${output:-/tmp/install-logs}
 
     while getopts d:o: option
     do
@@ -38,6 +38,11 @@ run() {
     dialog-what-disk-to-use hd
     disk=$(cat hd) && rm hd
     log INFO "DISK CHOSEN: $disk" "$output"
+
+    local encryption
+    dialog-want-encryption encryption
+    encryption=$(cat encryption) && rm encryption
+    log INFO "ENCRYPTION: $encryption (0: false, 1: true)" "$output"
 
     local swap_size
     dialog-what-swap-size swaps
@@ -132,6 +137,8 @@ dialog-what-disk-to-use() {
 dialog-what-swap-size() {
     local default_size="8"
     local file=${1:?}
+    local size
+
     dialog --no-cancel --inputbox "You need four partitions: Boot, Root and Swap \n\
         The boot will be 512M\n\
         The root will be the rest of the hard disk\n\
@@ -139,10 +146,36 @@ dialog-what-swap-size() {
         If you dont enter anything: \n\
             swap -> ${default_size}G \n\n" 20 60 2> "$file"
 
-    local size=$(cat "$file")
+    size=$(cat "$file")
     [[ $size =~ ^[0-9]+$ ]] || size=$default_size
 
     echo "$size" > "$file"
+}
+
+dialog-want-encryption() {
+    local file=${1:?}
+
+    dialog --defaultno --title "Encrypting your partition" --yesno \
+        "Do you want to encrypt your partition? \n\n\
+        Encrypting your main partition will guarantee you that no \n\
+        deceivers will steal your data if they get access to your hard disk. \n\n" 15 60
+
+    response=$?
+    case $response in
+        0) echo 1 > $file;;
+        1) echo 0 > $file;;
+    esac
+}
+
+dialog-encryption-passphrase() {
+    local hd=${1:?}
+    local passphrase
+
+    dialog --no-cancel --inputbox "Please enter your passphrase for the encryption. \n\n" 20 60 2> "$passphrase"
+    printf "$passphrase" | cryptsetup -q luksFormat "$hd" -
+    passphrase=""
+    # TODO - TO CALL
+    # TODO - DO IT LIKE A NORMAL PASSWORD? (SEE example in chroot thingy for user passwords)
 }
 
 set-timedate() {
@@ -217,13 +250,14 @@ EOF
 format-partitions() {
     local hd=${1:?}
     local -r uefi=${2:?}
+    local -r encryption=${3:?}
 
     echo "$hd" | grep -E 'nvme' &> /dev/null && hd="${hd}p"
 
     mkswap "${hd}2"
     swapon "${hd}2"
 
-    mkfs.ext4 "${hd}3"
+    [[ "$encryption" == 0 ]]   mkfs.ext4 "${hd}3"
     mount "${hd}3" /mnt
 
     [[ "$uefi" == 1 ]] && \

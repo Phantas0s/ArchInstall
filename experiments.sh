@@ -48,5 +48,5 @@
 #######################
 
 
-
+# Try zram - https://www.reddit.com/r/archlinux/comments/xfruda/is_swap_partition_necessary_at_present/
 
