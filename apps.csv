@@ -37,6 +37,7 @@ tools,xcape,Configure modifier key
 tools,bc,Calculator
 tools,httpie,a CLI cURL-like tool for humans
 tools,fzf,Command line fuzzy finder
+tools,sysz,Use fzf to find systemd units (AUR)
 tools,imagemagick,Convert edit or compose images
 tools,unclutter,Hide the mouse after short period of time
 tools,pv,Display progress bar through pipeline
@@ -56,6 +57,7 @@ tools,taskell,CLI kanban
 tools,tree,List FS in tree-like format
 tools,neofetch,Get system specs
 tools,numlockx,Keylock manager
+tools,xdg-ninja,Verify files which can go to xdg config (AUR)
 graphism,gcolor2,Simple color selector
 graphism,pinta,Easy to use image editor
 graphism,libwebp,Image converter from jpg to webp
@@ -168,5 +170,6 @@ gaming,steam,Video game distribution service
 gaming,ttf-liberation,Fonts for steam
 photography,darktable,RAW developer
 photography,digikam,Photo organizer and developer
+photography,breeze-icons,Icons for digikam
 photography,xf86-input-wacom,Drivers for Wacom tablet
 photography,displaycal,Display calibration software
