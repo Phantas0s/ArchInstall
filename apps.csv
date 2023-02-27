@@ -46,7 +46,7 @@ tools,noto-fonts-cjk,Fonts for asian display
 tools,noto-fonts-emoji,Fonts for emojis
 tools,whois,Display web domain information
 tools,time,Measure time takes a specific command
-tools,downgrader,Utility to downgrad Arch packages (AUR)
+tools,downgrade,Utility to downgrade Arch packages (AUR)
 tools,simple-mtpfs,Can mount MTP filesystems (thanks Android) (AUR)
 tools,scrot,Screenshot software for i3lock
 tools,xclip,CLI to Clipboard
