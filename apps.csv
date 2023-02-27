@@ -12,8 +12,6 @@ network,wget,Tool for retrieving files using HTTP HTTPS FTP and FTPS
 network,net-tools,Include netstats and others
 network,openvpn,VPN
 network,lynx,CLI Browser
-network,speedtest-cli,CLI measuring Internet speed
-network,siege,Http load testing and benchmarking utility
 compression,unzip,Compress / uncompress zip files
 compression,p7zip,Compress / uncompress 7z files
 audio,alsa-utils,Utils to control sound card
@@ -23,19 +21,18 @@ audio,pipewire-pulse,Sound Middleware
 audio,pavucontrol,Control panel for input hardware
 audio,pulsemixer,Alternative to pavucontrol in terminal
 tools,rsync,Tool for transferring and synchronizing files across computer systems
-tools,ntfs-3g,Filesystem
+tools,ntfs-3g,Filesystem for phone and table
 tools,picom,Compositor for X - manage transparency
 tools,htop,Interactive process viewer
 tools,qtkeychain,Qt API to store passwords
 tools,duf,Disk analyzer
 tools,arandr,xrandr GUI
-tools,boxes,Draw ASCII boxes in terminal - ESSENTIAL! (AUR)
+tools,boxes,Draw ASCII boxes in terminal (AUR)
 tools,xsel,Manipulate the X selection
 tools,lxappearance,Theme switcher of LXDE
 tools,polkit,Control system wide privilege
 tools,xcape,Configure modifier key
 tools,bc,Calculator
-tools,httpie,a CLI cURL-like tool for humans
 tools,fzf,Command line fuzzy finder
 tools,sysz,Use fzf to find systemd units (AUR)
 tools,imagemagick,Convert edit or compose images
@@ -46,7 +43,7 @@ tools,noto-fonts-cjk,Fonts for asian display
 tools,noto-fonts-emoji,Fonts for emojis
 tools,whois,Display web domain information
 tools,time,Measure time takes a specific command
-tools,downgrader,Utility to downgrad Arch packages (AUR)
+tools,downgrade,Utility to downgrade Arch packages (AUR)
 tools,simple-mtpfs,Can mount MTP filesystems (thanks Android) (AUR)
 tools,scrot,Screenshot software for i3lock
 tools,xclip,CLI to Clipboard
@@ -95,14 +92,13 @@ programming,npm,Infamous javascript package manager
 programming,nvm,Change node version (AUR)
 programming,yarn,Wrapper for npm
 programming,docker,Build ship and run distributed applications
-programming,docker-compose,Orchestration for docker
 programming,ctags,Generates an index file of language objects found in source files
 programming,yamllint,Linter for yaml
 programming,vint,Linter for VimScript
 programming,rlwrap,Intercepting user input (used for Clojure cli)
 programming,leiningen,REPL for Clojure
 programming,racket,Language Racket
-programming,shellcheck-bin,linter for the shell (AUR)
+programming,shellcheck-bin,Linter for the shell (AUR)
 programming,gopls,Golang language server
 programming,clojure-lsp-bin,Clojure language server (AUR)
 programming,clj-kondo-bin,Clojure static analysis
@@ -128,6 +124,8 @@ keyring,seahorse,Gnome keyring GUI
 urxvt,rxvt-unicode,Terminal Urxvt
 urxvt,urxvt-tabbedex-mina86-git,Improved tab for Urxvt (AUR)
 urxvt,urxvt-resize-font-git,Increase / decrease font size for Urxvt via keystrokes(AUR)
+ghostty,ghostty,Terminal ghostty
+ghostty,ghostty-terminfo,Terminfo for ghostty
 ripgrep,ripgrep,Line oriented search tool (grep improved)
 rover,rover,Simple file browser for the terminal (AUR)
 nextcloud,nextcloud-client,Client to nextcloud
@@ -155,7 +153,6 @@ pandoc,pandoc,Document converter
 pandoc,lua-lpeg,Necessary library for Pandoc Lua filters
 pandoc,texlive-most,Tex Document Production System
 pandoc,texlive-most-doc,Most doc for LaTex (AUR)
-pandoc,python-panflute,Useful for some Pandoc python scripts
 firefox,firefox,Browser Firefox
 brave,brave-bin,Browser Brave (AUR)
 qutebrowser,qutebrowser,Mouseless browser
