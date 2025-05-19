@@ -6,6 +6,7 @@ essential,man-pages,Manual pages
 essential,tldr,Examples for CLIs
 essential,openssh,Remote login tool for SSH protocol
 essential,cowsay,We all need a cow in our life
+essential,moreutils,More utils
 network,networkmanager,Network manager
 network,nmap,Network mapper (comes with ncat too)
 network,wget,Tool for retrieving files using HTTP HTTPS FTP and FTPS
